@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:happy_care/core/presentation/onboarding.dart';
+import 'package:happy_care/modules/onboarding/onboarding.dart';
 
 part 'app_routes.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:happy_care/config/constants.dart';
-import 'package:happy_care/core/presentation/widget/onboarding_custom.dart';
+import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/widgets/onboarding_custom.dart';
 import 'package:onboarding/onboarding.dart';
 
 class OnboardingScreen extends StatelessWidget {
