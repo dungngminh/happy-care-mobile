@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
-import 'package:happy_care/widgets/onboarding_custom.dart';
+import 'package:happy_care/modules/onboarding/widget/onboarding_custom.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:onboarding/onboarding.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -53,21 +55,13 @@ class OnboardingScreen extends StatelessWidget {
         proceedButtonColor: kMainColor,
         proceedpButtonText: Text(
           "Đăng nhập",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.openSans(
             color: Colors.white,
-            fontSize: 15,
+            fontSize: 16,
             letterSpacing: 1.0,
           ),
         ),
-        proceedButtonRoute: (context) {
-          return Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-            (route) => false,
-          );
-        },
+        proceedButtonRoute: (context) => Get.offAndToNamed(AppRoutes.rSignIn),
       ),
       isSkippable: false,
       pages: onboardingPagesList,
@@ -91,4 +85,3 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 }
-

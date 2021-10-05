@@ -37,6 +37,7 @@ dependencies:
   onboarding: ^2.1.0
   google_fonts: ^2.1.0
   flutter_svg: ^0.22.0
+  font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:happy_care/modules/onboarding/onboarding.dart';
+import 'package:happy_care/modules/sign_in/sign_in.dart';
+import 'package:happy_care/modules/sign_in/sign_in_binding.dart';
 
 part 'app_routes.dart';
 
-// ignore: avoid_classes_with_only_static_members
 class AppPages {
   static const initial = AppRoutes.rOnboarding;
 
@@ -12,10 +13,11 @@ class AppPages {
       name: AppRoutes.rOnboarding,
       page: () => OnboardingScreen(),
     ),
-    // GetPage(
-    //   name: AppRoutes.rSignIn,
-    //   page: () {},
-    // ),
+    GetPage(
+      name: AppRoutes.rSignIn,
+      binding: SignInBinding(),
+      page: () => SignInScreen(),
+    ),
     // GetPage(
     //   name: AppRoutes.rSignUp,
     //   page: () {},

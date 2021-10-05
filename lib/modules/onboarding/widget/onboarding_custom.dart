@@ -35,11 +35,11 @@ class OnboardingCustom extends StatelessWidget {
                     child: SvgPicture.asset("assets/logos/happy_care.svg"),
                   ),
                   SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
                   Text(
                     "Happy Care".toUpperCase(),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.openSans(
                       color: kMainColor,
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
@@ -64,10 +64,10 @@ class OnboardingCustom extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.openSans(
               color: kMainColor,
               fontSize: 24,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
             ),
           ),
           SizedBox(
@@ -75,7 +75,7 @@ class OnboardingCustom extends StatelessWidget {
           ),
           Text(
             description,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.openSans(
               fontSize: 15,
             ),
             textAlign: TextAlign.center,
