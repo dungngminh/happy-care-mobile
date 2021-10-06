@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
-import 'package:happy_care/modules/sign_in/sign_in_controller.dart';
+import 'package:happy_care/modules/sign_up/sign_up_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class SignInScreen extends GetView<SignInController> {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends GetWidget<SignUpController> {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,41 @@ class SignInScreen extends GetView<SignInController> {
                   ),
                 ],
               ),
+              SizedBox(height: 42),
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 145,
+                    width: 145,
+                    child: CircleAvatar(
+                      backgroundColor: kMainColor,
+                      child: SizedBox(
+                        height: 136,
+                        width: 136,
+                        child: CircleAvatar(
+                          backgroundColor: kSecondColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: CircleAvatar(
+                        backgroundColor: kMainColor,
+                        child: Icon(
+                          Icons.add_a_photo,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
-                height: 283,
-                width: 317,
-                child: SvgPicture.asset("assets/images/Medicine-cuate.svg"),
+                height: 35,
               ),
               Row(
                 children: [
@@ -56,7 +87,7 @@ class SignInScreen extends GetView<SignInController> {
                     width: 5,
                   ),
                   Text(
-                    "Đăng nhập".toUpperCase(),
+                    "Đăng ký".toUpperCase(),
                     style: GoogleFonts.openSans(
                       fontSize: 24,
                       color: kMainColor,
@@ -66,9 +97,7 @@ class SignInScreen extends GetView<SignInController> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               Container(
                 height: 50,
                 width: double.infinity,
@@ -160,6 +189,64 @@ class SignInScreen extends GetView<SignInController> {
                 ),
               ),
               SizedBox(
+                height: 12,
+              ),
+              Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: kSecondColor,
+                ),
+                child: Stack(
+                  children: [
+                    Obx(() => TextFormField(
+                          controller: controller.rePasswordController,
+                          style: GoogleFonts.openSans(
+                            color: kMainColor,
+                            fontWeight: FontWeight.w600,
+                            textBaseline: TextBaseline.alphabetic,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          obscureText: controller.isHideRepassword.value,
+                          decoration: InputDecoration(
+                            fillColor: kMainColor,
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: kMainColor,
+                            ),
+                            hintText: 'Nhập lại password...',
+                            contentPadding: const EdgeInsets.only(right: 40),
+                            border: InputBorder.none,
+                            hintStyle: GoogleFonts.openSans(
+                              color: kMainColor,
+                              fontWeight: FontWeight.w500,
+                              textBaseline: TextBaseline.alphabetic,
+                            ),
+                          ),
+                        )),
+                    GestureDetector(
+                      onTap: () {
+                        print("repassword hide on off");
+                        controller.turnOnOffHiddenRepassword();
+                      },
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: Obx(() => Icon(
+                                controller.isHideRepassword.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: kMainColor,
+                              )),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
                 height: 20,
               ),
               Container(
@@ -171,7 +258,7 @@ class SignInScreen extends GetView<SignInController> {
                 ),
                 child: Center(
                   child: Text(
-                    "Đăng nhập".toUpperCase(),
+                    "Đăng ký".toUpperCase(),
                     style: GoogleFonts.openSans(
                       color: Colors.white,
                       fontSize: 18,
@@ -185,7 +272,7 @@ class SignInScreen extends GetView<SignInController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Bạn là người dùng mới ?",
+                    "Bạn đã có tài khoản ?",
                     style: GoogleFonts.openSans(
                       color: kMainColor,
                       fontSize: 15,
@@ -194,10 +281,10 @@ class SignInScreen extends GetView<SignInController> {
                   GestureDetector(
                     onTap: () {
                       print("tap");
-                      Get.toNamed(AppRoutes.rSignUp);
+                      Get.offAndToNamed(AppRoutes.rSignIn);
                     },
                     child: Text(
-                      " Đăng ký",
+                      " Đăng nhập",
                       style: GoogleFonts.openSans(
                         color: kMainColor,
                         fontSize: 15,
@@ -262,7 +349,7 @@ class SignInScreen extends GetView<SignInController> {
                     ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

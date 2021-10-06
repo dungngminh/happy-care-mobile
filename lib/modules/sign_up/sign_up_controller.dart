@@ -1,14 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class SignInController extends GetxController {
+class SignUpController extends GetxController {
   final isHidePassword = true.obs;
+  final isHideRepassword = true.obs;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController rePasswordController = TextEditingController();
 
   turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
+    update();
+  }
+
+  turnOnOffHiddenRepassword() {
+    isHideRepassword.value = !isHideRepassword.value;
     update();
   }
 
@@ -16,6 +23,7 @@ class SignInController extends GetxController {
   void onClose() {
     emailController.dispose();
     passwordController.dispose();
-    super.onClose();
+    rePasswordController.dispose();
+    super.dispose();
   }
 }
