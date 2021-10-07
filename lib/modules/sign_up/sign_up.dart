@@ -29,7 +29,6 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ),
                   Text(
                     "Happy Care".toUpperCase(),
-                    //TODO: spacing of title
                     style: GoogleFonts.openSans(
                       color: kMainColor,
                       fontSize: 28,
@@ -54,11 +53,17 @@ class SignUpScreen extends GetWidget<SignUpController> {
                     child: CircleAvatar(
                       backgroundColor: kMainColor,
                       child: SizedBox(
-                        height: 136,
-                        width: 136,
-                        child: CircleAvatar(
-                          backgroundColor: kSecondColor,
-                        ),
+                        height: 134,
+                        width: 134,
+                        child: GetBuilder<SignUpController>(builder: (context) {
+                          return controller.profileImage == null
+                              ? CircleAvatar(
+                                  backgroundColor: kSecondColor,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      FileImage(controller.profileImage!));
+                        }),
                       ),
                     ),
                   ),
@@ -66,7 +71,61 @@ class SignUpScreen extends GetWidget<SignUpController> {
                     bottom: 0,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      onTap: () => controller
+                                          .getProfileImageFromCamera(),
+                                      leading: Icon(Icons.photo_camera,
+                                          color: kMainColor),
+                                      title: Text(
+                                        "Chụp ảnh",
+                                        style: GoogleFonts.openSans(
+                                          color: kMainColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    ListTile(
+                                      onTap: () => controller
+                                          .getProfileImageFromGallery(),
+                                      leading: Icon(Icons.photo_album,
+                                          color: kMainColor),
+                                      title: Text(
+                                        "Chọn từ thư viện",
+                                        style: GoogleFonts.openSans(
+                                          color: kMainColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    ListTile(
+                                      onTap: () =>
+                                          controller.removeProfileImage(),
+                                      leading:
+                                          Icon(Icons.delete, color: kMainColor),
+                                      title: Text(
+                                        "Xóa ảnh",
+                                        style: GoogleFonts.openSans(
+                                          color: kMainColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
                       child: CircleAvatar(
                         backgroundColor: kMainColor,
                         child: Icon(
@@ -281,7 +340,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   GestureDetector(
                     onTap: () {
                       print("tap");
-                      Get.offAndToNamed(AppRoutes.rSignIn);
+                      Get.offNamed(AppRoutes.rSignIn);
                     },
                     child: Text(
                       " Đăng nhập",

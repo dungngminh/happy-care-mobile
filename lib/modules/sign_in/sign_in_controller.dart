@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignInController extends GetxController {
-  final isHidePassword = true.obs;
+  var isHidePassword = true.obs;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
+    update();
+  }
+
+  resetValue() {
+    isHidePassword.value = true;
+    emailController.text = "";
+    passwordController.text = "";
     update();
   }
 

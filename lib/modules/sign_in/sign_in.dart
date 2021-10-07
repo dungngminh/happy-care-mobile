@@ -6,7 +6,7 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_in/sign_in_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class SignInScreen extends GetView<SignInController> {
+class SignInScreen extends GetWidget<SignInController> {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -194,6 +194,7 @@ class SignInScreen extends GetView<SignInController> {
                   GestureDetector(
                     onTap: () {
                       print("tap");
+                      controller.resetValue();
                       Get.toNamed(AppRoutes.rSignUp);
                     },
                     child: Text(
