@@ -39,6 +39,11 @@ dependencies:
   flutter_svg: ^0.22.0
   font_awesome_flutter: ^9.1.0
   image_picker: ^0.8.4+2
+  rounded_loading_button: ^2.0.9
+  flutter_dotenv: ^5.0.2
+  connectivity: ^3.0.6
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +71,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logos/
+    - assets/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

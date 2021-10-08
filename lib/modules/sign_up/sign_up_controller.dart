@@ -1,17 +1,32 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+enum Status { loading, success, error }
 
 class SignUpController extends GetxController {
+  //obs variable
   final isHidePassword = true.obs;
   final isHideRepassword = true.obs;
+  final status = Status.loading.obs;
   File? profileImage;
 
+  //controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController rePasswordController = TextEditingController();
+  final RoundedLoadingButtonController btnController =
+      RoundedLoadingButtonController();
+
+  //repository
+  final UserRepository repository = UserRepository();
 
   void turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -21,6 +36,69 @@ class SignUpController extends GetxController {
   void turnOnOffHiddenRepassword() {
     isHideRepassword.value = !isHideRepassword.value;
     update();
+  }
+
+  Future<void> createNewUser(BuildContext context) async {
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        rePasswordController.text.isEmpty) {
+      btnController.error();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: kBackgroundColor,
+          content: Text(
+            "Vui lòng điền đủ thông tin",
+            style: GoogleFonts.openSans(
+              color: kMainColor,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+      await Future.delayed(Duration(seconds: 1));
+      btnController.reset();
+    } else {
+      print(emailController.text);
+      print(passwordController.text);
+      bool isOK = await repository.createNewUser(
+          email: emailController.text, password: passwordController.text);
+      if (isOK) {
+        btnController.success();
+        await Future.delayed(Duration(seconds: 1));
+        Get.back();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: kBackgroundColor,
+            content: Text(
+              "Đăng ký thành công",
+              style: GoogleFonts.openSans(
+                color: kMainColor,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      } else {
+        btnController.error();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: kBackgroundColor,
+            content: Text(
+              "Đăng ký thất bại",
+              style: GoogleFonts.openSans(
+                color: kMainColor,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+        await Future.delayed(Duration(seconds: 1));
+        btnController.reset();
+      }
+    }
   }
 
   Future<void> getProfileImageFromCamera() async {

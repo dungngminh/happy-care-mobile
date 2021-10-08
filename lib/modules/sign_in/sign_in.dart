@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_in/sign_in_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignInScreen extends GetWidget<SignInController> {
   const SignInScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class SignInScreen extends GetWidget<SignInController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 35, left: 40, right: 40),
+          padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
           child: Column(
             children: [
               Row(
@@ -162,24 +163,41 @@ class SignInScreen extends GetWidget<SignInController> {
               SizedBox(
                 height: 20,
               ),
-              Container(
+              RoundedLoadingButton(
+                borderRadius: 35,
                 height: 55,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Center(
-                  child: Text(
-                    "Đăng nhập".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                width: 330,
+                color: kMainColor,
+                successColor: kMainColor,
+                controller: controller.btnController,
+                onPressed: () => controller.signIn(context),
+                child: Text(
+                  "Đăng nhập".toUpperCase(),
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+              // Container(
+              //   height: 55,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     color: kMainColor,
+              //     borderRadius: BorderRadius.circular(25),
+              //   ),
+              //   child: Center(
+              //     child: Text(
+              //       "Đăng nhập".toUpperCase(),
+              //       style: GoogleFonts.openSans(
+              //         color: Colors.white,
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 18),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_up/sign_up_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends GetWidget<SignUpController> {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 35, left: 40, right: 40),
+          padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
           child: Column(
             children: [
               Row(
@@ -179,7 +180,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                       color: kMainColor,
                     ),
                     hintText: 'Email...',
-                    contentPadding: const EdgeInsets.only(right: 40),
+                    contentPadding: const EdgeInsets.only(right: 32),
                     border: InputBorder.none,
                     hintStyle: GoogleFonts.openSans(
                       color: kMainColor,
@@ -308,21 +309,20 @@ class SignUpScreen extends GetWidget<SignUpController> {
               SizedBox(
                 height: 20,
               ),
-              Container(
+              RoundedLoadingButton(
+                borderRadius: 35,
                 height: 55,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Center(
-                  child: Text(
-                    "Đăng ký".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                width: 330,
+                color: kMainColor,
+                successColor: kMainColor,
+                controller: controller.btnController,
+                onPressed: () => controller.createNewUser(context),
+                child: Text(
+                  "Đăng ký".toUpperCase(),
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

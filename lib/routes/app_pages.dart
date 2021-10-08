@@ -9,7 +9,7 @@ part 'app_routes.dart';
 
 class AppPages {
   static const initial = AppRoutes.rSignIn;
-
+  static const initial2 = AppRoutes.rSignUp;
   static final routes = [
     GetPage(
       name: AppRoutes.rOnboarding,
