@@ -38,7 +38,7 @@ class SignInController extends GetxController {
           ),
         ),
       );
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 2));
       btnController.reset();
     } else {
       print(emailController.text);

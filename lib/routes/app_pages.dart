@@ -8,8 +8,7 @@ import 'package:happy_care/modules/sign_up/sign_up_binding.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const initial = AppRoutes.rSignIn;
-  static const initial2 = AppRoutes.rSignUp;
+  static const initial = AppRoutes.rOnboarding;
   static final routes = [
     GetPage(
       name: AppRoutes.rOnboarding,
