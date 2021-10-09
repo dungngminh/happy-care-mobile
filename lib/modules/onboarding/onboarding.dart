@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/modules/onboarding/widget/onboarding_custom.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:onboarding/onboarding.dart';
@@ -50,19 +51,21 @@ class OnboardingScreen extends StatelessWidget {
     return Onboarding(
       background: kBackgroundColor,
       proceedButtonStyle: ProceedButtonStyle(
-        proceedButtonPadding:
-            EdgeInsets.symmetric(horizontal: 17.0, vertical: 1.7),
-        proceedButtonColor: kMainColor,
-        proceedpButtonText: Text(
-          "Đăng nhập",
-          style: GoogleFonts.openSans(
-            color: Colors.white,
-            fontSize: 16,
-            letterSpacing: 1.0,
+          proceedButtonPadding:
+              EdgeInsets.symmetric(horizontal: 17.0, vertical: 1.7),
+          proceedButtonColor: kMainColor,
+          proceedpButtonText: Text(
+            "Đăng nhập",
+            style: GoogleFonts.openSans(
+              color: Colors.white,
+              fontSize: 16,
+              letterSpacing: 1.0,
+            ),
           ),
-        ),
-        proceedButtonRoute: (context) => Get.offAndToNamed(AppRoutes.rSignIn),
-      ),
+          proceedButtonRoute: (context) async {
+            await SharedPrefUtils.setBoolKey('first_time', false);
+            Get.offAndToNamed(AppRoutes.rSignIn);
+          }),
       isSkippable: false,
       pages: onboardingPagesList,
       indicator: Indicator(

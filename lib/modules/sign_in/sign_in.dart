@@ -30,7 +30,6 @@ class SignInScreen extends GetWidget<SignInController> {
                   ),
                   Text(
                     "Happy Care".toUpperCase(),
-                    //TODO: spacing of title
                     style: GoogleFonts.openSans(
                       color: kMainColor,
                       fontSize: 28,

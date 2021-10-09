@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/routes/app_pages.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
-  await Hive.initFlutter();
-  await Hive.openBox('jwt');
-  print(Hive.box('jwt').get('jwt'));
-  runApp(MyApp());
+  var isNotFirstTime = await SharedPrefUtils.getBoolKey("first_time") ?? true;
+  runApp(MyApp(
+    isNotFirstTime: isNotFirstTime,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.isNotFirstTime}) : super(key: key);
+  final bool isNotFirstTime;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,7 @@ class MyApp extends StatelessWidget {
       title: "Happy Care",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: Hive.box('jwt').get('jwt') == null
-          ? AppPages.initial
-          : AppPages.initial2,
+      initialRoute: isNotFirstTime ? AppRoutes.rOnboarding : AppRoutes.rSignIn,
       getPages: AppPages.routes,
     );
   }

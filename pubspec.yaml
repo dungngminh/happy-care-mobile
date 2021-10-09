@@ -42,8 +42,8 @@ dependencies:
   rounded_loading_button: ^2.0.9
   flutter_dotenv: ^5.0.2
   connectivity: ^3.0.6
-  hive: ^2.0.4
-  hive_flutter: ^1.1.0
+  shared_preferences: ^2.0.8
+
 
 dev_dependencies:
   flutter_test:
