@@ -20,4 +20,9 @@ class SharedPrefUtils {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString(key);
   }
+
+  static removeStringKey(String key) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.remove(key);
+  }
 }

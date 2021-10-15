@@ -7,14 +7,16 @@ import 'package:happy_care/routes/app_pages.dart';
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
   var isNotFirstTime = await SharedPrefUtils.getBoolKey("first_time") ?? true;
+  var token = await SharedPrefUtils.getStringKey("token");
   runApp(MyApp(
-    isNotFirstTime: isNotFirstTime,
+    isNotFirstTime: isNotFirstTime, token: token,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.isNotFirstTime}) : super(key: key);
+  const MyApp({Key? key, required this.isNotFirstTime, this.token}) : super(key: key);
   final bool isNotFirstTime;
+  final String? token;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: "Happy Care",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: isNotFirstTime ? AppRoutes.rOnboarding : AppRoutes.rSignIn,
+      initialRoute: isNotFirstTime ? AppRoutes.rOnboarding : (token != null ? AppRoutes.rHome : AppRoutes.rSignIn),
       getPages: AppPages.routes,
     );
   }

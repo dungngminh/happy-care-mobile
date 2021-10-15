@@ -56,8 +56,6 @@ class SignUpController extends GetxController {
           ),
         ),
       );
-      await Future.delayed(Duration(seconds: 1));
-      btnController.reset();
     } else {
       print(emailController.text);
       print(passwordController.text);
@@ -95,8 +93,6 @@ class SignUpController extends GetxController {
             ),
           ),
         );
-        await Future.delayed(Duration(seconds: 1));
-        btnController.reset();
       }
     }
   }

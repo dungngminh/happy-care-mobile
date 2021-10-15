@@ -1,9 +1,10 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+
 class UserApi {
-  Future<bool> createNewUser(String email, String password) async {
+  Future<String> createNewUser(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
       'password': password,
@@ -19,15 +20,15 @@ class UserApi {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      print(response.statusCode);
-      return true;
+      print(response.body);
+      return response.body;
     } else {
       print(response.body);
-      return false;
+      throw Exception("Fail to get Sign Up");
     }
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<String> signIn(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
       'password': password,
@@ -44,12 +45,10 @@ class UserApi {
     );
     if (response.statusCode == 200) {
       print(response.body);
-      var result = convert.jsonDecode(response.body);
-      print("result " + result['token']);
-      return true;
+      return response.body;
     } else {
       print(response.body);
-      return false;
+      throw Exception("Fail to get Sign In");
     }
   }
 }
