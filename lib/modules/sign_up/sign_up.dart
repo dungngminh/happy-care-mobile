@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_up/sign_up_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
-import 'package:happy_care/widgets/logo_title.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends GetWidget<SignUpController> {
@@ -19,7 +18,33 @@ class SignUpScreen extends GetWidget<SignUpController> {
           padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
           child: Column(
             children: [
-              LogoTitle(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: SvgPicture.asset("assets/logos/happy_care.svg"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Happy Care".toUpperCase(),
+                    style: GoogleFonts.openSans(
+                      color: kMainColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 4.0),
+                          blurRadius: 10.0,
+                          color: Colors.black.withOpacity(0.25),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 42),
               Stack(
                 children: [
@@ -292,8 +317,6 @@ class SignUpScreen extends GetWidget<SignUpController> {
                 successColor: kMainColor,
                 controller: controller.btnController,
                 onPressed: () => controller.createNewUser(context),
-                resetDuration: Duration(seconds: 3),
-                resetAfterDuration: true,
                 child: Text(
                   "Đăng ký".toUpperCase(),
                   style: GoogleFonts.openSans(

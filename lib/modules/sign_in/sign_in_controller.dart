@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
-import 'package:happy_care/routes/app_pages.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignInController extends GetxController {
@@ -14,6 +13,8 @@ class SignInController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
+
+  SignInController();
 
   turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -37,6 +38,8 @@ class SignInController extends GetxController {
           ),
         ),
       );
+      await Future.delayed(Duration(seconds: 2));
+      btnController.reset();
     } else {
       print(emailController.text);
       print(passwordController.text);
@@ -58,7 +61,6 @@ class SignInController extends GetxController {
             ),
           ),
         );
-        Get.toNamed(AppRoutes.rHome);
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -74,6 +76,8 @@ class SignInController extends GetxController {
             ),
           ),
         );
+        await Future.delayed(Duration(seconds: 1));
+        btnController.reset();
       }
     }
   }
