@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class UserApi {
-  Future<bool> createNewUser(String email, String password) async {
+  Future<String> createNewUser(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
       'password': password,
@@ -20,14 +20,14 @@ class UserApi {
     );
     if (response.statusCode == 200) {
       print(response.statusCode);
-      return true;
+      return response.body;
     } else {
       print(response.body);
-      return false;
+      throw Exception("Cannot sign up");
     }
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<String> signIn(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
       'password': password,
@@ -43,13 +43,11 @@ class UserApi {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      print(response.body);
-      var result = convert.jsonDecode(response.body);
-      print("result " + result['token']);
-      return true;
+      print(response.statusCode);
+      return response.body;
     } else {
       print(response.body);
-      return false;
+      throw Exception("Cannot sign in");
     }
   }
 }

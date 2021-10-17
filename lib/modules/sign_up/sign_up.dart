@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_up/sign_up_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/logo_title.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends GetWidget<SignUpController> {
@@ -18,33 +19,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
           padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: SvgPicture.asset("assets/logos/happy_care.svg"),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Happy Care".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 4.0),
-                          blurRadius: 10.0,
-                          color: Colors.black.withOpacity(0.25),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              LogoTitle(),
               SizedBox(height: 42),
               Stack(
                 children: [
@@ -158,152 +133,157 @@ class SignUpScreen extends GetWidget<SignUpController> {
                 ],
               ),
               SizedBox(height: 12),
-              Container(
+              SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: kSecondColor,
+                    ),
+                    child: TextFormField(
+                      controller: controller.emailController,
+                      style: GoogleFonts.openSans(
+                        color: kMainColor,
+                        fontWeight: FontWeight.w600,
+                        textBaseline: TextBaseline.alphabetic,
+                      ),
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        fillColor: kMainColor,
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: kMainColor,
+                        ),
+                        hintText: 'Email...',
+                        contentPadding: const EdgeInsets.only(right: 32),
+                        border: InputBorder.none,
+                        hintStyle: GoogleFonts.openSans(
+                          color: kMainColor,
+                          fontWeight: FontWeight.w500,
+                          textBaseline: TextBaseline.alphabetic,
+                        ),
+                      ),
+                    ),
+                  )),
+              SizedBox(
+                height: 12,
+              ),
+              SizedBox(
                 height: 50,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondColor,
-                ),
-                child: TextFormField(
-                  controller: controller.emailController,
-                  style: GoogleFonts.openSans(
-                    color: kMainColor,
-                    fontWeight: FontWeight.w600,
-                    textBaseline: TextBaseline.alphabetic,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kSecondColor,
                   ),
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    fillColor: kMainColor,
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: kMainColor,
-                    ),
-                    hintText: 'Email...',
-                    contentPadding: const EdgeInsets.only(right: 32),
-                    border: InputBorder.none,
-                    hintStyle: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontWeight: FontWeight.w500,
-                      textBaseline: TextBaseline.alphabetic,
-                    ),
+                  child: Stack(
+                    children: [
+                      Obx(() => TextFormField(
+                            controller: controller.passwordController,
+                            style: GoogleFonts.openSans(
+                              color: kMainColor,
+                              fontWeight: FontWeight.w600,
+                              textBaseline: TextBaseline.alphabetic,
+                            ),
+                            textAlignVertical: TextAlignVertical.center,
+                            obscureText: controller.isHidePassword.value,
+                            decoration: InputDecoration(
+                              fillColor: kMainColor,
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: kMainColor,
+                              ),
+                              hintText: 'Password...',
+                              contentPadding: const EdgeInsets.only(right: 40),
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.openSans(
+                                color: kMainColor,
+                                fontWeight: FontWeight.w500,
+                                textBaseline: TextBaseline.alphabetic,
+                              ),
+                            ),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          print("password hide on off");
+                          controller.turnOnOffHiddenPassword();
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Obx(() => Icon(
+                                  controller.isHidePassword.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: kMainColor,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               SizedBox(
                 height: 12,
               ),
-              Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondColor,
-                ),
-                child: Stack(
-                  children: [
-                    Obx(() => TextFormField(
-                          controller: controller.passwordController,
-                          style: GoogleFonts.openSans(
-                            color: kMainColor,
-                            fontWeight: FontWeight.w600,
-                            textBaseline: TextBaseline.alphabetic,
-                          ),
-                          textAlignVertical: TextAlignVertical.center,
-                          obscureText: controller.isHidePassword.value,
-                          decoration: InputDecoration(
-                            fillColor: kMainColor,
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: kMainColor,
-                            ),
-                            hintText: 'Password...',
-                            contentPadding: const EdgeInsets.only(right: 40),
-                            border: InputBorder.none,
-                            hintStyle: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w500,
-                              textBaseline: TextBaseline.alphabetic,
-                            ),
-                          ),
-                        )),
-                    GestureDetector(
-                      onTap: () {
-                        print("password hide on off");
-                        controller.turnOnOffHiddenPassword();
-                      },
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: Obx(() => Icon(
-                                controller.isHidePassword.value
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: kMainColor,
-                              )),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
-                height: 12,
-              ),
-              Container(
                 height: 50,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondColor,
-                ),
-                child: Stack(
-                  children: [
-                    Obx(() => TextFormField(
-                          controller: controller.rePasswordController,
-                          style: GoogleFonts.openSans(
-                            color: kMainColor,
-                            fontWeight: FontWeight.w600,
-                            textBaseline: TextBaseline.alphabetic,
-                          ),
-                          textAlignVertical: TextAlignVertical.center,
-                          obscureText: controller.isHideRepassword.value,
-                          decoration: InputDecoration(
-                            fillColor: kMainColor,
-                            prefixIcon: Icon(
-                              Icons.lock,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kSecondColor,
+                  ),
+                  child: Stack(
+                    children: [
+                      Obx(() => TextFormField(
+                            controller: controller.rePasswordController,
+                            style: GoogleFonts.openSans(
                               color: kMainColor,
-                            ),
-                            hintText: 'Nhập lại password...',
-                            contentPadding: const EdgeInsets.only(right: 40),
-                            border: InputBorder.none,
-                            hintStyle: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               textBaseline: TextBaseline.alphabetic,
                             ),
-                          ),
-                        )),
-                    GestureDetector(
-                      onTap: () {
-                        print("repassword hide on off");
-                        controller.turnOnOffHiddenRepassword();
-                      },
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: Obx(() => Icon(
-                                controller.isHideRepassword.value
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                            textAlignVertical: TextAlignVertical.center,
+                            obscureText: controller.isHideRepassword.value,
+                            decoration: InputDecoration(
+                              fillColor: kMainColor,
+                              prefixIcon: Icon(
+                                Icons.lock,
                                 color: kMainColor,
-                              )),
+                              ),
+                              hintText: 'Nhập lại password...',
+                              contentPadding: const EdgeInsets.only(right: 40),
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.openSans(
+                                color: kMainColor,
+                                fontWeight: FontWeight.w500,
+                                textBaseline: TextBaseline.alphabetic,
+                              ),
+                            ),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          print("repassword hide on off");
+                          controller.turnOnOffHiddenRepassword();
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Obx(() => Icon(
+                                  controller.isHideRepassword.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: kMainColor,
+                                )),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -312,7 +292,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
               RoundedLoadingButton(
                 borderRadius: 35,
                 height: 55,
-                width: 330,
+                width: double.infinity,
                 color: kMainColor,
                 successColor: kMainColor,
                 controller: controller.btnController,

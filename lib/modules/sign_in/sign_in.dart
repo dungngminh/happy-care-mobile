@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_in/sign_in_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/logo_title.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignInScreen extends GetWidget<SignInController> {
@@ -18,33 +19,7 @@ class SignInScreen extends GetWidget<SignInController> {
           padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: SvgPicture.asset("assets/logos/happy_care.svg"),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Happy Care".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 4.0),
-                          blurRadius: 10.0,
-                          color: Colors.black.withOpacity(0.25),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              LogoTitle(),
               SizedBox(
                 height: 283,
                 width: 317,
@@ -69,34 +44,36 @@ class SignInScreen extends GetWidget<SignInController> {
               SizedBox(
                 height: 12,
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondColor,
-                ),
-                child: TextFormField(
-                  controller: controller.emailController,
-                  style: GoogleFonts.openSans(
-                    color: kMainColor,
-                    fontWeight: FontWeight.w600,
-                    textBaseline: TextBaseline.alphabetic,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kSecondColor,
                   ),
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    fillColor: kMainColor,
-                    prefixIcon: Icon(
-                      Icons.person,
+                  child: TextFormField(
+                    controller: controller.emailController,
+                    style: GoogleFonts.openSans(
                       color: kMainColor,
-                    ),
-                    hintText: 'Email...',
-                    contentPadding: const EdgeInsets.only(right: 40),
-                    border: InputBorder.none,
-                    hintStyle: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       textBaseline: TextBaseline.alphabetic,
+                    ),
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      fillColor: kMainColor,
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: kMainColor,
+                      ),
+                      hintText: 'Email...',
+                      contentPadding: const EdgeInsets.only(right: 40),
+                      border: InputBorder.none,
+                      hintStyle: GoogleFonts.openSans(
+                        color: kMainColor,
+                        fontWeight: FontWeight.w500,
+                        textBaseline: TextBaseline.alphabetic,
+                      ),
                     ),
                   ),
                 ),
@@ -104,59 +81,61 @@ class SignInScreen extends GetWidget<SignInController> {
               SizedBox(
                 height: 12,
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondColor,
-                ),
-                child: Stack(
-                  children: [
-                    Obx(() => TextFormField(
-                          controller: controller.passwordController,
-                          style: GoogleFonts.openSans(
-                            color: kMainColor,
-                            fontWeight: FontWeight.w600,
-                            textBaseline: TextBaseline.alphabetic,
-                          ),
-                          textAlignVertical: TextAlignVertical.center,
-                          obscureText: controller.isHidePassword.value,
-                          decoration: InputDecoration(
-                            fillColor: kMainColor,
-                            prefixIcon: Icon(
-                              Icons.lock,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kSecondColor,
+                  ),
+                  child: Stack(
+                    children: [
+                      Obx(() => TextFormField(
+                            controller: controller.passwordController,
+                            style: GoogleFonts.openSans(
                               color: kMainColor,
-                            ),
-                            hintText: 'Password...',
-                            contentPadding: const EdgeInsets.only(right: 40),
-                            border: InputBorder.none,
-                            hintStyle: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               textBaseline: TextBaseline.alphabetic,
                             ),
-                          ),
-                        )),
-                    GestureDetector(
-                      onTap: () {
-                        print("password hide on off");
-                        controller.turnOnOffHiddenPassword();
-                      },
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: Obx(() => Icon(
-                                controller.isHidePassword.value
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                            textAlignVertical: TextAlignVertical.center,
+                            obscureText: controller.isHidePassword.value,
+                            decoration: InputDecoration(
+                              fillColor: kMainColor,
+                              prefixIcon: Icon(
+                                Icons.lock,
                                 color: kMainColor,
-                              )),
+                              ),
+                              hintText: 'Password...',
+                              contentPadding: const EdgeInsets.only(right: 40),
+                              border: InputBorder.none,
+                              hintStyle: GoogleFonts.openSans(
+                                color: kMainColor,
+                                fontWeight: FontWeight.w500,
+                                textBaseline: TextBaseline.alphabetic,
+                              ),
+                            ),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          print("password hide on off");
+                          controller.turnOnOffHiddenPassword();
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Obx(() => Icon(
+                                  controller.isHidePassword.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: kMainColor,
+                                )),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -179,24 +158,6 @@ class SignInScreen extends GetWidget<SignInController> {
                   ),
                 ),
               ),
-              // Container(
-              //   height: 55,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     color: kMainColor,
-              //     borderRadius: BorderRadius.circular(25),
-              //   ),
-              //   child: Center(
-              //     child: Text(
-              //       "Đăng nhập".toUpperCase(),
-              //       style: GoogleFonts.openSans(
-              //         color: Colors.white,
-              //         fontSize: 18,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 18),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

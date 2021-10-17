@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/widgets/logo_title.dart';
 
 class OnboardingCustom extends StatelessWidget {
   const OnboardingCustom({
@@ -27,26 +28,7 @@ class OnboardingCustom extends StatelessWidget {
           if (isFirstPage)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: SvgPicture.asset("assets/logos/happy_care.svg"),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Happy Care".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              child: LogoTitle(),
             ),
           SizedBox(
             height: isFirstPage ? 10 : 73,

@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignInController extends GetxController {
   var isHidePassword = true.obs;
   final UserRepository repository = UserRepository();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
-
-  SignInController();
 
   turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -38,8 +36,8 @@ class SignInController extends GetxController {
           ),
         ),
       );
-      await Future.delayed(Duration(seconds: 2));
-      btnController.reset();
+      await Future.delayed(Duration(seconds: 2))
+          .then((value) => btnController.reset());
     } else {
       print(emailController.text);
       print(passwordController.text);
@@ -47,7 +45,6 @@ class SignInController extends GetxController {
           email: emailController.text, password: passwordController.text);
       if (isOK) {
         btnController.success();
-        // Get.toNamed(AppRoutes.rHome);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: kBackgroundColor,
@@ -61,6 +58,8 @@ class SignInController extends GetxController {
             ),
           ),
         );
+        await Future.delayed(Duration(seconds: 2))
+            .then((value) => Get.offAndToNamed(AppRoutes.rMain));
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -76,8 +75,8 @@ class SignInController extends GetxController {
             ),
           ),
         );
-        await Future.delayed(Duration(seconds: 1));
-        btnController.reset();
+        await Future.delayed(Duration(seconds: 2))
+            .then((value) => btnController.reset());
       }
     }
   }

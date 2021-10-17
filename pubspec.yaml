@@ -43,6 +43,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   connectivity: ^3.0.6
   shared_preferences: ^2.0.8
+  bottom_navy_bar: ^6.0.0
 
 
 dev_dependencies:
