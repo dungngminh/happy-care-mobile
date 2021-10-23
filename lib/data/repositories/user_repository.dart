@@ -1,6 +1,8 @@
-import 'package:happy_care/core/utils/shared_pref.dart';
-import 'package:happy_care/data/services/user_api.dart';
 import 'dart:convert' as convert;
+
+import 'package:happy_care/core/utils/shared_pref.dart';
+import 'package:happy_care/data/models/user.dart';
+import 'package:happy_care/data/services/user_api.dart';
 
 class UserRepository {
   Future<bool> createNewUser(
@@ -33,6 +35,19 @@ class UserRepository {
       return true;
     } catch (_) {
       return false;
+    }
+  }
+
+  Future<User> getUserData() async {
+    try {
+      String token = await SharedPrefUtils.getStringKey('token');
+      final response = await UserApi().getDataInformation(token);
+      var result = convert.jsonDecode(response);
+      User user = User.fromJson(result);
+      print(user);
+      return user;
+    } catch (_) {
+      throw Exception("Can't get user information");
     }
   }
 }

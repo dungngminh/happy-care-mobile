@@ -50,4 +50,23 @@ class UserApi {
       throw Exception("Cannot sign in");
     }
   }
+
+  Future<String> getDataInformation(String token) async {
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $token',
+    };
+    print(token);
+    print("${dotenv.env['BASE_URL']}/api/users/me");
+    var response = await http.get(
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
+      headers: headers,
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return response.body;
+    } else {
+      throw Exception("Cannot get user information");
+    }
+  }
 }
