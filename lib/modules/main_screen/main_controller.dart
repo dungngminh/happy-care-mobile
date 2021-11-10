@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
-  int currentIndex = 0;
+  var currentIndex = 0.obs;
 
   
   void changeCurrentIndex(int newIndex) {
-    currentIndex = newIndex;
-    update();
+    currentIndex.value = newIndex;
   }
 }

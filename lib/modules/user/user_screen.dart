@@ -1,125 +1,136 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:happy_care/widgets/information_tile.dart';
 
 class UserScreen extends GetView<UserController> {
   const UserScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Column(
           children: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: 350,
-                  width: double.infinity,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: kMainColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(26),
-                        bottomRight: Radius.circular(26),
-                      ),
-                    ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: kMainColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(45),
+                    bottomRight: Radius.circular(45),
                   ),
                 ),
-                Positioned(
-                  top: 50,
-                  left: 120,
-                  height: 180,
-                  width: 180,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kSecondColor,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 26,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 60,
-                  left: 130,
-                  height: 160,
-                  width: 160,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kMainColor,
-                    ),
-                  ),
-                ),
-                Obx(() {
-                  final status = controller.status.value;
-                  if (status == Status.loading) {
-                    return Positioned(
-                      left: 180,
-                      bottom: 50,
-                      child: SpinKitThreeBounce(
-                        size: 26,
-                        color: Colors.white,
-                      ),
-                    );
-                  } else if (status == Status.error) {
-                    return Text("Error",
-                        style: GoogleFonts.openSans(color: kSecondColor));
-                  } else {
-                    return Positioned(
-                      left: 95,
-                      bottom: 70,
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Builder(
-                          builder: (context) {
-                            if (controller.user.value.profileUser?.fullName !=
-                                null) {
-                              return Text(
-                                controller.user.value.email,
-                                style: GoogleFonts.openSans(
-                                  color: kSecondColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              );
-                            } else
-                              return Column(
-                                children: [
-                                  Text(
-                                    controller
-                                            .user.value.profileUser?.fullName ??
-                                        'hello',
-                                    style: GoogleFonts.openSans(
-                                      color: kSecondColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.user.value.email,
-                                    style: GoogleFonts.openSans(
-                                      color: kSecondColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              );
-                          },
+                    SizedBox(
+                      height: 160,
+                      width: 160,
+                      child: CircleAvatar(
+                        backgroundColor: kSecondColor,
+                        child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                Image.asset("assets/images/icon.png").image,
+                          ),
                         ),
                       ),
-                    );
-                  }
-                }),
-              ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Nguyễn Minh Dũng",
+                      style: GoogleFonts.openSans(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => controller.signOut(),
-              child: Text("Sign out"),
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 10.0,
+                ),
+                child: Obx(() {
+                  final status = controller.status.value;
+                  return Column(
+                    children: [
+                      InformationTile(
+                        icon: Icons.mail,
+                        title: 'Email',
+                        subtitle: status == Status.loading
+                            ? "Đang cập nhật"
+                            : controller.user.value.email,
+                      ),
+                      InformationTile(
+                        icon: Icons.phone,
+                        title: 'Số điện thoại',
+                        subtitle: status == Status.loading
+                            ? "Đang cập nhật"
+                            : controller.user.value.profileUser?.phone,
+                      ),
+                      InformationTile(
+                        icon: Icons.location_pin,
+                        title: 'Địa chỉ',
+                        subtitle: status == Status.loading
+                            ? "Đang cập nhật"
+                            : controller.user.value.profileUser?.address,
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.signOut(),
+                        child: Container(
+                          height: 50,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 60, vertical: 30),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: kMainColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Đăng xuất".toUpperCase(),
+                              style: GoogleFonts.openSans(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+              ),
             ),
           ],
         ),

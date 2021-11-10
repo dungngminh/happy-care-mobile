@@ -125,12 +125,14 @@ class SignInScreen extends GetWidget<SignInController> {
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: const EdgeInsets.only(right: 16.0),
-                            child: Obx(() => Icon(
-                                  controller.isHidePassword.value
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: kMainColor,
-                                )),
+                            child: Obx(
+                              () => Icon(
+                                controller.isHidePassword.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: kMainColor,
+                              ),
+                            ),
                           ),
                         ),
                       ),

@@ -6,15 +6,16 @@ import 'package:happy_care/routes/app_pages.dart';
 enum Status { loading, done, error }
 
 class UserController extends GetxController {
-  Rx<int> index = 0.obs;
-  final user = User.init().obs;
+  var user = User.init().obs;
   final status = Status.loading.obs;
-  final UserRepository _userRepository = UserRepository();
+  final UserRepository? userRepository;
+
+  UserController({this.userRepository});
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    await _userRepository.getUserData().then((data) {
+    await userRepository!.getUserData().then((data) {
       user(data);
       status(Status.done);
     }).onError((error, stackTrace) {
@@ -24,12 +25,7 @@ class UserController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await _userRepository.signOut();
+    await userRepository!.signOut();
     Get.offAndToNamed(AppRoutes.rSignIn);
-  }
-
-  void updateIndex() {
-    index.value++;
-    update();
   }
 }

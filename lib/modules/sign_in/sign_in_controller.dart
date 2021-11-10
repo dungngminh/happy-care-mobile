@@ -59,7 +59,7 @@ class SignInController extends GetxController {
           ),
         );
         await Future.delayed(Duration(seconds: 2))
-            .then((value) => Get.offAndToNamed(AppRoutes.rMain));
+            .then((value) => Get.toNamed(AppRoutes.rMain));
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(
