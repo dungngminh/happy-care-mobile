@@ -64,7 +64,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                                         "Chụp ảnh",
                                         style: GoogleFonts.openSans(
                                           color: kMainColor,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -78,7 +78,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                                         "Chọn từ thư viện",
                                         style: GoogleFonts.openSans(
                                           color: kMainColor,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -92,7 +92,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                                         "Xóa ảnh",
                                         style: GoogleFonts.openSans(
                                           color: kMainColor,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
                                       ),

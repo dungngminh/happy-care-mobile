@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const rUser = '/user';
   static const rChat = '/chat';
   static const rMed = '/med';
+  static const rEdit = '/edit';
 }

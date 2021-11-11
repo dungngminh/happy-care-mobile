@@ -65,8 +65,7 @@ class SignUpController extends GetxController {
           email: emailController.text, password: passwordController.text);
       if (isOK) {
         btnController.success();
-        await Future.delayed(Duration(seconds: 1))
-            .then((value) => Get.back());
+        await Future.delayed(Duration(seconds: 1)).then((value) => Get.back());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: kBackgroundColor,

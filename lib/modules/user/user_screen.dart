@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/information_tile.dart';
 
 class UserScreen extends GetView<UserController> {
@@ -33,7 +34,7 @@ class UserScreen extends GetView<UserController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => Get.toNamed(AppRoutes.rEdit),
                           icon: Icon(
                             Icons.edit,
                             color: Colors.white,

@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 
-class EditInformationBinding extends Bindings{
+import 'edit_information_controller.dart';
+
+class EditInformationBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut(
+        () => EditInformationController());
   }
-
 }

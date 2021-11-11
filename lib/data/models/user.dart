@@ -1,4 +1,8 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+
+// ignore: must_be_immutable
+class User extends Equatable {
   late String id;
   late String email;
   late String role;
@@ -29,6 +33,9 @@ class User {
     data['role'] = role;
     return data;
   }
+
+  @override
+  List<Object?> get props => [profileUser];
 }
 
 class ProfileUser {
@@ -53,7 +60,7 @@ class ProfileUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['fullname'] = fullName;
     data['age'] = age;
     data['phone'] = phone;
