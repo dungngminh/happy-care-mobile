@@ -48,7 +48,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => controller.saveUserInformation(),
                         icon: Icon(
                           Icons.save,
                           color: kMainColor,

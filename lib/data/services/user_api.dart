@@ -28,18 +28,18 @@ class UserApi {
   }
 
   Future<String> signIn(String email, String password) async {
-    Map<String, String> bodyRequest = {
+    Map<String, String> body = {
       'email': email,
       'password': password,
     };
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    print(bodyRequest);
+    print(body);
     print("${dotenv.env['BASE_URL']}/api/users/login");
     var response = await http.post(
       Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
-      body: convert.jsonEncode(bodyRequest),
+      body: convert.jsonEncode(body),
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -69,4 +69,16 @@ class UserApi {
       throw Exception("Cannot get user information");
     }
   }
+
+  // Future<String> updateUserInformation({
+  //   required String token,
+  //   String? fullName,
+  //   String? phone,
+  //   String? address,
+  // }) async {
+  //   Map<String, String> headers = {
+  //     'Authorization':'Bearer $token',
+  //   };
+    
+  // }
 }

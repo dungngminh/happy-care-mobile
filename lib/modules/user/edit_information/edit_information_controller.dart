@@ -17,7 +17,6 @@ class EditInformationController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
-
   Future<bool> showConfirmDialog(context) async {
     return await showDialog(
       context: context,
@@ -78,4 +77,6 @@ class EditInformationController extends GetxController {
     update();
     Get.back();
   }
+
+  saveUserInformation() {}
 }

@@ -15,6 +15,16 @@ class UserController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    await getUserInformation();
+  }
+
+  Future<void> signOut() async {
+    await userRepository!.signOut();
+    Get.offAndToNamed(AppRoutes.rSignIn);
+  }
+
+  Future<void> getUserInformation() async {
+    status(Status.loading);
     await userRepository!.getUserData().then((data) {
       user(data);
       status(Status.done);
@@ -22,10 +32,5 @@ class UserController extends GetxController {
       print("$error");
       status(Status.error);
     });
-  }
-
-  Future<void> signOut() async {
-    await userRepository!.signOut();
-    Get.offAndToNamed(AppRoutes.rSignIn);
   }
 }
