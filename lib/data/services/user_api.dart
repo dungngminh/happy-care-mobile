@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -37,11 +39,15 @@ class UserApi {
     };
     print(body);
     print("${dotenv.env['BASE_URL']}/api/users/login");
-    var response = await http.post(
+    var response = await http
+        .post(
       Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
       body: convert.jsonEncode(body),
       headers: headers,
-    );
+    )
+        .timeout(Duration(minutes: 2), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
     if (response.statusCode == 200) {
       print(response.statusCode);
       return response.body;
@@ -79,6 +85,6 @@ class UserApi {
   //   Map<String, String> headers = {
   //     'Authorization':'Bearer $token',
   //   };
-    
+
   // }
 }

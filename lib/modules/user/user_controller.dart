@@ -20,7 +20,7 @@ class UserController extends GetxController {
 
   Future<void> signOut() async {
     await userRepository!.signOut();
-    Get.offAndToNamed(AppRoutes.rSignIn);
+    Get.offAllNamed(AppRoutes.rSignIn);
   }
 
   Future<void> getUserInformation() async {

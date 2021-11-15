@@ -22,7 +22,7 @@ class MainScreen extends GetWidget<MainController> {
             HomeScreen(),
             ChatScreen(),
             PrescriptionScreen(),
-            UserScreen(),
+            // UserScreen(),
           ],
         ),
       ),

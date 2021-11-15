@@ -20,7 +20,7 @@ class UserRepository {
     try {
       String response = await UserApi().signIn(email, password);
       var result = convert.jsonDecode(response);
-      String token = result['token'];
+      String token = result['data']['token'];
       await SharedPrefUtils.setStringKey('token', token);
       return true;
     } catch (_) {
@@ -43,7 +43,7 @@ class UserRepository {
       String token = await SharedPrefUtils.getStringKey('token');
       final response = await UserApi().getDataInformation(token);
       var result = convert.jsonDecode(response);
-      User user = User.fromJson(result);
+      User user = User.fromJson(result['data']);
       print(user);
       return user;
     } catch (_) {

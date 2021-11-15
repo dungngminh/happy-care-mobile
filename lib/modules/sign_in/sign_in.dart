@@ -206,7 +206,7 @@ class SignInScreen extends GetWidget<SignInController> {
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
                         "Hoặc".toUpperCase(),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.openSans(
                           color: kMainColor,
                           fontWeight: FontWeight.w400,
                           fontSize: 13,

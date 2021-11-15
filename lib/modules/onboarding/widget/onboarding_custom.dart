@@ -27,7 +27,7 @@ class OnboardingCustom extends StatelessWidget {
         children: [
           if (isFirstPage)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: LogoTitle(),
             ),
           SizedBox(
