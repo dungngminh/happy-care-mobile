@@ -2,12 +2,13 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/chat/chat_screen.dart';
 import 'package:happy_care/modules/home/home_screen.dart';
 import 'package:happy_care/modules/main_screen/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
-import 'package:happy_care/modules/user/user_screen.dart';
+import 'package:happy_care/modules/user/user_screen_doctor.dart';
 
 class MainScreen extends GetWidget<MainController> {
   const MainScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class MainScreen extends GetWidget<MainController> {
             HomeScreen(),
             ChatScreen(),
             PrescriptionScreen(),
-            // UserScreen(),
+            UserDoctorScreen(),
           ],
         ),
       ),
@@ -32,7 +33,7 @@ class MainScreen extends GetWidget<MainController> {
           selectedIndex: controller.currentIndex.value,
           items: [
             BottomNavyBarItem(
-              icon: Icon(Icons.home_rounded),
+              icon: Icon(Icons.home_rounded), 
               title: Text(
                 'Trang chủ',
                 style: GoogleFonts.openSans(

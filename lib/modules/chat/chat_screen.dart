@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends GetView<ChatController> {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override

@@ -14,9 +14,9 @@ class UserApi {
       'Content-Type': 'application/json',
     };
     print(bodyRequest);
-    print("${dotenv.env['BASE_URL']}/api/users");
+    print("${dotenv.env['DEV_URL']}/api/users");
     var response = await http.post(
-      Uri.parse("${dotenv.env['BASE_URL']}/api/users"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users"),
       body: convert.jsonEncode(bodyRequest),
       headers: headers,
     );
@@ -38,10 +38,12 @@ class UserApi {
       'Content-Type': 'application/json',
     };
     print(body);
-    print("${dotenv.env['BASE_URL']}/api/users/login");
+    print("${dotenv.env['DEV_URL']}/api/users/login");
     var response = await http
         .post(
-      Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
+      // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users/login"),
+
       body: convert.jsonEncode(body),
       headers: headers,
     )
@@ -62,9 +64,12 @@ class UserApi {
       'Authorization': 'Bearer $token',
     };
     print(token);
-    print("${dotenv.env['BASE_URL']}/api/users/me");
+    // print("${dotenv.env['BASE_URL']}/api/users/me");
+    print("${dotenv.env['DEV_URL']}/api/users/me");
     var response = await http.get(
-      Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
+      // Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
+
       headers: headers,
     );
     print(response.statusCode);
@@ -73,6 +78,28 @@ class UserApi {
       return response.body;
     } else {
       throw Exception("Cannot get user information");
+    }
+  }
+
+  Future<bool> signOut({required String token}) async {
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http
+        .post(
+      // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users/logout"),
+      headers: headers,
+    )
+        .timeout(Duration(minutes: 2), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+      return true;
+    } else {
+      print(response.body);
+      throw Exception("Cant sign out");
     }
   }
 

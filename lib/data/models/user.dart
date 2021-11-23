@@ -1,70 +1,104 @@
-import 'package:equatable/equatable.dart';
+// To parse this JSON data, do
+//
+//     final user = userFromJson(jsonString);
 
+import 'dart:convert';
 
-// ignore: must_be_immutable
-class User extends Equatable {
+User userFromJson(String str) => User.fromJson(json.decode(str));
+
+String userToJson(User data) => json.encode(data.toJson());
+
+class User {
+  User({
+    this.profile,
+    required this.id,
+    required this.email,
+    required this.role,
+    this.specializations,
+    this.background,
+  });
+
+  Profile? profile;
   late String id;
   late String email;
   late String role;
-  ProfileUser? profileUser;
+  late List<String?>? specializations;
+  late List<Background?>? background;
 
   User.init();
-  User(
-      {required this.id,
-      required this.email,
-      required this.role,
-      this.profileUser});
 
-  User.fromJson(Map<String, dynamic> json) {
-    profileUser =
-        json['profile'] != null ? ProfileUser.fromJson(json['profile']) : null;
-    id = json['_id'];
-    email = json['email'];
-    role = json['role'];
-  }
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        profile: Profile.fromJson(json["profile"]),
+        id: json["_id"],
+        email: json["email"],
+        role: json["role"],
+        specializations:
+            List<String>.from(json["specializations"].map((x) => x)),
+        background: List<Background>.from(
+            json["background"].map((x) => Background.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (profileUser != null) {
-      data['profile'] = profileUser!.toJson();
-    }
-    data['_id'] = id;
-    data['email'] = email;
-    data['role'] = role;
-    return data;
-  }
-
-  @override
-  List<Object?> get props => [profileUser];
+  Map<String, dynamic> toJson() => {
+        "profile": profile?.toJson(),
+        "_id": id,
+        "email": email,
+        "role": role,
+        "specializations": List<dynamic>.from(specializations!.map((x) => x)),
+        "background": List<dynamic>.from(background!.map((x) => x?.toJson())),
+      };
 }
 
-class ProfileUser {
-  String? fullName;
-  int? age;
-  String? phone;
-  String? address;
-  String? avatarUrl;
+class Background {
+  Background({
+    this.description,
+    this.id,
+  });
 
-  ProfileUser({
-    this.fullName,
+  String? description;
+  String? id;
+
+  String? get degree => description?.split("  ").first;
+  String? get workLocation => description?.split("  ")[1];
+
+  factory Background.fromJson(Map<String, dynamic> json) => Background(
+        description: json["description"],
+        id: json["_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "description": description,
+        "_id": id,
+      };
+}
+
+class Profile {
+  Profile({
+    this.fullname,
+    this.gender,
     this.age,
     this.phone,
     this.address,
   });
 
-  ProfileUser.fromJson(Map<String, dynamic> json) {
-    fullName = json['fullname'];
-    age = json['age'];
-    phone = json['phone'];
-    address = json['address'];
-  }
+  String? fullname;
+  String? gender;
+  int? age;
+  String? phone;
+  String? address;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['fullname'] = fullName;
-    data['age'] = age;
-    data['phone'] = phone;
-    data['address'] = address;
-    return data;
-  }
+  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
+        fullname: json["fullname"],
+        gender: json["gender"],
+        age: json["age"],
+        phone: json["phone"],
+        address: json["address"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "fullname": fullname,
+        "gender": gender,
+        "age": age,
+        "phone": phone,
+        "address": address,
+      };
 }

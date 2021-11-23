@@ -2,7 +2,7 @@
     package="com.example.happy_care">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="happy_care"
+        android:label="Happy Care"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

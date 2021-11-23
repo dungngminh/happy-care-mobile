@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
+import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
+import 'package:happy_care/modules/chat/widget/own_messenger.dart';
 
 class ChatRoomScreen extends GetView<ChatRoomController> {
   const ChatRoomScreen({Key? key}) : super(key: key);
@@ -61,8 +63,28 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
           ],
         ),
         body: Container(
+          height: double.infinity,
+          padding: EdgeInsets.only(bottom: 5),
           color: kSecondColor,
-          child: ListView(),
+          child: ListView(
+            shrinkWrap: true,
+            reverse: true,
+            //messenge = messenger.reversed.toList();
+            children: [
+              NotOwnMessenger(
+                messenge: 'Á đụ má mày nói con kặc gì dậy',
+                time: '18:02',
+              ),
+              OwnMessenger(
+                messenge: 'Tôi có thể xúc bình xăng con anh được không?',
+                time: '18:01',
+              ),
+              OwnMessenger(
+                messenge: 'Anh bạn à',
+                time: '18:01',
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: Transform.translate(
           offset: Offset(0.0, -1 * MediaQuery.of(context).viewInsets.bottom),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
@@ -25,11 +27,21 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "Happy Care",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       initialRoute: isNotFirstTime
           ? AppRoutes.rOnboarding
           : (token != null ? AppRoutes.rMain : AppRoutes.rSignIn),
       getPages: AppPages.routes,
     );
+  }
+}
+
+class NoGrowBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

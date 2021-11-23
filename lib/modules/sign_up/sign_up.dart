@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/sign_up/sign_up_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
@@ -291,7 +292,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
               ),
               RoundedLoadingButton(
                 borderRadius: 35,
-                height: 55,
+                height: 52,
                 width: double.infinity,
                 color: kMainColor,
                 successColor: kMainColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/edit_information/edit_information_controller.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -192,7 +193,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                         TextFormField(
                           autofocus: false,
-                          initialValue: controller.user.profileUser?.fullName,
+                          initialValue: controller.user.profile?.fullname,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
@@ -219,7 +220,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
-                          initialValue: controller.user.profileUser?.phone,
+                          initialValue: controller.user.profile?.phone,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
@@ -246,7 +247,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
-                          initialValue: controller.user.profileUser?.address,
+                          initialValue: controller.user.profile?.address,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(

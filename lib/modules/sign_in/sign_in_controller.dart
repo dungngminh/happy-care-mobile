@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/routes/app_pages.dart';
@@ -88,10 +89,4 @@ class SignInController extends GetxController {
     update();
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 }
