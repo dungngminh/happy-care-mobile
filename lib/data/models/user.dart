@@ -22,20 +22,21 @@ class User {
   late String id;
   late String email;
   late String role;
-  late List<String?>? specializations;
-  late List<Background?>? background;
+  List<String>? specializations;
+  List<Background>? background;
 
   User.init();
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        profile: Profile.fromJson(json["profile"]),
+        profile:
+            json["profile"] != null ? Profile.fromJson(json["profile"]) : null,
         id: json["_id"],
         email: json["email"],
         role: json["role"],
         specializations:
             List<String>.from(json["specializations"].map((x) => x)),
-        background: List<Background>.from(
-            json["background"].map((x) => Background.fromJson(x))),
+        background: json["background"] != null ? List<Background>.from(
+            json["background"].map((x) => Background.fromJson(x))) :null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,8 +44,7 @@ class User {
         "_id": id,
         "email": email,
         "role": role,
-        "specializations": List<dynamic>.from(specializations!.map((x) => x)),
-        "background": List<dynamic>.from(background!.map((x) => x?.toJson())),
+        "background": List<dynamic>.from(background!.map((x) => x.toJson())),
       };
 }
 

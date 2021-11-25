@@ -8,6 +8,7 @@ import 'package:happy_care/modules/chat/chat_screen.dart';
 import 'package:happy_care/modules/home/home_screen.dart';
 import 'package:happy_care/modules/main_screen/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
+import 'package:happy_care/modules/user/user_screen.dart';
 import 'package:happy_care/modules/user/user_screen_doctor.dart';
 
 class MainScreen extends GetWidget<MainController> {
@@ -19,11 +20,13 @@ class MainScreen extends GetWidget<MainController> {
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.value,
-          children: const [
+          children: [
             HomeScreen(),
             ChatScreen(),
             PrescriptionScreen(),
-            UserDoctorScreen(),
+            controller.role.value == "doctor"
+                ? UserDoctorScreen()
+                : UserScreen(),
           ],
         ),
       ),
@@ -33,7 +36,7 @@ class MainScreen extends GetWidget<MainController> {
           selectedIndex: controller.currentIndex.value,
           items: [
             BottomNavyBarItem(
-              icon: Icon(Icons.home_rounded), 
+              icon: Icon(Icons.home_rounded),
               title: Text(
                 'Trang chủ',
                 style: GoogleFonts.openSans(

@@ -48,6 +48,7 @@ dependencies:
   equatable: ^2.0.3
   dvhcvn: ^1.3.20211101
   socket_io_client: ^1.0.1
+  fluttertoast: ^8.0.8
 
 
 dev_dependencies:

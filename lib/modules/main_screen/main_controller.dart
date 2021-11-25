@@ -1,19 +1,22 @@
 import 'package:get/get.dart';
-import 'package:happy_care/data/services/socket_io_service.dart';
+import 'package:happy_care/data/repositories/user_repository.dart';
 
 class MainController extends GetxController {
   var currentIndex = 0.obs;
-  final String role = "";
+  var role = "".obs;
 
   void changeCurrentIndex(int newIndex) {
     currentIndex.value = newIndex;
   }
 
-  final SocketIOService socketService = SocketIOService();
+  UserRepository? userRepository;
+
+  MainController({this.userRepository});
 
   @override
-  void onInit() {
-    socketService.initService();
+  Future<void> onInit() async {
     super.onInit();
+    await userRepository?.getUserData().then((value) => role.value = value.role);
   }
+
 }

@@ -44,7 +44,7 @@ class UserDoctorScreen extends GetView<UserController> {
                               status == Status.loading
                                   ? "Đang cập nhật"
                                   : (controller
-                                          .user.value.background?.first?.degree
+                                          .user.value.background?.first.degree
                                           ?.toUpperCase() ??
                                       ""),
                               style: GoogleFonts.openSans(
@@ -129,7 +129,7 @@ class UserDoctorScreen extends GetView<UserController> {
                         subtitle: status == Status.loading
                             ? "Đang cập nhật"
                             : controller
-                                .user.value.background?.first?.workLocation,
+                                .user.value.background?.first.workLocation,
                       ),
                       InformationTile(
                         icon: Icons.mail,
@@ -137,6 +137,13 @@ class UserDoctorScreen extends GetView<UserController> {
                         subtitle: status == Status.loading
                             ? "Đang cập nhật"
                             : controller.user.value.email,
+                      ),
+                      InformationTile(
+                        icon: Icons.badge_rounded,
+                        title: 'Tuổi',
+                        subtitle: status == Status.loading
+                            ? "Đang cập nhật"
+                            : controller.user.value.profile?.age.toString(),
                       ),
                       InformationTile(
                         icon: Icons.phone,

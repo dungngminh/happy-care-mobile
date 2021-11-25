@@ -8,7 +8,7 @@ import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class ChatScreen extends GetView<ChatController> {
+class ChatScreen extends GetWidget<ChatController> {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
@@ -50,8 +50,10 @@ class ChatScreen extends GetView<ChatController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildSearchBar(
-                          function: () => Get.toNamed(AppRoutes.rChatSearch)),
+                      buildSearchBar(function: () {
+                        controller.pressRandom();
+                        Get.toNamed(AppRoutes.rChatSearch);
+                      }),
                       SizedBox(
                         height: size.height * 0.02,
                       ),

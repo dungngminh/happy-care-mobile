@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class SocketIOService {
@@ -10,7 +11,7 @@ class SocketIOService {
   // }
   // SocketIOService._internal();
 
-  void initService() {
+  Future<void> initService() async {
     socket = io.io(
         "${dotenv.env['DEV_URL']}",
         io.OptionBuilder()
@@ -18,5 +19,16 @@ class SocketIOService {
             .disableAutoConnect()
             .build());
     socket.connect();
+    String token = await SharedPrefUtils.getStringKey('token');
+    socket.onConnect((_) {
+      socket.emitWithAck('join', token, ack: (data) {
+        print('ack $data');
+        if (data != null) {
+          print('from server $data');
+        } else {
+          print("Null");
+        }
+      });
+    });
   }
 }

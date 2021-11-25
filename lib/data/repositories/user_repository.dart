@@ -5,8 +5,6 @@ import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/services/user_api.dart';
 
 class UserRepository {
-
-
   Future<bool> createNewUser(
       {required String email, required String password}) async {
     try {
@@ -48,10 +46,26 @@ class UserRepository {
       String token = await SharedPrefUtils.getStringKey('token');
       final response = await UserApi().getDataInformation(token);
       var result = convert.jsonDecode(response);
+      print(result['data']['user']);
       print(User.fromJson(result['data']['user']));
       return User.fromJson(result['data']['user']);
     } catch (_) {
-      throw Exception("Can't get user information");
+      await SharedPrefUtils.removeStringKey('token');
+      throw Exception(_);
     }
+  }
+
+  Future<bool> updateInformation(
+      String? fullname, int? age, String? phone, String? address) async {
+    Map<String, Map<String, dynamic>> body = {
+      "profile": {
+        "fullname": fullname,
+        "age": age,
+        "phone": phone,
+        "address": address,
+      }
+    };
+    String token = await SharedPrefUtils.getStringKey('token');
+    return await UserApi().updateUserInformation(token: token, body: body);
   }
 }

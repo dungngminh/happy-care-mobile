@@ -21,7 +21,7 @@ class UserApi {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      print(response.statusCode);
+      print("=======CREATE_NEW_USER======\n" + response.body);
       return response.body;
     } else {
       print(response.body);
@@ -51,7 +51,7 @@ class UserApi {
       throw TimeoutException("Time out exception");
     });
     if (response.statusCode == 200) {
-      print(response.statusCode);
+      print("=======SIGNIN_RESPONSE======\n" + response.body);
       return response.body;
     } else {
       print(response.body);
@@ -74,7 +74,7 @@ class UserApi {
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.body);
+      print("=======GETDATA_USER======\n" + response.body);
       return response.body;
     } else {
       throw Exception("Cannot get user information");
@@ -95,7 +95,7 @@ class UserApi {
       throw TimeoutException("Time out exception");
     });
     if (response.statusCode == 200) {
-      print(response.body);
+      print("=======SIGNOUT_RESPONSE======\n" + response.body);
       return true;
     } else {
       print(response.body);
@@ -103,15 +103,31 @@ class UserApi {
     }
   }
 
-  // Future<String> updateUserInformation({
-  //   required String token,
-  //   String? fullName,
-  //   String? phone,
-  //   String? address,
-  // }) async {
-  //   Map<String, String> headers = {
-  //     'Authorization':'Bearer $token',
-  //   };
+  Future<bool> updateUserInformation(
+      {required String token,
+      required Map<String, Map<String, dynamic>> body}) async {
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $token',
+    };
 
-  // }
+    print(body);
+    print("${dotenv.env['DEV_URL']}/api/users/me");
+    var response = await http
+        .patch(
+      // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
+      body: convert.jsonEncode(body),
+      headers: headers,
+    )
+        .timeout(Duration(minutes: 2), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
+    if (response.statusCode == 200) {
+      print("=======UPDATE_INFORMATION======\n" + response.body);
+      return true;
+    } else {
+      print(response.body);
+      return false;
+    }
+  }
 }

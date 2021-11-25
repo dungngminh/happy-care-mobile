@@ -196,6 +196,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           initialValue: controller.user.profile?.fullname,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
+                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.fullname),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -220,9 +221,41 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
+                          autofocus: false,
+                          initialValue: controller.user.profile?.age.toString(),
+                          style: GoogleFonts.openSans(color: kMainColor),
+                          textAlignVertical: TextAlignVertical.center,
+                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.age),
+                          decoration: InputDecoration(
+                            prefixIcon:
+                                Icon(Icons.badge_rounded, color: kMainColor),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kMainColor.withOpacity(0.7),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kMainColor,
+                              ),
+                            ),
+                            focusColor: kMainColor,
+                            border: OutlineInputBorder(),
+                            labelText: 'Tuổi',
+                            labelStyle: GoogleFonts.openSans(color: kMainColor),
+                            hintText: 'Nhập tuổi của bạn..',
+                            hintStyle: GoogleFonts.openSans(color: kMainColor),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        TextFormField(
+                          autofocus: false,
                           initialValue: controller.user.profile?.phone,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
+                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.phone),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.phone, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -247,9 +280,11 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
+                          autofocus: false,
                           initialValue: controller.user.profile?.address,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
+                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.address),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -262,6 +297,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                 color: kMainColor,
                               ),
                             ),
+                            
                             focusColor: kMainColor,
                             border: OutlineInputBorder(),
                             labelText: 'Địa chỉ',
@@ -270,43 +306,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                             hintStyle: GoogleFonts.openSans(color: kMainColor),
                           ),
                         ),
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   child: DecoratedBox(
-                        //     decoration: BoxDecoration(
-                        //       border: Border.all(color: Colors.grey),
-                        //       borderRadius:
-                        //           const BorderRadius.all(Radius.circular(4.0)),
-                        //     ),
-                        //     child: Padding(
-                        //       padding:
-                        //           const EdgeInsets.symmetric(horizontal: 8.0),
-                        //       child: GetBuilder<EditInformationController>(
-                        //           builder: (controller) {
-                        //         return DropdownButton<String>(
-                        //           hint: Text(" Địa chỉ"),
-                        //           alignment: Alignment.centerLeft,
-                        //           isExpanded: true,
-                        //           iconSize: 24,
-                        //           elevation: 16,
-                        //           onChanged: (String? newValue) => {},
-                        //           items: <String>[
-                        //             'Tranh vẽ',
-                        //             'Âm nhạc',
-                        //             'Nhiếp ảnh'
-                        //           ].map<DropdownMenuItem<String>>(
-                        //               (String value) {
-                        //             return DropdownMenuItem<String>(
-                        //               value: value,
-                        //               child: Text(value,
-                        //                   style: GoogleFonts.openSans()),
-                        //             );
-                        //           }).toList(),
-                        //         );
-                        //       }),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

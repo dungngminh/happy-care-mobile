@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:happy_care/widgets/my_toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditInformationController extends GetxController {
@@ -14,9 +15,15 @@ class EditInformationController extends GetxController {
   User get user => _userController.user.value;
   File? profileImage;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  String? fullname;
+  String? age;
+  String? phone;
+  String? address;
+
+  void onChangeValue(String value, String? field) {
+    field = value;
+    update();
+  }
 
   Future<bool> showConfirmDialog(context) async {
     return await showDialog(
@@ -79,5 +86,21 @@ class EditInformationController extends GetxController {
     Get.back();
   }
 
-  saveUserInformation() {}
+  saveUserInformation() async {
+    print(fullname);
+    print(age);
+    print(phone);
+    print(address);
+    bool result = await _userController.userRepository!.updateInformation(
+        fullname ?? user.profile?.fullname,
+        age == null ? user.profile?.age : int.parse(age!),
+        phone ?? user.profile?.phone,
+        address ?? user.profile?.address);
+    if (result) {
+      MyToast.showToast("Cập nhật thông tin thành công");
+      Get.back(result: "reset");
+    } else {
+      MyToast.showToast("Cập nhật không thành công, vui lòng thử lại");
+    }
+  }
 }
