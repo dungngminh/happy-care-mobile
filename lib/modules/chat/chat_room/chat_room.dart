@@ -70,13 +70,13 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
             shrinkWrap: true,
             reverse: true,
             //messenge = messenger.reversed.toList();
-            children: [
+            children: const [
               NotOwnMessenger(
-                messenge: 'Á đụ má mày nói con kặc gì dậy',
+                messenge: 'Tôi có thể giúp gì cho bạn?',
                 time: '18:02',
               ),
               OwnMessenger(
-                messenge: 'Tôi có thể xúc bình xăng con anh được không?',
+                messenge: 'Tôi có vấn đề về sức khỏe cần bạn giúp đỡ',
                 time: '18:01',
               ),
               OwnMessenger(

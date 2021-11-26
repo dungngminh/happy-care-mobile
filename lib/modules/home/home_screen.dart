@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/home/home_controller.dart';
+import 'package:happy_care/modules/user/user_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,21 +14,28 @@ class HomeScreen extends GetView<HomeController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Chào buổi sáng, Dũng"),
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundImage:
-                          Image.asset('assets/images/icon.png').image,
+                GetBuilder<UserController>(builder: (controller) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Chào, ${controller.user.value.role != "doctor" ? "Bác sĩ ${controller.user.value.profile?.fullname}" : "người dùng"}",
+                          style: GoogleFonts.openSans(
+                            color: kMainColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                }),
               ],
             ),
           ),

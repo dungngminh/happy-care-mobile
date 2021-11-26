@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/specialization.dart';
-import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/chat/search/chat_search_controller.dart';
 import 'package:happy_care/modules/chat/widget/doctor_search_tile.dart';
 

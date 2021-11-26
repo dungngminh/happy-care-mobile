@@ -21,7 +21,7 @@ class RoomMessListTile extends StatelessWidget {
       title: Text("Nguyễn Minh Dũng",
           style: GoogleFonts.openSans(color: kMainColor)),
       subtitle: Text(
-        "Á đụ má mày nói con kặc gì dậy",
+        "Tôi có thể giúp gì cho bạn?",
         style: GoogleFonts.openSans(),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

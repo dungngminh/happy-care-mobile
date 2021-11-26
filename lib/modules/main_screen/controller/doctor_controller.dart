@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:happy_care/data/models/user.dart';
