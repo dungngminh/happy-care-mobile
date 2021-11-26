@@ -13,7 +13,7 @@ class UserApi {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    print("=============CREATE NEW USER BODY REQUEST==========$bodyRequest");
+    print("=============CREATE NEW USER BODY REQUEST==========\n$bodyRequest");
     var response = await http
         .post(
       Uri.parse("${dotenv.env['DEV_URL']}/api/users"),
@@ -40,7 +40,7 @@ class UserApi {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    print("=============SIGN IN BODY REQUEST==========$body");
+    print("=============SIGN IN BODY REQUEST==========\n$body");
     var response = await http
         .post(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
@@ -113,7 +113,7 @@ class UserApi {
       "profile": body,
     };
 
-    print("=============UPDATE INFORMATION BODY REQUEST==========$bodyy");
+    print("=============UPDATE INFORMATION BODY REQUEST==========\n$bodyy");
     var response = await http
         .patch(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
