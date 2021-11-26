@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,10 +9,15 @@ class ProfileItem extends StatelessWidget {
     Key? key,
     required this.size,
     required this.function,
+    required this.isOnline,
+    this.fullName,
   }) : super(key: key);
 
   final Size size;
   final void Function() function;
+  final bool isOnline;
+  final String? fullName;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -26,15 +32,28 @@ class ProfileItem extends StatelessWidget {
           width: size.width * 0.17,
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: Image.asset("assets/images/icon.png").image,
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage:
+                        Image.asset("assets/images/icon.png").image,
+                  ),
+                  isOnline
+                      ? Badge(
+                          toAnimate: false,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.green,
+                        )
+                      : SizedBox(),
+                ],
               ),
               SizedBox(
                 height: 10,
               ),
               Text(
-                "Minh Đức Bie Nguyễn",
+                fullName ?? "Bác sĩ giấu tên",
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.openSans(

@@ -14,8 +14,9 @@ class OnboardingScreen extends StatelessWidget {
       widget: OnboardingCustom(
         pathSvg: 'assets/images/undraw_doctors_hwty.svg',
         title: 'Tư vấn sức khỏe ngay tại nhà với bác sĩ, chuyên gia',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            'Nunc vestibulum volutpat consequat curabitur aliquam sagittis elementum feugiat. Libero sed.',
+        description:
+            'Ngay tại nhà với chiếc điện thoại, bạn có thể được tư vấn sức khỏe '
+            'với các bác sĩ, chuyên gia chuyên khoa',
       ),
     ),
     PageModel(
@@ -23,26 +24,29 @@ class OnboardingScreen extends StatelessWidget {
         isFirstPage: false,
         pathSvg: 'assets/images/undraw_medical_research_qg4d.svg',
         title: 'Giải đáp thắc mắc liên quan tới sức khỏe',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            'Nunc vestibulum volutpat consequat curabitur aliquam sagittis elementum feugiat. Libero sed.',
+        description:
+            'Các bác sĩ, chuyên gia sẽ giải đáp các thắc mắc của bạn liên quan tới sức khỏe '
+            'Đưa ra những lời khuyên giúp bạn hiểu rõ hơn về tình trạng, sức khỏe của bạn hiện tại',
       ),
     ),
     PageModel(
       widget: OnboardingCustom(
         isFirstPage: false,
         pathSvg: 'assets/images/undraw_medicine_b1ol.svg',
-        title: 'Giải đáp thắc mắc liên quan tới sức khỏe',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            'Nunc vestibulum volutpat consequat curabitur aliquam sagittis elementum feugiat. Libero sed.',
+        title: 'Đưa ra các đơn thuốc hiệu quả',
+        description:
+            'Các bác sĩ, chuyên gia có thể sẽ cung cấp cho bạn đơn thuốc với các triệu chứng lâm sàng '
+            'Đảm bảo sức khỏe của bạn nhanh chóng với những triệu chứng rõ ràng.',
       ),
     ),
     PageModel(
       widget: OnboardingCustom(
         isFirstPage: false,
         pathSvg: 'assets/images/undraw_doctor_kw5l.svg',
-        title: 'Giải đáp thắc mắc liên quan tới sức khỏe',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            'Nunc vestibulum volutpat consequat curabitur aliquam sagittis elementum feugiat. Libero sed.',
+        title: 'Đội ngũ bác sĩ, chuyên gia uy tín',
+        description:
+            'Happy Care mang tới bạn đội ngũ bác sĩ, chuyên gia từ các bệnh viện uy tín '
+            'Giúp những lời khuyên, đơn thuốc mà đội ngũ mang tới bạn đáng tin cậy cho sức khỏe của bạn',
       ),
     )
   ];

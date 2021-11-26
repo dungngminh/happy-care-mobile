@@ -15,14 +15,23 @@ class EditInformationController extends GetxController {
   User get user => _userController.user.value;
   File? profileImage;
 
-  String? fullname;
-  String? age;
-  String? phone;
-  String? address;
+  late TextEditingController nameController;
+  late TextEditingController ageController;
+  late TextEditingController phoneController;
+  late TextEditingController addressController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    nameController = TextEditingController(text: user.profile?.fullname);
+    phoneController = TextEditingController(text: user.profile?.phone);
+    ageController = TextEditingController(
+        text: user.profile?.age != null ? user.profile!.age!.toString() : null);
+     addressController = TextEditingController(text: user.profile?.address);
+  }
 
   void onChangeValue(String value, String? field) {
     field = value;
-    update();
   }
 
   Future<bool> showConfirmDialog(context) async {
@@ -87,18 +96,16 @@ class EditInformationController extends GetxController {
   }
 
   saveUserInformation() async {
-    print(fullname);
-    print(age);
-    print(phone);
-    print(address);
     bool result = await _userController.userRepository!.updateInformation(
-        fullname ?? user.profile?.fullname,
-        age == null ? user.profile?.age : int.parse(age!),
-        phone ?? user.profile?.phone,
-        address ?? user.profile?.address);
+      fullname: nameController.text == "" ? null : nameController.text,
+      age: ageController.text == "" ? null : int.parse(ageController.text),
+      phone: phoneController.text == "" ? null : phoneController.text,
+      address: addressController.text == "" ? null : addressController.text,
+    );
+
     if (result) {
       MyToast.showToast("Cập nhật thông tin thành công");
-      Get.back(result: "reset");
+      Get.back(result: true);
     } else {
       MyToast.showToast("Cập nhật không thành công, vui lòng thử lại");
     }

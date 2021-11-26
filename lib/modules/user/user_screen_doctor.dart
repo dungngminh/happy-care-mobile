@@ -13,7 +13,6 @@ class UserDoctorScreen extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print("size of screen: $size");
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
@@ -56,7 +55,12 @@ class UserDoctorScreen extends GetView<UserController> {
                         Spacer(),
                         Expanded(
                           child: IconButton(
-                            onPressed: () => Get.toNamed(AppRoutes.rEdit),
+                            onPressed: () async {
+                              bool result = await Get.toNamed(AppRoutes.rEdit);
+                              if (result) {
+                                controller.getUserInformation();
+                              }
+                            },
                             icon: Icon(
                               Icons.edit,
                               color: Colors.white,

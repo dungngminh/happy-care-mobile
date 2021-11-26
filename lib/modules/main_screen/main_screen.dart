@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/modules/chat/chat_doctor_screen.dart';
 import 'package:happy_care/modules/chat/chat_screen.dart';
 import 'package:happy_care/modules/home/home_screen.dart';
-import 'package:happy_care/modules/main_screen/main_controller.dart';
+import 'package:happy_care/modules/main_screen/controller/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
 import 'package:happy_care/modules/user/user_screen.dart';
 import 'package:happy_care/modules/user/user_screen_doctor.dart';
@@ -22,7 +23,9 @@ class MainScreen extends GetWidget<MainController> {
           index: controller.currentIndex.value,
           children: [
             HomeScreen(),
-            ChatScreen(),
+            controller.role.value == "doctor"
+                ? ChatDoctorScreen()
+                : ChatScreen(),
             PrescriptionScreen(),
             controller.role.value == "doctor"
                 ? UserDoctorScreen()

@@ -6,6 +6,7 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
+import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
 class ChatScreen extends GetWidget<ChatController> {
@@ -70,18 +71,38 @@ class ChatScreen extends GetWidget<ChatController> {
                       SizedBox(
                         width: double.infinity,
                         height: size.height * 0.16,
-                        child: ListView.builder(
-                          itemCount: 10,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return ProfileItem(
-                              size: size,
-                              function: () => Get.toNamed(
-                                AppRoutes.rChatRoom,
-                              ),
+                        child: GetBuilder<DoctorController>(
+                            builder: (docController) {
+                          final status = docController.status.value;
+                          if (status == Status.idle) {
+                            return ListView.builder(
+                              itemCount: docController.listDoctor.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ProfileItem(
+                                  fullName: docController
+                                      .listDoctor[index].profile?.fullname,
+                                  size: size,
+                                  function: () => Get.toNamed(
+                                    AppRoutes.rChatRoom,
+                                  ),
+                                  isOnline:
+                                      docController.listDoctor[index].isOnline!,
+                                );
+                              },
                             );
-                          },
-                        ),
+                          } else if (status == Status.loading) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            return Center(
+                                child: Icon(
+                              Icons.error_rounded,
+                              color: kMainColor,
+                            ));
+                          }
+                        }),
                       ),
                     ],
                   ),

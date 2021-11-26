@@ -193,10 +193,10 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                         TextFormField(
                           autofocus: false,
-                          initialValue: controller.user.profile?.fullname,
+                          controller: controller.nameController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.fullname),
+                          
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -222,10 +222,10 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                         TextFormField(
                           autofocus: false,
-                          initialValue: controller.user.profile?.age.toString(),
+                          controller: controller.ageController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.age),
+    
                           decoration: InputDecoration(
                             prefixIcon:
                                 Icon(Icons.badge_rounded, color: kMainColor),
@@ -252,10 +252,10 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                         TextFormField(
                           autofocus: false,
-                          initialValue: controller.user.profile?.phone,
+                          controller: controller.phoneController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.phone),
+                  
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.phone, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -280,11 +280,12 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
+                          
                           autofocus: false,
-                          initialValue: controller.user.profile?.address,
+                          controller: controller.addressController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                          onFieldSubmitted: (String value) => controller.onChangeValue(value, controller.address),
+                        
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(

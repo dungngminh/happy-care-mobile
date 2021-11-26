@@ -40,8 +40,6 @@ class SignInController extends GetxController {
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
     } else {
-      print(emailController.text);
-      print(passwordController.text);
       bool isOK = await repository.signIn(
           email: emailController.text, password: passwordController.text);
       if (isOK) {

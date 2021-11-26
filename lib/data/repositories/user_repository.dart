@@ -3,8 +3,12 @@ import 'dart:convert' as convert;
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/services/user_api.dart';
+import 'package:happy_care/data/socket/socket_io_service.dart';
 
 class UserRepository {
+  final SocketIOService? _ioService;
+  UserRepository({SocketIOService? ioService}) : _ioService = ioService;
+
   Future<bool> createNewUser(
       {required String email, required String password}) async {
     try {
@@ -32,6 +36,7 @@ class UserRepository {
   Future<bool> signOut() async {
     try {
       String token = await SharedPrefUtils.getStringKey('token');
+      _ioService!.signOut();
       await UserApi().signOut(token: token);
       return true;
     } catch (_) {
@@ -46,7 +51,7 @@ class UserRepository {
       String token = await SharedPrefUtils.getStringKey('token');
       final response = await UserApi().getDataInformation(token);
       var result = convert.jsonDecode(response);
-      print(result['data']['user']);
+      print("===========CHECK CREATING USER============\n");
       print(User.fromJson(result['data']['user']));
       return User.fromJson(result['data']['user']);
     } catch (_) {
@@ -56,15 +61,14 @@ class UserRepository {
   }
 
   Future<bool> updateInformation(
-      String? fullname, int? age, String? phone, String? address) async {
-    Map<String, Map<String, dynamic>> body = {
-      "profile": {
-        "fullname": fullname,
-        "age": age,
-        "phone": phone,
-        "address": address,
-      }
+      {String? fullname, int? age, String? phone, String? address}) async {
+    Map<String, dynamic> body = {
+      "fullname": fullname,
+      "age": age,
+      "phone": phone,
+      "address": address
     };
+
     String token = await SharedPrefUtils.getStringKey('token');
     return await UserApi().updateUserInformation(token: token, body: body);
   }

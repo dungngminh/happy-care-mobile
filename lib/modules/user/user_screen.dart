@@ -13,7 +13,6 @@ class UserScreen extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print("size of screen: $size");
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
@@ -38,7 +37,12 @@ class UserScreen extends GetView<UserController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                          onPressed: () => Get.toNamed(AppRoutes.rEdit),
+                          onPressed: () async {
+                            bool result = await Get.toNamed(AppRoutes.rEdit);
+                            if (result) {
+                              controller.getUserInformation();
+                            }
+                          },
                           icon: Icon(
                             Icons.edit,
                             color: Colors.white,
@@ -109,7 +113,10 @@ class UserScreen extends GetView<UserController> {
                         title: 'Tuổi',
                         subtitle: status == Status.loading
                             ? "Đang cập nhật"
-                            : controller.user.value.profile?.age.toString(),
+                            : controller.user.value.profile?.age.toString() ==
+                                    "null"
+                                ? null
+                                : controller.user.value.profile?.age.toString(),
                       ),
                       InformationTile(
                         icon: Icons.phone,

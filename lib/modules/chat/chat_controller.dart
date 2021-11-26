@@ -5,13 +5,7 @@ class ChatController extends GetxController {
   final SocketIOService? socketService;
   ChatController({this.socketService});
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    await socketService?.initService();
-  }
 
   void pressRandom() {
-    print("press");
   }
 }

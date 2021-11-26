@@ -292,8 +292,8 @@ class SignUpScreen extends GetWidget<SignUpController> {
               ),
               RoundedLoadingButton(
                 borderRadius: 35,
-                height: 52,
-                width: double.infinity,
+                height: 55,
+                width: 330,
                 color: kMainColor,
                 successColor: kMainColor,
                 controller: controller.btnController,
@@ -320,7 +320,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print("tap");
+                      print("TO SIGN IN");
                       Get.offNamed(AppRoutes.rSignIn);
                     },
                     child: Text(

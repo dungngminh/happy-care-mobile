@@ -16,6 +16,7 @@ class User {
     required this.role,
     this.specializations,
     this.background,
+    this.isOnline = false,
   });
 
   Profile? profile;
@@ -24,6 +25,7 @@ class User {
   late String role;
   List<String>? specializations;
   List<Background>? background;
+  bool? isOnline;
 
   User.init();
 
@@ -35,8 +37,10 @@ class User {
         role: json["role"],
         specializations:
             List<String>.from(json["specializations"].map((x) => x)),
-        background: json["background"] != null ? List<Background>.from(
-            json["background"].map((x) => Background.fromJson(x))) :null,
+        background: json["background"] != null
+            ? List<Background>.from(
+                json["background"].map((x) => Background.fromJson(x)))
+            : null,
       );
 
   Map<String, dynamic> toJson() => {

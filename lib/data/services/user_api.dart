@@ -13,18 +13,21 @@ class UserApi {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    print(bodyRequest);
-    print("${dotenv.env['DEV_URL']}/api/users");
-    var response = await http.post(
+    print("=============CREATE NEW USER BODY REQUEST==========$bodyRequest");
+    var response = await http
+        .post(
       Uri.parse("${dotenv.env['DEV_URL']}/api/users"),
       body: convert.jsonEncode(bodyRequest),
       headers: headers,
-    );
+    )
+        .timeout(Duration(minutes: 1), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
     if (response.statusCode == 200) {
-      print("=======CREATE_NEW_USER======\n" + response.body);
+      print("=======CREATE_NEW_USER_RESPONSE======\n" + response.body);
       return response.body;
     } else {
-      print(response.body);
+      print("=======CREATE_NEW_USER_RESPONSE-ERROR======\n" + response.body);
       throw Exception("Cannot sign up");
     }
   }
@@ -37,8 +40,7 @@ class UserApi {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    print(body);
-    print("${dotenv.env['DEV_URL']}/api/users/login");
+    print("=============SIGN IN BODY REQUEST==========$body");
     var response = await http
         .post(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
@@ -47,7 +49,7 @@ class UserApi {
       body: convert.jsonEncode(body),
       headers: headers,
     )
-        .timeout(Duration(minutes: 2), onTimeout: () {
+        .timeout(Duration(minutes: 1), onTimeout: () {
       throw TimeoutException("Time out exception");
     });
     if (response.statusCode == 200) {
@@ -63,9 +65,7 @@ class UserApi {
     Map<String, String> headers = {
       'Authorization': 'Bearer $token',
     };
-    print(token);
     // print("${dotenv.env['BASE_URL']}/api/users/me");
-    print("${dotenv.env['DEV_URL']}/api/users/me");
     var response = await http.get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
       Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
@@ -91,42 +91,44 @@ class UserApi {
       Uri.parse("${dotenv.env['DEV_URL']}/api/users/logout"),
       headers: headers,
     )
-        .timeout(Duration(minutes: 2), onTimeout: () {
+        .timeout(Duration(minutes: 1), onTimeout: () {
       throw TimeoutException("Time out exception");
     });
     if (response.statusCode == 200) {
       print("=======SIGNOUT_RESPONSE======\n" + response.body);
       return true;
     } else {
-      print(response.body);
+       print("=======SIGNOUT_RESPONSE_ERROR======\n" + response.body);
       throw Exception("Cant sign out");
     }
   }
 
   Future<bool> updateUserInformation(
-      {required String token,
-      required Map<String, Map<String, dynamic>> body}) async {
+      {required String token, required Map<String, dynamic> body}) async {
     Map<String, String> headers = {
       'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+    Map<String, dynamic> bodyy = {
+      "profile": body,
     };
 
-    print(body);
-    print("${dotenv.env['DEV_URL']}/api/users/me");
+    print("=============UPDATE INFORMATION BODY REQUEST==========$bodyy");
     var response = await http
         .patch(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
       Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
-      body: convert.jsonEncode(body),
+      body: convert.jsonEncode(bodyy),
       headers: headers,
     )
-        .timeout(Duration(minutes: 2), onTimeout: () {
+        .timeout(Duration(minutes: 1), onTimeout: () {
       throw TimeoutException("Time out exception");
     });
     if (response.statusCode == 200) {
       print("=======UPDATE_INFORMATION======\n" + response.body);
       return true;
     } else {
-      print(response.body);
+      print("=======UPDATE_INFORMATION_ERROR======\n" + response.body);
       return false;
     }
   }

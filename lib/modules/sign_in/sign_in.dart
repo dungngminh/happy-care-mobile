@@ -174,7 +174,7 @@ class SignInScreen extends GetWidget<SignInController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print("tap");
+                      print("TO SIGN UP");
                       controller.resetValue();
                       Get.toNamed(AppRoutes.rSignUp);
                     },
