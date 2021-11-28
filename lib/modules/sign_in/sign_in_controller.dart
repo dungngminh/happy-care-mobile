@@ -86,5 +86,4 @@ class SignInController extends GetxController {
     passwordController.text = "";
     update();
   }
-
 }

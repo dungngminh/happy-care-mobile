@@ -4,10 +4,13 @@ import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
 import 'package:happy_care/modules/main_screen/controller/spec_controller.dart';
 
+import '../chat_controller.dart';
+
 class ChatSearchController extends GetxController {
   var status = Status.idle.obs;
   final SpecController _specController = Get.find();
   final DoctorController doctorController = Get.find();
+  final ChatController chatController = Get.find();
   List<Specialization> listSpec = [];
   Specialization? selected;
   List<User> listDoctor = [];
@@ -24,6 +27,7 @@ class ChatSearchController extends GetxController {
 
   categorySelected(Specialization value) async {
     selected = value;
+    update();
     listDoctor = await doctorController.getDoctorMaybeBySpecId(id: value.id);
     update();
   }

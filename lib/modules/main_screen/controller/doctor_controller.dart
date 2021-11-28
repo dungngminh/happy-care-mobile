@@ -40,16 +40,20 @@ class DoctorController extends GetxController {
   }
 
   void checkOnlineAndSort() {
-    for (var doctor in listDoctor) {
-      for (var inApp in listInApp!) {
-        if (inApp.userId == doctor.id) {
-          doctor.isOnline = true;
-          break;
-        } else {
-          continue;
+    if (listInApp != null) {
+      for (var doctor in listDoctor) {
+        for (var inApp in listInApp!) {
+          if (inApp.userId == doctor.id) {
+            doctor.isOnline = true;
+            break;
+          } else {
+            continue;
+          }
         }
       }
+      listDoctor.sort((a, b) => b.isOnline! ? 1 : -1);
+    } else {
+      return;
     }
-    listDoctor.sort((a, b) => b.isOnline! ? 1 : -1);
   }
 }

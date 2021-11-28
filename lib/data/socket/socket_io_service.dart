@@ -1,8 +1,8 @@
-
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class SocketIOService {
   late io.Socket socket;
   List<DoctorInApp>? listDoctor;
@@ -30,7 +30,7 @@ class SocketIOService {
 
   getDoctorInApp() {
     socket.emitWithAck('get-doctors-in-app', "hello", ack: (data) {
-      if (data != null) {
+      if (data != 'cannot found any doctors') {
         print('===========GET DOCTOR IN APP=======\n$data');
         try {
           Iterable list = data["doctors"];
@@ -38,12 +38,13 @@ class SocketIOService {
           print(listDoctor);
         } catch (_) {
           print("null call");
+          listDoctor == null;
         }
       } else {
         print("===========NO DOCTOR IN APP=======\nNull");
+        listDoctor == null;
       }
     });
-    return null;
   }
 
   signOut() {

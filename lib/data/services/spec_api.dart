@@ -1,9 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class SpecApi {
+  final Client http;
+
+  SpecApi(this.http);
+
   Future<String> getAllSpecAvailable() async {
     var response = await http
         .get(

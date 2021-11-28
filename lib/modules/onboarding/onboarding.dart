@@ -16,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
         title: 'Tư vấn sức khỏe ngay tại nhà với bác sĩ, chuyên gia',
         description:
             'Ngay tại nhà với chiếc điện thoại, bạn có thể được tư vấn sức khỏe '
-            'với các bác sĩ, chuyên gia chuyên khoa',
+            'với các bác sĩ, chuyên gia chuyên khoa.',
       ),
     ),
     PageModel(
@@ -33,7 +33,7 @@ class OnboardingScreen extends StatelessWidget {
       widget: OnboardingCustom(
         isFirstPage: false,
         pathSvg: 'assets/images/undraw_medicine_b1ol.svg',
-        title: 'Đưa ra các đơn thuốc hiệu quả',
+        title: 'Đưa ra\nđơn thuốc hiệu quả',
         description:
             'Các bác sĩ, chuyên gia có thể sẽ cung cấp cho bạn đơn thuốc với các triệu chứng lâm sàng '
             'Đảm bảo sức khỏe của bạn nhanh chóng với những triệu chứng rõ ràng.',
@@ -43,9 +43,9 @@ class OnboardingScreen extends StatelessWidget {
       widget: OnboardingCustom(
         isFirstPage: false,
         pathSvg: 'assets/images/undraw_doctor_kw5l.svg',
-        title: 'Đội ngũ bác sĩ, chuyên gia uy tín',
+        title: 'Đội ngũ\nbác sĩ, chuyên gia uy tín',
         description:
-            'Happy Care mang tới bạn đội ngũ bác sĩ, chuyên gia từ các bệnh viện uy tín '
+            'Happy Care mang tới bạn đội ngũ bác sĩ, chuyên gia từ các bệnh viện uy tín.'
             'Giúp những lời khuyên, đơn thuốc mà đội ngũ mang tới bạn đáng tin cậy cho sức khỏe của bạn',
       ),
     )

@@ -9,7 +9,7 @@ class SocketEventStream {
 
   Stream<DoctorInApp> get getResponse => _socketStream.stream;
 
-   void dispose(){
+  void dispose() {
     _socketStream.close();
   }
 }

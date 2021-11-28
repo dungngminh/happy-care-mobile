@@ -5,6 +5,7 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/specialization.dart';
 import 'package:happy_care/modules/chat/search/chat_search_controller.dart';
 import 'package:happy_care/modules/chat/widget/doctor_search_tile.dart';
+import 'package:happy_care/routes/app_pages.dart';
 
 class ChatSearchScreen extends GetWidget<ChatSearchController> {
   const ChatSearchScreen({Key? key}) : super(key: key);
@@ -84,6 +85,17 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                         specialization:
                             controller.listDoctor[index].specializations!.first,
                         isOnline: controller.listDoctor[index].isOnline,
+                        function: () async {
+                          bool result = await controller.chatController
+                              .joinToChatRoom(
+                                  doctorId: controller.listDoctor[index].id);
+                          if (result) {
+                            await Get.toNamed(AppRoutes.rChatRoom,
+                                arguments: controller.listDoctor[index]);
+                          } else {
+                            print("Fail");
+                          }
+                        },
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
@@ -101,5 +113,3 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
     );
   }
 }
-
-

@@ -1,5 +1,1 @@
-class SocketIoRepository{
-
-
-  
-}
+class SocketIoRepository {}

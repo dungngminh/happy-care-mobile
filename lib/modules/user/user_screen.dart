@@ -33,23 +33,26 @@ class UserScreen extends GetView<UserController> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            bool result = await Get.toNamed(AppRoutes.rEdit);
-                            if (result) {
-                              controller.getUserInformation();
-                            }
-                          },
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 26,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              var result = await Get.toNamed(AppRoutes.rEdit);
+                              if (result != null) {
+                                controller.getUserInformation();
+                              }
+                            },
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 26,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 10,

@@ -7,7 +7,6 @@ class SpecController extends GetxController {
   final SpecializationRepository? _specRepo;
   SpecController({SpecializationRepository? specRepo}) : _specRepo = specRepo;
 
-
   @override
   Future<void> onInit() async {
     super.onInit();

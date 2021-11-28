@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:convert' as convert;
 
 class UserApi {
+  final Client http;
+
+  UserApi(this.http);
+  
   Future<String> createNewUser(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
@@ -98,7 +102,7 @@ class UserApi {
       print("=======SIGNOUT_RESPONSE======\n" + response.body);
       return true;
     } else {
-       print("=======SIGNOUT_RESPONSE_ERROR======\n" + response.body);
+      print("=======SIGNOUT_RESPONSE_ERROR======\n" + response.body);
       throw Exception("Cant sign out");
     }
   }

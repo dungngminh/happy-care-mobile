@@ -14,7 +14,10 @@ class EditInformationScreen extends GetView<EditInformationController> {
     final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
-        final shouldPop = await controller.showConfirmDialog(context);
+        final shouldPop = await controller.showConfirmDialog(context,
+            title: "Hủy thay đổi",
+            contentDialog: "Bạn có muốn hủy thay đổi?",
+            confirmFunction: () => Get.back(result: true));
         return shouldPop;
       },
       child: GestureDetector(
@@ -30,8 +33,12 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          final shouldPop =
-                              await controller.showConfirmDialog(context);
+                          final shouldPop = await controller.showConfirmDialog(
+                              context,
+                              title: "Hủy thay đổi",
+                              contentDialog: "Bạn có muốn hủy thay đổi?",
+                              confirmFunction: () => Get.back(result: true));
+
                           if (shouldPop) Get.back();
                         },
                         icon: Icon(
@@ -49,7 +56,8 @@ class EditInformationScreen extends GetView<EditInformationController> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () => controller.saveUserInformation(),
+                        onPressed: () =>
+                            controller.saveUserInformation(context),
                         icon: Icon(
                           Icons.save,
                           color: kMainColor,
@@ -196,7 +204,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           controller: controller.nameController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                          
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -225,7 +232,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           controller: controller.ageController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-    
                           decoration: InputDecoration(
                             prefixIcon:
                                 Icon(Icons.badge_rounded, color: kMainColor),
@@ -255,7 +261,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           controller: controller.phoneController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                  
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.phone, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -280,12 +285,10 @@ class EditInformationScreen extends GetView<EditInformationController> {
                           height: size.height * 0.03,
                         ),
                         TextFormField(
-                          
                           autofocus: false,
                           controller: controller.addressController,
                           style: GoogleFonts.openSans(color: kMainColor),
                           textAlignVertical: TextAlignVertical.center,
-                        
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person, color: kMainColor),
                             enabledBorder: OutlineInputBorder(
@@ -298,7 +301,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                 color: kMainColor,
                               ),
                             ),
-                            
                             focusColor: kMainColor,
                             border: OutlineInputBorder(),
                             labelText: 'Địa chỉ',

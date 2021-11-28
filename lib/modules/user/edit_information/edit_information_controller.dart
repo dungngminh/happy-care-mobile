@@ -27,27 +27,30 @@ class EditInformationController extends GetxController {
     phoneController = TextEditingController(text: user.profile?.phone);
     ageController = TextEditingController(
         text: user.profile?.age != null ? user.profile!.age!.toString() : null);
-     addressController = TextEditingController(text: user.profile?.address);
+    addressController = TextEditingController(text: user.profile?.address);
   }
 
   void onChangeValue(String value, String? field) {
     field = value;
   }
 
-  Future<bool> showConfirmDialog(context) async {
+  showConfirmDialog(BuildContext context,
+      {required String title,
+      required String contentDialog,
+      required void Function() confirmFunction}) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          "Hủy thay đổi",
+          title,
           style: GoogleFonts.openSans(fontWeight: FontWeight.w600),
         ),
         content: Text(
-          "Bạn xác nhận hủy thay đổi?",
+          contentDialog,
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.back(result: true),
+            onPressed: confirmFunction,
             child: Text(
               "Xác nhận",
               style: GoogleFonts.openSans(color: kMainColor),
@@ -95,19 +98,26 @@ class EditInformationController extends GetxController {
     Get.back();
   }
 
-  saveUserInformation() async {
-    bool result = await _userController.userRepository!.updateInformation(
-      fullname: nameController.text == "" ? null : nameController.text,
-      age: ageController.text == "" ? null : int.parse(ageController.text),
-      phone: phoneController.text == "" ? null : phoneController.text,
-      address: addressController.text == "" ? null : addressController.text,
-    );
+  saveUserInformation(BuildContext context) async {
+    await showConfirmDialog(context,
+        title: "Cập nhật thông tin",
+        contentDialog: "Xác nhận cập nhật thông tin",
+        confirmFunction: () async {
+      bool result = await _userController.userRepository!.updateInformation(
+        fullname: nameController.text == "" ? null : nameController.text,
+        age: ageController.text == "" ? null : int.parse(ageController.text),
+        phone: phoneController.text == "" ? null : phoneController.text,
+        address: addressController.text == "" ? null : addressController.text,
+      );
 
-    if (result) {
-      MyToast.showToast("Cập nhật thông tin thành công");
-      Get.back(result: true);
-    } else {
-      MyToast.showToast("Cập nhật không thành công, vui lòng thử lại");
-    }
+      if (result) {
+        Get.back();
+        MyToast.showToast("Cập nhật thông tin thành công");
+        Get.back(result: true);
+      } else {
+        Get.back();
+        MyToast.showToast("Cập nhật không thành công, vui lòng thử lại");
+      }
+    });
   }
 }

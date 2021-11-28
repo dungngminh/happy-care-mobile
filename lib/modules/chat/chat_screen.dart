@@ -52,7 +52,6 @@ class ChatScreen extends GetWidget<ChatController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildSearchBar(function: () {
-                        controller.pressRandom();
                         Get.toNamed(AppRoutes.rChatSearch);
                       }),
                       SizedBox(
@@ -83,9 +82,19 @@ class ChatScreen extends GetWidget<ChatController> {
                                   fullName: docController
                                       .listDoctor[index].profile?.fullname,
                                   size: size,
-                                  function: () => Get.toNamed(
-                                    AppRoutes.rChatRoom,
-                                  ),
+                                  function: () async {
+                                    bool result =
+                                        await controller.joinToChatRoom(
+                                            doctorId: docController
+                                                .listDoctor[index].id);
+                                    if (result) {
+                                      await Get.toNamed(AppRoutes.rChatRoom,
+                                          arguments:
+                                              docController.listDoctor[index]);
+                                    } else {
+                                      print("Fail");
+                                    }
+                                  },
                                   isOnline:
                                       docController.listDoctor[index].isOnline!,
                                 );

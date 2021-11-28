@@ -17,7 +17,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
+          padding: const EdgeInsets.only(top: 55, left: 40, right: 40),
           child: Column(
             children: [
               LogoTitle(),

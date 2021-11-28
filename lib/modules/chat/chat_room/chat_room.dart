@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
 
 class ChatRoomScreen extends GetView<ChatRoomController> {
   const ChatRoomScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final user = Get.arguments as User;
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -28,7 +29,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
               backgroundImage: Image.asset("assets/images/icon.png").image,
             ),
             title: Text(
-              "Nguyễn Minh Dũng",
+              user.profile?.fullname ?? user.email,
               style: GoogleFonts.openSans(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -36,7 +37,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
               ),
             ),
             subtitle: Text(
-              "Khoa Nam học",
+              user.specializations!.first,
               style: GoogleFonts.openSans(
                 color: Colors.white,
                 fontSize: 13,

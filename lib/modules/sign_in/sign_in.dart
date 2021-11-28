@@ -14,10 +14,11 @@ class SignInScreen extends GetWidget<SignInController> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 45, left: 40, right: 40),
+          padding: const EdgeInsets.only(top: 48, left: 40, right: 40),
           child: Column(
             children: [
               LogoTitle(),
@@ -176,6 +177,7 @@ class SignInScreen extends GetWidget<SignInController> {
                     onTap: () {
                       print("TO SIGN UP");
                       controller.resetValue();
+
                       Get.toNamed(AppRoutes.rSignUp);
                     },
                     child: Text(

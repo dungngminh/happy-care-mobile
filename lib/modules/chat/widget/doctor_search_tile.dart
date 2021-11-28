@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 
-
 class DoctorSearchTile extends StatelessWidget {
   const DoctorSearchTile({
     Key? key,
     this.fullname,
     this.specialization,
-    this.isOnline,
+    this.isOnline, required this.function,
   }) : super(key: key);
 
   final String? fullname;
   final String? specialization;
   final bool? isOnline;
+  final void Function() function;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,7 @@ class DoctorSearchTile extends StatelessWidget {
       subtitle: Text(specialization ?? "Chưa có thông tin",
           style: GoogleFonts.openSans()),
       trailing: isOnline! ? Icon(Icons.wifi_rounded, color: kMainColor) : null,
+      onTap: function,
     );
   }
 }
