@@ -86,15 +86,11 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                         isOnline: controller.listDoctor[index].isOnline,
                         avatar: controller.listDoctor[index].profile?.avatar,
                         function: () async {
-                          bool result = await controller.chatController
+                          await controller.chatController
                               .joinToChatRoom(
-                                  doctorId: controller.listDoctor[index].id);
-                          if (result) {
-                            await Get.toNamed(AppRoutes.rChatRoom,
-                                arguments: controller.listDoctor[index]);
-                          } else {
-                            print("Fail");
-                          }
+                                  doctorId: controller.listDoctor[index].id)
+                              .then((value) => Get.toNamed(AppRoutes.rChatRoom,
+                                  arguments: controller.listDoctor[index]));
                         },
                       );
                     },

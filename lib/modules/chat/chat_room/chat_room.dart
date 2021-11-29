@@ -1,17 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
-import 'package:happy_care/data/models/user.dart';
+import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
+import 'package:intl/intl.dart';
 
-class ChatRoomScreen extends GetView<ChatRoomController> {
+class ChatRoomScreen extends GetWidget<ChatRoomController> {
   const ChatRoomScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final user = Get.arguments as User;
+    final roomPass = Get.arguments as RoomChatPass;
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -26,10 +29,21 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
           titleSpacing: -10,
           title: ListTile(
             leading: CircleAvatar(
-              backgroundImage: Image.asset("assets/images/icon.png").image,
+              backgroundColor: kSecondColor,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  backgroundImage: roomPass.userChatWith.profile?.avatar == null
+                      ? Image.asset("assets/images/icon.png").image
+                      : Image.memory(base64Decode(
+                              roomPass.userChatWith.profile!.avatar!))
+                          .image,
+                ),
+              ),
             ),
             title: Text(
-              user.profile?.fullname ?? user.email,
+              roomPass.userChatWith.profile?.fullname ??
+                  roomPass.userChatWith.email,
               style: GoogleFonts.openSans(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -37,7 +51,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
               ),
             ),
             subtitle: Text(
-              user.specializations!.first,
+              roomPass.userChatWith.specializations!.first,
               style: GoogleFonts.openSans(
                 color: Colors.white,
                 fontSize: 13,
@@ -65,26 +79,38 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
         ),
         body: Container(
           height: double.infinity,
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(bottom: 5, top: 5),
           color: kSecondColor,
-          child: ListView(
-            shrinkWrap: true,
-            reverse: true,
-            //messenge = messenger.reversed.toList();
-            children: const [
-              NotOwnMessenger(
-                messenge: 'Tôi có thể giúp gì cho bạn?',
-                time: '18:02',
-              ),
-              OwnMessenger(
-                messenge: 'Tôi có vấn đề về sức khỏe cần bạn giúp đỡ',
-                time: '18:01',
-              ),
-              OwnMessenger(
-                messenge: 'Anh bạn à',
-                time: '18:01',
-              ),
-            ],
+          child: Obx(
+            () {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.listMess.length,
+                itemBuilder: (context, index) {
+                  final formater = DateFormat("HH:mm");
+
+                  if (controller.listMess[index].user !=
+                      roomPass.userChatWith.id) {
+                    return OwnMessenger(
+                      messenge: controller.listMess[index].content,
+                      time: formater.format(
+                        DateTime.now().toLocal(),
+                      ),
+                    );
+                  } else {
+                    return NotOwnMessenger(
+                      messenge: controller.listMess[index].content,
+                      avatar: roomPass.userChatWith.profile?.avatar,
+                      time: formater.format(
+                        DateTime.parse(
+                          controller.listMess[index].time!,
+                        ).toLocal(),
+                      ),
+                    );
+                  }
+                },
+              );
+            },
           ),
         ),
         bottomNavigationBar: Transform.translate(
@@ -104,12 +130,14 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                   ),
                   Expanded(
                     child: TextField(
+                      controller: controller.textMessController,
                       textAlignVertical: TextAlignVertical.center,
                     ),
                   ),
                   IconButton(
                     color: kMainColor,
-                    onPressed: () {},
+                    onPressed: () =>
+                        controller.sendMessage(roomId: roomPass.id),
                     icon: Icon(
                       Icons.send_rounded,
                     ),

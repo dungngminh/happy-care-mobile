@@ -8,13 +8,17 @@ class RoomRepository {
 
   RoomRepository({this.roomApi});
 
-  Future<bool> checkRoomIfExist(
+  Future<String?> checkRoomIfExist(
       {required String userId, required String doctorId}) async {
     String token = await SharedPrefUtils.getStringKey('token');
     String response = await roomApi!
         .checkRoomIfExist(token: token, userId: userId, doctorId: doctorId);
     var converted = convert.jsonDecode(response);
-    return converted["success"];
+    if (converted["success"] == true) {
+      return converted["data"]["roomId"];
+    } else {
+      return null;
+    }
   }
 
   Future<List<RoomChat>?> getMyRoom() async {

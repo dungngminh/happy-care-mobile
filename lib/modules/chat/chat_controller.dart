@@ -31,10 +31,8 @@ class ChatController extends GetxController {
       for (var room in listRoom) {
         if (userController.user.value.role == "member") {
           listUserChatWithByRoom.add(await getUserById(room.members![1].id!));
-        }
-        else{
+        } else {
           listUserChatWithByRoom.add(await getUserById(room.members![0].id!));
-
         }
       }
       status(ChatStatus.idle);
@@ -44,10 +42,12 @@ class ChatController extends GetxController {
     });
   }
 
-  joinToChatRoom({required String doctorId}) async {
-    bool result = await roomRepository!.checkRoomIfExist(
+  Future<void> joinToChatRoom({required String doctorId}) async {
+    String? roomId = await roomRepository!.checkRoomIfExist(
         userId: userController.user.value.id, doctorId: doctorId);
-    return result;
+    socketService!
+        .joinToRoom(roomId: roomId!, userId: userController.user.value.id);
+
   }
 
   Future<User> getUserById(String userId) async {

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
@@ -26,7 +27,6 @@ class ChatScreen extends GetWidget<ChatController> {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 20,
                   backgroundColor: kMainColor,
                   child: Padding(
                     padding: const EdgeInsets.all(2.0),
@@ -106,17 +106,14 @@ class ChatScreen extends GetWidget<ChatController> {
                                   avatar: docController
                                       .listDoctor[index].profile?.avatar,
                                   function: () async {
-                                    bool result =
-                                        await controller.joinToChatRoom(
+                                    await controller
+                                        .joinToChatRoom(
                                             doctorId: docController
-                                                .listDoctor[index].id);
-                                    if (result) {
-                                      await Get.toNamed(AppRoutes.rChatRoom,
-                                          arguments:
-                                              docController.listDoctor[index]);
-                                    } else {
-                                      print("Fail");
-                                    }
+                                                .listDoctor[index].id)
+                                        .then((value) => Get.toNamed(
+                                            AppRoutes.rChatRoom,
+                                            arguments: docController
+                                                .listDoctor[index]));
                                   },
                                   isOnline:
                                       docController.listDoctor[index].isOnline!,
@@ -182,11 +179,16 @@ class ChatScreen extends GetWidget<ChatController> {
                         itemCount: controller.listRoom.length,
                         itemBuilder: (context, index) {
                           return RoomMessListTile(
-                            function: () => Get.toNamed(
-                              AppRoutes.rChatRoom,
-                              arguments:
-                                  controller.listUserChatWithByRoom[index],
-                            ),
+                            function: () async {
+                              await controller
+                                  .joinToChatRoom(
+                                      doctorId: controller
+                                          .listUserChatWithByRoom[index].id)
+                                  .then((value) => Get.toNamed(
+                                          AppRoutes.rChatRoom,
+                                          arguments: RoomChatPass(controller.listRoom[index].id!, controller
+                                          .listUserChatWithByRoom[index])));
+                            },
                             title: controller.listUserChatWithByRoom[index]
                                     .profile?.fullname ??
                                 'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',

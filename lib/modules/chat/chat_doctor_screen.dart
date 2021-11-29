@@ -126,9 +126,17 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                             itemCount: controller.listRoom.length,
                             itemBuilder: (context, index) {
                               return RoomMessListTile(
-                                function: () => Get.toNamed(
-                                  AppRoutes.rChatRoom,
-                                ),
+                                function: () async {
+                                  await controller
+                                      .joinToChatRoom(
+                                          doctorId: controller
+                                              .listUserChatWithByRoom[index].id)
+                                      .then(
+                                        (value) => Get.toNamed(
+                                          AppRoutes.rChatRoom,
+                                        ),
+                                      );
+                                },
                                 title: controller.listUserChatWithByRoom[index]
                                         .profile?.fullname ??
                                     'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',

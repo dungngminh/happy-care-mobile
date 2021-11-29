@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 
 class NotOwnMessenger extends StatelessWidget {
-  const NotOwnMessenger({Key? key, required this.messenge, required this.time})
+  const NotOwnMessenger(
+      {Key? key, required this.messenge, required this.time, this.avatar})
       : super(key: key);
   final String messenge;
   final String time;
+  final String? avatar;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -20,7 +24,15 @@ class NotOwnMessenger extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundImage: Image.asset("assets/images/icon.png").image,
+            backgroundColor: kMainColor,
+            child: Padding(
+              padding: const EdgeInsets.all(1.5),
+              child: CircleAvatar(
+                backgroundImage: avatar == null
+                    ? Image.asset("assets/images/icon.png").image
+                    : Image.memory(base64Decode(avatar!)).image,
+              ),
+            ),
           ),
           SizedBox(
             width: 8,

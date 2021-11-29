@@ -12,7 +12,8 @@ class SocketIOService {
         "${dotenv.env['DEV_URL']}",
         io.OptionBuilder()
             .setTransports(['websocket'])
-            .disableAutoConnect().enableForceNewConnection()
+            .disableAutoConnect()
+            .enableForceNewConnection()
             .build());
     socket.connect();
     String token = await SharedPrefUtils.getStringKey('token');
@@ -51,4 +52,31 @@ class SocketIOService {
   signOut() {
     socket.disconnect();
   }
+
+  joinToRoom({required String roomId, required String userId}) {
+    Map<String, String> msg = {"roomId": roomId, "userId": userId};
+    socket.emitWithAck('join-chat-room', msg, ack: (data) {
+      if (data != 'joined room $roomId') {
+        print(data);
+      } else {
+        print(data);
+      }
+    });
+  }
+
+  sendMessage(
+      {required String content,
+      required String roomId,
+      required String userId}) {
+    Map<String, String> msg = {
+      "message": content,
+      "roomId": roomId,
+      "userId": userId
+    };
+    print(msg);
+    socket.emitWithAck('send-message', msg, ack: (data) {
+      print(data);
+    });
+  }
+
 }

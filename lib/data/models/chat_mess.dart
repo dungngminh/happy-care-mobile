@@ -1,21 +1,17 @@
 class ChatMess {
-  final String id;
   final String content;
-  final DateTime time;
   final String user;
-  final String roomId;
-  final bool status;
+  final String? time;
 
   ChatMess({
-    required this.id,
     required this.content,
-    required this.time,
     required this.user,
-    required this.roomId,
-    required this.status,
+    this.time,
   });
 
-  // factory ChatMess.fromJson(Map<String, dynamic> json){
-  //   return ChatMess(id )
-  // }
+  factory ChatMess.fromJson(Map<String, dynamic> json) => ChatMess(
+        content: json['message'],
+        user: json['user'],
+        time: json['time'],
+      );
 }
