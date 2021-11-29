@@ -1,7 +1,7 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SocketIOService {
   late io.Socket socket;
@@ -16,6 +16,7 @@ class SocketIOService {
             .build());
     socket.connect();
     String token = await SharedPrefUtils.getStringKey('token');
+    print(token);
     socket.onConnect((_) {
       socket.emitWithAck('join', token, ack: (data) {
         if (data != null) {

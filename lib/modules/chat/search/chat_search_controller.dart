@@ -7,7 +7,6 @@ import 'package:happy_care/modules/main_screen/controller/spec_controller.dart';
 import '../chat_controller.dart';
 
 class ChatSearchController extends GetxController {
-  var status = Status.idle.obs;
   final SpecController _specController = Get.find();
   final DoctorController doctorController = Get.find();
   final ChatController chatController = Get.find();

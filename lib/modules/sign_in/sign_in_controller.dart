@@ -9,11 +9,13 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignInController extends GetxController {
   var isHidePassword = true.obs;
-  final UserRepository repository = UserRepository();
+  final UserRepository? userRepository;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
+
+  SignInController({this.userRepository});
 
   turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -40,7 +42,7 @@ class SignInController extends GetxController {
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
     } else {
-      bool isOK = await repository.signIn(
+      bool isOK = await userRepository!.signIn(
           email: emailController.text, password: passwordController.text);
       if (isOK) {
         btnController.success();

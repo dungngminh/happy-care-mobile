@@ -3,12 +3,10 @@ import 'dart:convert' as convert;
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/services/user_api.dart';
-import 'package:happy_care/data/socket/socket_io_service.dart';
 
 class UserRepository {
-  final SocketIOService? ioService;
   final UserApi? userApi;
-  UserRepository({this.userApi, this.ioService});
+  UserRepository({this.userApi});
 
   Future<bool> createNewUser(
       {required String email, required String password}) async {
@@ -29,21 +27,15 @@ class UserRepository {
       await SharedPrefUtils.setStringKey('token', token);
       return true;
     } catch (_) {
-      print(_ as Exception);
       return false;
     }
   }
 
   Future<bool> signOut() async {
-    try {
-      String token = await SharedPrefUtils.getStringKey('token');
-      ioService!.signOut();
-      await userApi!.signOut(token: token);
-      await SharedPrefUtils.removeStringKey('token');
-      return true;
-    } catch (_) {
-      return false;
-    }
+    String token = await SharedPrefUtils.getStringKey('token');
+    await userApi!.signOut(token: token);
+    print("Token is deleted ?${await SharedPrefUtils.removeStringKey('token')}");
+    return true;
   }
 
   Future<User> getUserData() async {
@@ -61,12 +53,17 @@ class UserRepository {
   }
 
   Future<bool> updateInformation(
-      {String? fullname, int? age, String? phone, String? address}) async {
+      {String? fullname,
+      int? age,
+      String? phone,
+      String? address,
+      String? avatar}) async {
     Map<String, dynamic> body = {
       "fullname": fullname,
       "age": age,
       "phone": phone,
-      "address": address
+      "address": address,
+      "avatar": avatar,
     };
 
     String token = await SharedPrefUtils.getStringKey('token');

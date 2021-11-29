@@ -27,7 +27,9 @@ class SignUpController extends GetxController {
       RoundedLoadingButtonController();
 
   //repository
-  final UserRepository repository = UserRepository();
+  final UserRepository? userRepository;
+
+  SignUpController({this.userRepository});
 
   void turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -38,7 +40,7 @@ class SignUpController extends GetxController {
     isHideRepassword.value = !isHideRepassword.value;
     update();
   }
-
+  
   Future<void> createNewUser(BuildContext context) async {
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
@@ -60,7 +62,7 @@ class SignUpController extends GetxController {
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
     } else {
-      bool isOK = await repository.createNewUser(
+      bool isOK = await userRepository!.createNewUser(
           email: emailController.text, password: passwordController.text);
       if (isOK) {
         btnController.success();

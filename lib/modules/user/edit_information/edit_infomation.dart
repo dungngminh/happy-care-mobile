@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -80,7 +82,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                             height: 150,
                             width: 150,
                             child: GetBuilder<EditInformationController>(
-                                builder: (context) {
+                                builder: (controller) {
                               return controller.profileImage == null
                                   ? CircleAvatar(
                                       backgroundImage:
@@ -90,6 +92,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                   : CircleAvatar(
                                       backgroundImage:
                                           FileImage(controller.profileImage!));
+                            
                             }),
                           ),
                         ),

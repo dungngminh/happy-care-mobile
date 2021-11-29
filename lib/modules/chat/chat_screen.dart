@@ -116,19 +116,58 @@ class ChatScreen extends GetWidget<ChatController> {
                     ],
                   ),
                 ),
-                ListView.builder(
-                  padding: const EdgeInsets.only(),
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return RoomMessListTile(
-                      function: () => Get.toNamed(
-                        AppRoutes.rChatRoom,
+                Obx(() {
+                  final status = controller.status.value;
+                  if (status == Statuss.loading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: kMainColor,
                       ),
                     );
-                  },
-                ),
+                  } else if (status == Statuss.error) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.error,
+                            color: kMainColor,
+                          ),
+                          Text(
+                            "Có lỗi xảy ra, vui lòng thử lại",
+                            style: GoogleFonts.openSans(
+                              color: kMainColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    if (controller.listRoom.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "Bạn chưa có cuộc tư vấn nào",
+                          style: GoogleFonts.openSans(
+                            color: kMainColor,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        padding: const EdgeInsets.only(),
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: controller.listRoom.length,
+                        itemBuilder: (context, index) {
+                          return RoomMessListTile(
+                            function: () => Get.toNamed(
+                              AppRoutes.rChatRoom,
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }
+                }),
               ],
             ),
           ),

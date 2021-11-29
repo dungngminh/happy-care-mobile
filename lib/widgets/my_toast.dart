@@ -5,7 +5,8 @@ class MyToast {
   static showToast(String msg) {
     Fluttertoast.showToast(
       msg: msg,
-      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_LONG,
       backgroundColor: Colors.grey,
       textColor: Colors.white,
     );

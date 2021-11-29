@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/widgets/my_toast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class EditInformationController extends GetxController {
   final UserController _userController = Get.find();
@@ -21,17 +23,22 @@ class EditInformationController extends GetxController {
   late TextEditingController addressController;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     nameController = TextEditingController(text: user.profile?.fullname);
     phoneController = TextEditingController(text: user.profile?.phone);
     ageController = TextEditingController(
         text: user.profile?.age != null ? user.profile!.age!.toString() : null);
     addressController = TextEditingController(text: user.profile?.address);
-  }
-
-  void onChangeValue(String value, String? field) {
-    field = value;
+    if (user.profile?.avatar != null) {
+      final tempDir = await getTemporaryDirectory();
+      profileImage =
+          await File('${tempDir.path}-${DateTime.now().toIso8601String()}.png')
+              .create();
+      profileImage!.writeAsBytesSync(base64Decode(user.profile!.avatar!));
+      print(profileImage);
+    }
+    update();
   }
 
   showConfirmDialog(BuildContext context,
@@ -108,6 +115,9 @@ class EditInformationController extends GetxController {
         age: ageController.text == "" ? null : int.parse(ageController.text),
         phone: phoneController.text == "" ? null : phoneController.text,
         address: addressController.text == "" ? null : addressController.text,
+        avatar: profileImage == null
+            ? null
+            : base64Encode(profileImage!.readAsBytesSync()),
       );
 
       if (result) {

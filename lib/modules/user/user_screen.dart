@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,10 +67,21 @@ class UserScreen extends GetView<UserController> {
                         child: SizedBox(
                           height: 150,
                           width: 150,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                Image.asset("assets/images/icon.png").image,
-                          ),
+                          child:
+                              GetBuilder<UserController>(builder: (controller) {
+                            return controller.user.value.profile?.avatar == null
+                                ? CircleAvatar(
+                                    backgroundImage:
+                                        Image.asset("assets/images/icon.png")
+                                            .image,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: Image.memory(base64Decode(
+                                            controller
+                                                .user.value.profile!.avatar!))
+                                        .image,
+                                  );
+                          }),
                         ),
                       ),
                     ),
