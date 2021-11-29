@@ -34,7 +34,8 @@ class UserRepository {
   Future<bool> signOut() async {
     String token = await SharedPrefUtils.getStringKey('token');
     await userApi!.signOut(token: token);
-    print("Token is deleted ?${await SharedPrefUtils.removeStringKey('token')}");
+    print(
+        "Token is deleted ?${await SharedPrefUtils.removeStringKey('token')}");
     return true;
   }
 
@@ -68,5 +69,20 @@ class UserRepository {
 
     String token = await SharedPrefUtils.getStringKey('token');
     return await userApi!.updateUserInformation(token: token, body: body);
+  }
+
+  Future<User> getUserById(String userId) async {
+    try {
+      String response = await userApi!.getUserById(userId);
+      var converted = convert.jsonDecode(response);
+      print(
+          "=============CHECK_GET_USER_BY_ID${userId}_INSTANCE=======\n${User.fromJson(converted['data']['user'])}");
+      return User.fromJson(converted['data']['user']);
+    } catch (_) {
+      print(
+          "================GET_USER_BY_ID:$userId _ERROR=====================");
+      print(_.toString());
+      throw Exception();
+    }
   }
 }

@@ -4,11 +4,11 @@ import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/data/socket/socket_io_service.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-enum Status { loading, done, error }
+enum UserStatus { loading, done, error }
 
 class UserController extends GetxController {
   var user = User.init().obs;
-  final status = Status.loading.obs;
+  final status = UserStatus.loading.obs;
   final UserRepository? userRepository;
   final SocketIOService? socketIOService;
   UserController({this.userRepository, this.socketIOService});
@@ -27,14 +27,14 @@ class UserController extends GetxController {
   }
 
   Future<void> getUserInformation() async {
-    status(Status.loading);
+    status(UserStatus.loading);
     await userRepository!.getUserData().then((data) {
       user(data);
-      status(Status.done);
+      status(UserStatus.done);
       update();
     }).onError((error, stackTrace) {
       print("$error");
-      status(Status.error);
+      status(UserStatus.error);
     });
   }
 }

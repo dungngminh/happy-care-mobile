@@ -12,7 +12,7 @@ class SocketIOService {
         "${dotenv.env['DEV_URL']}",
         io.OptionBuilder()
             .setTransports(['websocket'])
-            .disableAutoConnect()
+            .disableAutoConnect().enableForceNewConnection()
             .build());
     socket.connect();
     String token = await SharedPrefUtils.getStringKey('token');

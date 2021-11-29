@@ -12,7 +12,6 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -76,7 +75,7 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
               ),
               Expanded(
                 child: GetBuilder<ChatSearchController>(builder: (controller) {
-                  return ListView.separated(
+                  return ListView.builder(
                     itemCount: controller.listDoctor.length,
                     itemBuilder: (context, index) {
                       return DoctorSearchTile(
@@ -85,6 +84,7 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                         specialization:
                             controller.listDoctor[index].specializations!.first,
                         isOnline: controller.listDoctor[index].isOnline,
+                        avatar: controller.listDoctor[index].profile?.avatar,
                         function: () async {
                           bool result = await controller.chatController
                               .joinToChatRoom(
@@ -96,11 +96,6 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                             print("Fail");
                           }
                         },
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: size.height * 0.02,
                       );
                     },
                   );

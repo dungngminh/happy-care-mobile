@@ -91,7 +91,7 @@ class UserScreen extends GetView<UserController> {
                     Obx(() {
                       final status = controller.status.value;
                       return Text(
-                        status == Status.loading
+                        status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.fullname ??
                                 controller.user.value.email,
@@ -120,14 +120,14 @@ class UserScreen extends GetView<UserController> {
                       InformationTile(
                         icon: Icons.mail,
                         title: 'Email',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.email,
                       ),
                       InformationTile(
                         icon: Icons.badge_rounded,
                         title: 'Tuổi',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.age.toString() ==
                                     "null"
@@ -137,14 +137,14 @@ class UserScreen extends GetView<UserController> {
                       InformationTile(
                         icon: Icons.phone,
                         title: 'Số điện thoại',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.phone,
                       ),
                       InformationTile(
                         icon: Icons.location_pin,
                         title: 'Địa chỉ',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.address,
                       ),

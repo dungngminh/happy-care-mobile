@@ -26,7 +26,7 @@ class HomeScreen extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          status != Status.loading
+                          status != UserStatus.loading
                               ? "Chào, ${controller.user.value.role == "doctor" ? "Bác sĩ ${controller.user.value.profile?.fullname}" : "${controller.user.value.profile?.fullname ?? "người dùng"} "}"
                               : "Chào",
                           style: GoogleFonts.openSans(

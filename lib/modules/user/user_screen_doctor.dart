@@ -42,7 +42,7 @@ class UserDoctorScreen extends GetView<UserController> {
                         Obx(() {
                           final status = controller.status.value;
                           return Text(
-                              status == Status.loading
+                              status == UserStatus.loading
                                   ? "Đang cập nhật"
                                   : (controller
                                           .user.value.background?.first.degree
@@ -104,7 +104,7 @@ class UserDoctorScreen extends GetView<UserController> {
                     Obx(() {
                       final status = controller.status.value;
                       return Text(
-                        status == Status.loading
+                        status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.fullname ??
                                 controller.user.value.email,
@@ -133,14 +133,14 @@ class UserDoctorScreen extends GetView<UserController> {
                       InformationTile(
                         icon: Icons.school,
                         title: 'Chuyên ngành',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.specializations?.first,
                       ),
                       InformationTile(
                         icon: Icons.work_rounded,
                         title: 'Đơn vị công tác',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller
                                 .user.value.background?.first.workLocation,
@@ -148,28 +148,28 @@ class UserDoctorScreen extends GetView<UserController> {
                       InformationTile(
                         icon: Icons.mail,
                         title: 'Email',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.email,
                       ),
                       InformationTile(
                         icon: Icons.badge_rounded,
                         title: 'Tuổi',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.age.toString(),
                       ),
                       InformationTile(
                         icon: Icons.phone,
                         title: 'Số điện thoại',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.phone,
                       ),
                       InformationTile(
                         icon: Icons.location_pin,
                         title: 'Địa chỉ',
-                        subtitle: status == Status.loading
+                        subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.address,
                       ),

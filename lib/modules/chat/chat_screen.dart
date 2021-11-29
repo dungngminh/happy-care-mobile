@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +9,7 @@ import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
+import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
 class ChatScreen extends GetWidget<ChatController> {
@@ -23,7 +26,25 @@ class ChatScreen extends GetWidget<ChatController> {
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: Image.asset("assets/images/icon.png").image,
+                  radius: 20,
+                  backgroundColor: kMainColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: GetBuilder<UserController>(
+                      builder: (controller) {
+                        return controller.user.value.profile?.avatar == null
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    Image.asset("assets/images/icon.png").image,
+                              )
+                            : CircleAvatar(
+                                backgroundImage: Image.memory(base64Decode(
+                                        controller.user.value.profile!.avatar!))
+                                    .image,
+                              );
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(
                   width: size.width * 0.04,
@@ -73,7 +94,7 @@ class ChatScreen extends GetWidget<ChatController> {
                         child: GetBuilder<DoctorController>(
                             builder: (docController) {
                           final status = docController.status.value;
-                          if (status == Status.idle) {
+                          if (status == DocStatus.idle) {
                             return ListView.builder(
                               itemCount: docController.listDoctor.length,
                               scrollDirection: Axis.horizontal,
@@ -82,6 +103,8 @@ class ChatScreen extends GetWidget<ChatController> {
                                   fullName: docController
                                       .listDoctor[index].profile?.fullname,
                                   size: size,
+                                  avatar: docController
+                                      .listDoctor[index].profile?.avatar,
                                   function: () async {
                                     bool result =
                                         await controller.joinToChatRoom(
@@ -100,7 +123,7 @@ class ChatScreen extends GetWidget<ChatController> {
                                 );
                               },
                             );
-                          } else if (status == Status.loading) {
+                          } else if (status == DocStatus.loading) {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
@@ -118,13 +141,13 @@ class ChatScreen extends GetWidget<ChatController> {
                 ),
                 Obx(() {
                   final status = controller.status.value;
-                  if (status == Statuss.loading) {
+                  if (status == ChatStatus.loading) {
                     return Center(
                       child: CircularProgressIndicator(
                         color: kMainColor,
                       ),
                     );
-                  } else if (status == Statuss.error) {
+                  } else if (status == ChatStatus.error) {
                     return Center(
                       child: Column(
                         children: [
@@ -161,7 +184,14 @@ class ChatScreen extends GetWidget<ChatController> {
                           return RoomMessListTile(
                             function: () => Get.toNamed(
                               AppRoutes.rChatRoom,
+                              arguments:
+                                  controller.listUserChatWithByRoom[index],
                             ),
+                            title: controller.listUserChatWithByRoom[index]
+                                    .profile?.fullname ??
+                                'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
+                            avatar: controller
+                                .listUserChatWithByRoom[index].profile?.avatar,
                           );
                         },
                       );

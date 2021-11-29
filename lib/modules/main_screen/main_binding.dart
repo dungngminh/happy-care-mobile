@@ -1,4 +1,4 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:get/get.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
 import 'package:happy_care/data/repositories/room_repository.dart';
@@ -17,7 +17,6 @@ import 'package:happy_care/modules/main_screen/controller/spec_controller.dart';
 import 'package:happy_care/modules/prescription/prescription_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:http/http.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class MainBinding extends Bindings {
   @override

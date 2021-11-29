@@ -82,13 +82,13 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
               child: Obx(
                 () {
                   final status = controller.status.value;
-                  if (status == Statuss.loading) {
+                  if (status == ChatStatus.loading) {
                     return Center(
                       child: CircularProgressIndicator(
                         color: kMainColor,
                       ),
                     );
-                  } else if (status == Statuss.error) {
+                  } else if (status == ChatStatus.error) {
                     return Center(
                       child: Column(
                         children: [
@@ -129,6 +129,11 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                 function: () => Get.toNamed(
                                   AppRoutes.rChatRoom,
                                 ),
+                                title: controller.listUserChatWithByRoom[index]
+                                        .profile?.fullname ??
+                                    'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
+                                avatar: controller.listUserChatWithByRoom[index]
+                                    .profile?.avatar,
                               );
                             },
                           ),

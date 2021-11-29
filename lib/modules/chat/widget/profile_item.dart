@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,12 +13,14 @@ class ProfileItem extends StatelessWidget {
     required this.function,
     required this.isOnline,
     this.fullName,
+    this.avatar,
   }) : super(key: key);
 
   final Size size;
   final void Function() function;
   final bool isOnline;
   final String? fullName;
+  final String? avatar;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +40,17 @@ class ProfileItem extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 children: [
                   CircleAvatar(
+                    backgroundColor: kMainColor,
                     radius: 30,
-                    backgroundImage:
-                        Image.asset("assets/images/icon.png").image,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: avatar == null
+                            ? Image.asset("assets/images/icon.png").image
+                            : Image.memory(base64Decode(avatar!)).image,
+                      ),
+                    ),
                   ),
                   isOnline
                       ? Badge(

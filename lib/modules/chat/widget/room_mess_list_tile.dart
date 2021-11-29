@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,7 +9,14 @@ class RoomMessListTile extends StatelessWidget {
   const RoomMessListTile({
     Key? key,
     required this.function,
+    this.avatar,
+    required this.title,
+    this.subtitle,
   }) : super(key: key);
+
+  final String title;
+  final String? subtitle;
+  final String? avatar;
 
   final void Function() function;
   @override
@@ -15,11 +24,18 @@ class RoomMessListTile extends StatelessWidget {
     return ListTile(
       onTap: function,
       leading: CircleAvatar(
-        radius: 25,
-        backgroundImage: Image.asset("assets/images/icon.png").image,
+        radius:25, backgroundColor: kMainColor,
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: CircleAvatar(
+            radius: 25,
+            backgroundImage: avatar == null
+                                ? Image.asset("assets/images/icon.png").image
+                                : Image.memory(base64Decode(avatar!)).image,
+          ),
+        ),
       ),
-      title: Text("Nguyễn Minh Dũng",
-          style: GoogleFonts.openSans(color: kMainColor)),
+      title: Text(title, style: GoogleFonts.openSans(color: kMainColor)),
       subtitle: Text(
         "Tôi có thể giúp gì cho bạn?",
         style: GoogleFonts.openSans(),

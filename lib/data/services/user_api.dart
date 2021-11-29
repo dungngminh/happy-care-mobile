@@ -8,7 +8,7 @@ class UserApi {
   final Client http;
 
   UserApi(this.http);
-  
+
   Future<String> createNewUser(String email, String password) async {
     Map<String, String> bodyRequest = {
       'email': email,
@@ -60,7 +60,7 @@ class UserApi {
       print("=======SIGNIN_RESPONSE======\n" + response.body);
       return response.body;
     } else {
-      print(response.body);
+      print("=======ERROR_SIGNIN_RESPONSE======\n" + response.body);
       throw Exception("Cannot sign in");
     }
   }
@@ -134,6 +134,20 @@ class UserApi {
     } else {
       print("=======UPDATE_INFORMATION_ERROR======\n" + response.body);
       return false;
+    }
+  }
+  
+  Future<String> getUserById(String userId) async {
+    var response = await http.get(
+      // Uri.parse("${dotenv.env['BASE_URL']}/api/users/$userId"),
+      Uri.parse("${dotenv.env['DEV_URL']}/api/users/$userId"),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print("=======GETDATA_USER_WITH_ID_$userId======\n" + response.body);
+      return response.body;
+    } else {
+      throw Exception("Cannot get user information: $userId");
     }
   }
 }

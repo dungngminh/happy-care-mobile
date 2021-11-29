@@ -4,13 +4,13 @@ import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
 import 'package:happy_care/data/socket/socket_io_service.dart';
 
-enum Status { loading, error, idle }
+enum DocStatus { loading, error, idle }
 
 class DoctorController extends GetxController {
   List<User> listDoctor = [];
   final DoctorRepository? _doctorRepository;
   final SocketIOService? _ioService;
-  final status = Status.loading.obs;
+  final status = DocStatus.loading.obs;
   List<DoctorInApp>? listInApp = [];
 
   DoctorController(
@@ -24,10 +24,10 @@ class DoctorController extends GetxController {
     listDoctor = await getDoctorMaybeBySpecId(id: null);
     _ioService?.initService();
     await Future.delayed(Duration(seconds: 3)).then((value) {
-      status(Status.idle);
+      status(DocStatus.idle);
       listInApp = _ioService?.listDoctor;
     }).catchError((_) {
-      status(Status.error);
+      status(DocStatus.error);
     });
     checkOnlineAndSort();
     update();
