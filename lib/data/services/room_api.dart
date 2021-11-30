@@ -11,11 +11,11 @@ class RoomApi {
 
   Future<String> checkRoomIfExist({
     required String token,
-    required String userId,
+    required String memberId,
     required String doctorId,
   }) async {
     Map<String, String> body = {
-      'memberId': userId,
+      'memberId': memberId,
       'doctorId': doctorId,
     };
     Map<String, String> headers = {

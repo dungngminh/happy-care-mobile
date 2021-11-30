@@ -88,7 +88,7 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                         function: () async {
                           await controller.chatController
                               .joinToChatRoom(
-                                  doctorId: controller.listDoctor[index].id)
+                                  notUserId: controller.listDoctor[index].id)
                               .then((value) => Get.toNamed(AppRoutes.rChatRoom,
                                   arguments: controller.listDoctor[index]));
                         },

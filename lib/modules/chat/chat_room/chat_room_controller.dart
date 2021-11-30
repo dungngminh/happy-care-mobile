@@ -24,7 +24,6 @@ class ChatRoomController extends GetxController {
   }
 
   sendMessage({required String roomId}) {
-    print("send");
     ioService!.sendMessage(
         content: textMessController.text,
         roomId: roomId,
@@ -32,6 +31,11 @@ class ChatRoomController extends GetxController {
     listMess.add(ChatMess(
         content: textMessController.text, user: userController.user.value.id));
     textMessController.clear();
+  }
+
+  leaveChatRoom({required String roomId}) {
+    ioService!.leaveChatRoom(roomId: roomId);
+    return true;
   }
 
   @override

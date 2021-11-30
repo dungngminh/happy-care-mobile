@@ -9,10 +9,10 @@ class RoomRepository {
   RoomRepository({this.roomApi});
 
   Future<String?> checkRoomIfExist(
-      {required String userId, required String doctorId}) async {
+      {required String memberId, required String doctorId}) async {
     String token = await SharedPrefUtils.getStringKey('token');
     String response = await roomApi!
-        .checkRoomIfExist(token: token, userId: userId, doctorId: doctorId);
+        .checkRoomIfExist(token: token, memberId: memberId, doctorId: doctorId);
     var converted = convert.jsonDecode(response);
     if (converted["success"] == true) {
       return converted["data"]["roomId"];

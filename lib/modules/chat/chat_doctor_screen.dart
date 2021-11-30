@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
@@ -21,40 +23,57 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 40),
+            padding: const EdgeInsets.only(left: 15, right: 5, top: 40),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  radius: 22,
-                  backgroundColor: kMainColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: GetBuilder<UserController>(
-                      builder: (controller) {
-                        return controller.user.value.profile?.avatar == null
-                            ? CircleAvatar(
-                                backgroundImage:
-                                    Image.asset("assets/images/icon.png").image,
-                              )
-                            : CircleAvatar(
-                                backgroundImage: Image.memory(base64Decode(
-                                        controller.user.value.profile!.avatar!))
-                                    .image,
-                              );
-                      },
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 22,
+                      backgroundColor: kMainColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: GetBuilder<UserController>(
+                          builder: (controller) {
+                            return controller.user.value.profile?.avatar == null
+                                ? CircleAvatar(
+                                    backgroundImage:
+                                        Image.asset("assets/images/icon.png")
+                                            .image,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: Image.memory(base64Decode(
+                                            controller
+                                                .user.value.profile!.avatar!))
+                                        .image,
+                                  );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: size.width * 0.04,
+                    ),
+                    Text(
+                      "Tư vấn sức khỏe",
+                      style: GoogleFonts.openSans(
+                          color: kMainColor,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: size.width * 0.04,
-                ),
-                Text(
-                  "Tư vấn sức khỏe",
-                  style: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
-                ),
+                controller.listRoom.isEmpty
+                    ? IconButton(
+                        splashRadius: 26,
+                        padding: const EdgeInsets.only(),
+                        onPressed: () => controller.loadMyRooms(),
+                        icon: Icon(Icons.refresh_rounded),
+                        color: kMainColor,
+                        iconSize: 26,
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -119,31 +138,60 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                       return ListView(
                         padding: const EdgeInsets.only(),
                         children: [
-                          ListView.builder(
-                            padding: const EdgeInsets.only(),
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: controller.listRoom.length,
-                            itemBuilder: (context, index) {
-                              return RoomMessListTile(
-                                function: () async {
-                                  await controller
-                                      .joinToChatRoom(
-                                          doctorId: controller
-                                              .listUserChatWithByRoom[index].id)
-                                      .then(
-                                        (value) => Get.toNamed(
-                                          AppRoutes.rChatRoom,
-                                        ),
-                                      );
-                                },
-                                title: controller.listUserChatWithByRoom[index]
-                                        .profile?.fullname ??
-                                    'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
-                                avatar: controller.listUserChatWithByRoom[index]
-                                    .profile?.avatar,
-                              );
-                            },
+                          AnimationLimiter(
+                            child: ListView.builder(
+                              padding: const EdgeInsets.only(),
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: controller.listRoom.length,
+                              itemBuilder: (context, index) {
+                                print("Room id:" +
+                                    controller.listRoom[index].id!);
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(seconds: 1),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: RoomMessListTile(
+                                        function: () async {
+                                          await controller
+                                              .joinToChatRoom(
+                                                  notUserId: controller
+                                                      .listUserChatWithByRoom[
+                                                          index]
+                                                      .id)
+                                              .then(
+                                                (value) => Get.toNamed(
+                                                  AppRoutes.rChatRoom,
+                                                  arguments: RoomChatPass(
+                                                      controller
+                                                          .listRoom[index].id!,
+                                                      controller
+                                                              .listUserChatWithByRoom[
+                                                          index]),
+                                                ),
+                                              );
+                                        },
+                                        title: controller
+                                                .listUserChatWithByRoom[index]
+                                                .profile
+                                                ?.fullname ??
+                                            (controller.userController.user
+                                                        .value.role !=
+                                                    'doctor'
+                                                ? "Bác sĩ ${controller.listUserChatWithByRoom[index].profile?.fullname}"
+                                                : "${controller.listUserChatWithByRoom[index].profile?.fullname}"),
+                                        avatar: controller
+                                            .listUserChatWithByRoom[index]
+                                            .profile
+                                            ?.avatar,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       );

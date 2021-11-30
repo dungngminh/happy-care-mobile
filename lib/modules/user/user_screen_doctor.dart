@@ -44,10 +44,12 @@ class UserDoctorScreen extends GetView<UserController> {
                           return Text(
                               status == UserStatus.loading
                                   ? "Đang cập nhật"
-                                  : (controller
-                                          .user.value.background?.first.degree
-                                          ?.toUpperCase() ??
-                                      ""),
+                                  : status == UserStatus.done
+                                      ? (controller.user.value.background?.first
+                                              .degree
+                                              ?.toUpperCase() ??
+                                          "")
+                                      : "",
                               style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -92,8 +94,11 @@ class UserDoctorScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage:
-                                        Image.memory(base64Decode(controller.user.value.profile!.avatar!)).image,);
+                                    backgroundImage: Image.memory(base64Decode(
+                                            controller
+                                                .user.value.profile!.avatar!))
+                                        .image,
+                                  );
                           }),
                         ),
                       ),
@@ -108,6 +113,8 @@ class UserDoctorScreen extends GetView<UserController> {
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.fullname ??
                                 controller.user.value.email,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -157,7 +164,10 @@ class UserDoctorScreen extends GetView<UserController> {
                         title: 'Tuổi',
                         subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
-                            : controller.user.value.profile?.age.toString(),
+                            : (controller.user.value.profile?.age == null
+                                ? null
+                                : controller.user.value.profile!.age
+                                    .toString()),
                       ),
                       InformationTile(
                         icon: Icons.phone,

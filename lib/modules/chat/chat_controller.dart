@@ -19,11 +19,11 @@ class ChatController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    status(ChatStatus.loading);
     await loadMyRooms();
   }
 
   Future<void> loadMyRooms() async {
+    status(ChatStatus.loading);
     await roomRepository!.getMyRoom().then((room) async {
       listRoom(room!.where((element) => element.haveMessage == true).toList());
       print(listRoom.toString());
@@ -42,12 +42,18 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> joinToChatRoom({required String doctorId}) async {
-    String? roomId = await roomRepository!.checkRoomIfExist(
-        userId: userController.user.value.id, doctorId: doctorId);
+  Future<String?> joinToChatRoom({required String notUserId}) async {
+    String? roomId;
+    if (userController.user.value.role == 'doctor') {
+      roomId = await roomRepository!.checkRoomIfExist(
+          memberId: notUserId, doctorId: userController.user.value.id);
+    } else {
+      roomId = await roomRepository!.checkRoomIfExist(
+          memberId: userController.user.value.id, doctorId: notUserId);
+    }
     socketService!
         .joinToRoom(roomId: roomId!, userId: userController.user.value.id);
-
+    return roomId;
   }
 
   Future<User> getUserById(String userId) async {

@@ -35,7 +35,7 @@ class SocketIOService {
       if (data != 'cannot found any doctors') {
         print('===========GET DOCTOR IN APP=======\n$data');
         try {
-          Iterable list = data["doctors"];
+          Iterable list = data["data"]["doctors"];
           listDoctor = list.map((e) => DoctorInApp.fromJson(e)).toList();
           print(listDoctor);
         } catch (_) {
@@ -75,8 +75,17 @@ class SocketIOService {
     };
     print(msg);
     socket.emitWithAck('send-message', msg, ack: (data) {
-      print(data);
+      print("send mess data: $data");
     });
   }
 
+  leaveChatRoom({required String roomId}) {
+    Map<String, String> msg = {
+      "roomId": roomId,
+    };
+    print("leaving");
+    socket.emitWithAck('leave-chat-room', msg, ack: (data) {
+      print("leave chat room data: $data");
+    });
+  }
 }
