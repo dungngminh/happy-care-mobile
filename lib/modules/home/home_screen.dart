@@ -18,27 +18,29 @@ class HomeScreen extends GetView<HomeController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GetBuilder<UserController>(builder: (controller) {
-                  final status = controller.status.value;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          status != UserStatus.loading
-                              ? "Chào, ${controller.user.value.role == "doctor" ? "Bác sĩ ${controller.user.value.profile?.fullname}" : "${controller.user.value.profile?.fullname ?? "người dùng"} "}"
-                              : "Chào",
-                          style: GoogleFonts.openSans(
-                            color: kMainColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                GetBuilder<UserController>(
+                  builder: (controller) {
+                    final status = controller.status.value;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            status != UserStatus.loading
+                                ? "Chào, ${controller.user.value.role == "doctor" ? "Bác sĩ ${controller.user.value.profile?.fullname}" : "${controller.user.value.profile?.fullname ?? "người dùng"} "}"
+                                : "Chào",
+                            style: GoogleFonts.openSans(
+                              color: kMainColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

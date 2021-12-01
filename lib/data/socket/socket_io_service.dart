@@ -5,7 +5,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class SocketIOService {
   late io.Socket socket;
-  List<DoctorInApp>? listDoctor;
+  List<DoctorInApp> listDoctor = [];
 
   Future<void> initService() async {
     socket = io.io(
@@ -32,19 +32,20 @@ class SocketIOService {
 
   getDoctorInApp() {
     socket.emitWithAck('get-doctors-in-app', "hello", ack: (data) {
-      if (data != 'cannot found any doctors') {
+      if (data["message"] != 'cannot found any doctors') {
         print('===========GET DOCTOR IN APP=======\n$data');
         try {
           Iterable list = data["data"]["doctors"];
           listDoctor = list.map((e) => DoctorInApp.fromJson(e)).toList();
           print(listDoctor);
         } catch (_) {
+          print("===========NO DOCTOR IN APP=======\nNull");
           print("null call");
-          listDoctor == null;
+          listDoctor == [];
         }
       } else {
         print("===========NO DOCTOR IN APP=======\nNull");
-        listDoctor == null;
+        listDoctor == [];
       }
     });
   }

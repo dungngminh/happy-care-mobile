@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/data/models/specialization.dart';
 import 'package:happy_care/modules/chat/search/chat_search_controller.dart';
 import 'package:happy_care/modules/chat/widget/doctor_search_tile.dart';
@@ -90,7 +91,8 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                               .joinToChatRoom(
                                   notUserId: controller.listDoctor[index].id)
                               .then((value) => Get.toNamed(AppRoutes.rChatRoom,
-                                  arguments: controller.listDoctor[index]));
+                                  arguments: RoomChatPass(
+                                      value!, controller.listDoctor[index])));
                         },
                       );
                     },

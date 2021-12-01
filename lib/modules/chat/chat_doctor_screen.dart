@@ -146,7 +146,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                               itemCount: controller.listRoom.length,
                               itemBuilder: (context, index) {
                                 print("Room id:" +
-                                    controller.listRoom[index].id!);
+                                    controller.listRoom[index]!.id!);
                                 return AnimationConfiguration.staggeredList(
                                   position: index,
                                   duration: const Duration(seconds: 1),
@@ -166,7 +166,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                   AppRoutes.rChatRoom,
                                                   arguments: RoomChatPass(
                                                       controller
-                                                          .listRoom[index].id!,
+                                                          .listRoom[index]!.id!,
                                                       controller
                                                               .listUserChatWithByRoom[
                                                           index]),

@@ -16,18 +16,22 @@ class ChatSearchController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     listSpec = [
       Specialization(id: null, name: "Tất cả"),
       ..._specController.listSpec
     ];
     listDoctor = doctorController.listDoctor;
-    super.onInit();
   }
 
   categorySelected(Specialization value) async {
     selected = value;
     update();
-    listDoctor = await doctorController.getDoctorMaybeBySpecId(id: value.id);
+    if (value.id == null) {
+      listDoctor = doctorController.listDoctor;
+    } else {
+      listDoctor = await doctorController.getDoctorMaybeBySpecId(id: value.id);
+    }
     update();
   }
 }

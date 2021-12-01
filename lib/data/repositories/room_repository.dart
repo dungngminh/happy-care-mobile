@@ -21,7 +21,7 @@ class RoomRepository {
     }
   }
 
-  Future<List<RoomChat>?> getMyRoom() async {
+  Future<List<RoomChat?>> getMyRoom() async {
     try {
       String token = await SharedPrefUtils.getStringKey('token');
       String response = await roomApi!.getMyRoom(token);
@@ -30,7 +30,7 @@ class RoomRepository {
       return listRoom.map((room) => RoomChat.fromJson(room)).toList();
     } catch (_) {
       print(_.toString());
-      return null;
+      return [];
     }
   }
 }

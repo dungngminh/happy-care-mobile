@@ -11,7 +11,8 @@ class ChatController extends GetxController {
   final SocketIOService? socketService;
   final RoomRepository? roomRepository;
   final UserController userController = Get.find();
-  final listRoom = RxList<RoomChat>([]);
+  // DoctorController? doctorController;
+  final listRoom = RxList<RoomChat?>([]);
   final listUserChatWithByRoom = RxList<User>([]);
   final status = ChatStatus.idle.obs;
   ChatController({this.socketService, this.roomRepository});
@@ -20,27 +21,32 @@ class ChatController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await loadMyRooms();
+    // if (userController.user.value.role == "member") {
+    //   doctorController = Get.find();
+    //   refreshDoctorOnline();
+    // }
   }
 
   Future<void> loadMyRooms() async {
     status(ChatStatus.loading);
     await roomRepository!.getMyRoom().then((room) async {
-      listRoom(room!.where((element) => element.haveMessage == true).toList());
+      listRoom(room.where((element) => element!.haveMessage == true).toList());
       print(listRoom.toString());
       listUserChatWithByRoom.clear();
       for (var room in listRoom) {
         if (userController.user.value.role == "member") {
-          listUserChatWithByRoom.add(await getUserById(room.members![1].id!));
+          listUserChatWithByRoom.add(await getUserById(room!.members![1].id!));
         } else {
-          listUserChatWithByRoom.add(await getUserById(room.members![0].id!));
+          listUserChatWithByRoom.add(await getUserById(room!.members![0].id!));
         }
       }
       status(ChatStatus.idle);
-    }).onError((error, stackTrace) {
-      print(error);
-      status(ChatStatus.error);
     });
   }
+
+  // Future<void> refreshDoctorOnline() async {
+  //   await doctorController!.getDoctorOnline();
+  // }
 
   Future<String?> joinToChatRoom({required String notUserId}) async {
     String? roomId;

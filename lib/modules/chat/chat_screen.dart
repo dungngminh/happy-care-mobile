@@ -63,16 +63,18 @@ class ChatScreen extends GetWidget<ChatController> {
                     ),
                   ],
                 ),
-                controller.listRoom.isEmpty
-                    ? IconButton(
-                        splashRadius: 26,
-                        padding: const EdgeInsets.only(),
-                        onPressed: () => controller.loadMyRooms(),
-                        icon: Icon(Icons.refresh_rounded),
-                        color: kMainColor,
-                        iconSize: 26,
-                      )
-                    : SizedBox(),
+                Obx(() {
+                  return controller.listRoom.isEmpty
+                      ? IconButton(
+                          splashRadius: 26,
+                          padding: const EdgeInsets.only(),
+                          onPressed: () => controller.loadMyRooms(),
+                          icon: Icon(Icons.refresh_rounded),
+                          color: kMainColor,
+                          iconSize: 26,
+                        )
+                      : SizedBox();
+                }),
               ],
             ),
           ),
@@ -87,7 +89,7 @@ class ChatScreen extends GetWidget<ChatController> {
                 padding: const EdgeInsets.only(),
                 children: [
                   SizedBox(
-                    height: size.height * 0.265,
+                    height: size.height * 0.256,
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,16 +98,32 @@ class ChatScreen extends GetWidget<ChatController> {
                           Get.toNamed(AppRoutes.rChatSearch);
                         }),
                         SizedBox(
-                          height: size.height * 0.02,
+                          height: size.height * 0.018,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Text(
-                            "Bác sĩ đang trực tuyến",
-                            style: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Bác sĩ đang trực tuyến",
+                                style: GoogleFonts.openSans(
+                                  color: kMainColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              // IconButton(
+                              //   padding: EdgeInsets.only(),
+                              //   splashRadius: 20,
+                              //   iconSize: 20,
+                              //   color: kMainColor,
+                              //   onPressed: () =>
+                              //       controller.refreshDoctorOnline(),
+                              //   icon: Icon(Icons.refresh_rounded),
+                              // ),
+                            ],
                           ),
                         ),
                         SizedBox(
@@ -163,37 +181,45 @@ class ChatScreen extends GetWidget<ChatController> {
                   Obx(() {
                     final status = controller.status.value;
                     if (status == ChatStatus.loading) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: kMainColor,
-                        ),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: size.height * 0.2),
+                          CircularProgressIndicator(
+                            color: kMainColor,
+                          ),
+                        ],
                       );
                     } else if (status == ChatStatus.error) {
-                      return Center(
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.error,
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: size.height * 0.2),
+                          Icon(
+                            Icons.error,
+                            color: kMainColor,
+                          ),
+                          Text(
+                            "Có lỗi xảy ra, vui lòng thử lại",
+                            style: GoogleFonts.openSans(
                               color: kMainColor,
                             ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      if (controller.listRoom.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: size.height * 0.2),
                             Text(
-                              "Có lỗi xảy ra, vui lòng thử lại",
+                              "Bạn chưa có cuộc tư vấn nào",
                               style: GoogleFonts.openSans(
                                 color: kMainColor,
                               ),
                             ),
                           ],
-                        ),
-                      );
-                    } else {
-                      if (controller.listRoom.isEmpty) {
-                        return Center(
-                          child: Text(
-                            "Bạn chưa có cuộc tư vấn nào",
-                            style: GoogleFonts.openSans(
-                              color: kMainColor,
-                            ),
-                          ),
                         );
                       } else {
                         return ListView.builder(
@@ -204,7 +230,7 @@ class ChatScreen extends GetWidget<ChatController> {
                           itemBuilder: (context, index) {
                             return RoomMessListTile(
                               function: () async {
-                                print(controller.listRoom[index].id!);
+                                print(controller.listRoom[index]!.id!);
                                 await controller
                                     .joinToChatRoom(
                                         notUserId: controller
@@ -212,7 +238,7 @@ class ChatScreen extends GetWidget<ChatController> {
                                     .then((value) => Get.toNamed(
                                         AppRoutes.rChatRoom,
                                         arguments: RoomChatPass(
-                                            controller.listRoom[index].id!,
+                                            controller.listRoom[index]!.id!,
                                             controller.listUserChatWithByRoom[
                                                 index])));
                               },
