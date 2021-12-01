@@ -17,17 +17,14 @@ class ChatRoomScreen extends GetWidget<ChatRoomController> {
     final roomPass = Get.arguments as RoomChatPass;
     final size = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: ()  => controller.leaveChatRoom(roomId: roomPass.id),
+      onWillPop: () async {
+        return controller.leaveChatRoom(roomId: roomPass.id);
+      },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: kMainColor,
-            leading: IconButton(
-              splashRadius: 24,
-              icon: BackButtonIcon(),
-              onPressed: () => Get.back(),
-            ),
             titleSpacing: -10,
             title: ListTile(
               leading: CircleAvatar(
@@ -35,11 +32,12 @@ class ChatRoomScreen extends GetWidget<ChatRoomController> {
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: CircleAvatar(
-                    backgroundImage: roomPass.userChatWith.profile?.avatar == null
-                        ? Image.asset("assets/images/icon.png").image
-                        : Image.memory(base64Decode(
-                                roomPass.userChatWith.profile!.avatar!))
-                            .image,
+                    backgroundImage:
+                        roomPass.userChatWith.profile?.avatar == null
+                            ? Image.asset("assets/images/icon.png").image
+                            : Image.memory(base64Decode(
+                                    roomPass.userChatWith.profile!.avatar!))
+                                .image,
                   ),
                 ),
               ),
