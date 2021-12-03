@@ -24,6 +24,7 @@ class RoomMessListTile extends StatelessWidget {
   final void Function() function;
   @override
   Widget build(BuildContext context) {
+    print(subtitle);
     return ListTile(
       onTap: function,
       leading: Stack(
@@ -48,7 +49,7 @@ class RoomMessListTile extends StatelessWidget {
       ),
       title: Text(title, style: GoogleFonts.openSans(color: kMainColor)),
       subtitle: Text(
-        "Tôi có thể giúp gì cho bạn?",
+        subtitle ?? "Hello",
         style: GoogleFonts.openSans(),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

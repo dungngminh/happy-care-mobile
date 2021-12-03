@@ -250,6 +250,7 @@ class ChatScreen extends GetWidget<ChatController> {
                                   'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
                               avatar: controller.listUserChatWithByRoom[index]
                                   .profile?.avatar,
+                                  subtitle: controller.listRoom[index]!.newestMessage,
                             );
                           },
                         );

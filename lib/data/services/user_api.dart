@@ -20,7 +20,7 @@ class UserApi {
     print("=============CREATE NEW USER BODY REQUEST==========\n$bodyRequest");
     var response = await http
         .post(
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users"),
       body: convert.jsonEncode(bodyRequest),
       headers: headers,
     )
@@ -48,7 +48,7 @@ class UserApi {
     var response = await http
         .post(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users/login"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
 
       body: convert.jsonEncode(body),
       headers: headers,
@@ -72,7 +72,7 @@ class UserApi {
     // print("${dotenv.env['BASE_URL']}/api/users/me");
     var response = await http.get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
 
       headers: headers,
     );
@@ -92,7 +92,7 @@ class UserApi {
     var response = await http
         .post(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users/logout"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/logout"),
       headers: headers,
     )
         .timeout(Duration(minutes: 1), onTimeout: () {
@@ -121,7 +121,7 @@ class UserApi {
     var response = await http
         .patch(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users/me"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/me"),
       body: convert.jsonEncode(bodyy),
       headers: headers,
     )
@@ -140,7 +140,7 @@ class UserApi {
   Future<String> getUserById(String userId) async {
     var response = await http.get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/$userId"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/users/$userId"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/users/$userId"),
     );
     print(response.statusCode);
     if (response.statusCode == 200) {

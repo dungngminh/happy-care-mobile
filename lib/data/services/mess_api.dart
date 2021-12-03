@@ -17,12 +17,12 @@ class MessApi {
       'Authorization': 'Bearer $token',
     };
     print(
-        "${dotenv.env['DEV_URL']}/api/messages/$roomId?start=$start&limit=$limit");
+        "${dotenv.env['BASE_URL']}/api/messages/$roomId?start=$start&limit=$limit");
     var response = await http
         .get(
             // Uri.parse("${dotenv.env['BASE_URL']}/api/rooms/verify-room"),
             Uri.parse(
-                "${dotenv.env['DEV_URL']}/api/messages/$roomId?start=$start&limit=$limit"),
+                "${dotenv.env['BASE_URL']}/api/messages/$roomId?start=$start&limit=$limit"),
             headers: headers)
         .timeout(Duration(minutes: 1), onTimeout: () {
       throw TimeoutException("Time out exception");

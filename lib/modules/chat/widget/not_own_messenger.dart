@@ -6,11 +6,16 @@ import 'package:happy_care/core/themes/colors.dart';
 
 class NotOwnMessenger extends StatelessWidget {
   const NotOwnMessenger(
-      {Key? key, required this.messenge, required this.time, this.avatar})
+      {Key? key,
+      required this.messenge,
+      required this.time,
+      this.avatar,
+      this.type = "text"})
       : super(key: key);
   final String messenge;
   final String time;
   final String? avatar;
+  final String type;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,13 +58,19 @@ class NotOwnMessenger extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    messenge,
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      color: kMainColor,
-                    ),
-                  ),
+                  child: type == "text"
+                      ? Text(
+                          messenge,
+                          style: GoogleFonts.openSans(
+                            fontSize: 18,
+                            color: kMainColor,
+                          ),
+                        )
+                      : Image.memory(
+                          base64Decode(messenge),
+                          width: 200,
+                          height: 300,
+                        ),
                 ),
               ),
             ),

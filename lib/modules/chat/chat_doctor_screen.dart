@@ -177,15 +177,15 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                 .listUserChatWithByRoom[index]
                                                 .profile
                                                 ?.fullname ??
-                                            (controller.userController.user
-                                                        .value.role !=
-                                                    'doctor'
-                                                ? "Bác sĩ ${controller.listUserChatWithByRoom[index].profile?.fullname}"
-                                                : "${controller.listUserChatWithByRoom[index].profile?.fullname}"),
+                                            controller
+                                                .listUserChatWithByRoom[index]
+                                                .email,
                                         avatar: controller
                                             .listUserChatWithByRoom[index]
                                             .profile
                                             ?.avatar,
+                                        subtitle: controller
+                                            .listRoom[index]!.newestMessage,
                                       ),
                                     ),
                                   ),

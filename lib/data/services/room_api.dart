@@ -26,7 +26,7 @@ class RoomApi {
     var response = await http
         .post(
             // Uri.parse("${dotenv.env['BASE_URL']}/api/rooms/verify-room"),
-            Uri.parse("${dotenv.env['DEV_URL']}/api/rooms/verify-room"),
+            Uri.parse("${dotenv.env['BASE_URL']}/api/rooms/verify-room"),
             body: convert.jsonEncode(body),
             headers: headers)
         .timeout(Duration(minutes: 1), onTimeout: () {
@@ -51,7 +51,7 @@ class RoomApi {
     var response = await http
         .get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/rooms/me"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/rooms/me"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/rooms/me"),
       headers: headers,
     )
         .timeout(Duration(minutes: 2), onTimeout: () {

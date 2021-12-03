@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 
 class OwnMessenger extends StatelessWidget {
   const OwnMessenger(
-      {Key? key, required this.messenge, required this.time, this.status})
+      {Key? key,
+      required this.messenge,
+      required this.time,
+      this.status,
+      this.type = "text"})
       : super(key: key);
   final String messenge;
   final String time;
   final bool? status;
+  final String type;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -36,13 +43,19 @@ class OwnMessenger extends StatelessWidget {
                 color: kMainColor,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    messenge,
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: type == "text"
+                      ? Text(
+                          messenge,
+                          style: GoogleFonts.openSans(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Image.memory(
+                          base64Decode(messenge),
+                          width: 200,
+                          height: 300,
+                        ),
                 ),
               ),
             ),

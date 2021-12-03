@@ -12,7 +12,7 @@ class SpecApi {
     var response = await http
         .get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/login"),
-      Uri.parse("${dotenv.env['DEV_URL']}/api/admin/specialization"),
+      Uri.parse("${dotenv.env['BASE_URL']}/api/admin/specialization"),
     )
         .timeout(Duration(minutes: 2), onTimeout: () {
       throw TimeoutException("Time out exception");

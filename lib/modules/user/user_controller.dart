@@ -3,6 +3,7 @@ import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/data/socket/socket_io_service.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/my_toast.dart';
 
 enum UserStatus { loading, done, error }
 
@@ -21,9 +22,10 @@ class UserController extends GetxController {
 
   Future<void> signOut() async {
     socketIOService!.signOut();
-    await userRepository!
-        .signOut()
-        .then((value) => Get.offAllNamed(AppRoutes.rSignIn));
+    await userRepository!.signOut().then((value) {
+      MyToast.showToast("Đăng xuất thành công");
+      Get.offAllNamed(AppRoutes.rSignIn);
+    });
   }
 
   Future<void> getUserInformation() async {

@@ -17,7 +17,7 @@ class DoctorApi {
     var response = await http
         .get(
             // Uri.parse("${dotenv.env['BASE_URL']}$path"),
-            Uri.parse("${dotenv.env['DEV_URL']}$path"),
+            Uri.parse("${dotenv.env['BASE_URL']}$path"),
             headers: headers)
         .timeout(Duration(minutes: 1), onTimeout: () {
       throw TimeoutException("Time out exception");

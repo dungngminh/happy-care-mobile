@@ -136,7 +136,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                               size: 25.0,
                               color: kMainColor,
                             ),
-                            onPressed: () {},
+                            onPressed: () => controller.getImageToSend(),
                           ),
                         ),
                         Expanded(
@@ -176,13 +176,17 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: IconButton(
+                          child: Obx(() =>IconButton(
                             onPressed: () =>
-                                controller.sendMessage(roomId: roomPass.id),
-                            icon: Icon(
-                              Icons.send_rounded,
-                              size: 25.0,
-                              color: kMainColor,
+                               !controller.isHadImage.value? controller.sendMessage(roomId: roomPass.id) :controller.sendImage(roomId: roomPass.id),
+                            icon: 
+                              Icon(
+                                !controller.isHadImage.value
+                                    ? Icons.send_rounded
+                                    : Icons.attach_file,
+                                size: 25.0,
+                                color: kMainColor,
+                              ),
                             ),
                           ),
                         )
@@ -191,8 +195,98 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                   ),
                 ],
               ),
+              GetBuilder<ChatRoomController>(builder: (controller) {
+                return controller.imageToSend == null
+                    ? SizedBox()
+                    : _buildImagePreview(controller);
+              }),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImagePreview(ChatRoomController controller) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5.0),
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Ảnh được chọn',
+              style: GoogleFonts.openSans(
+                color: Colors.grey.shade500,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    offset: Offset(0, 0.5),
+                    blurRadius: 3,
+                    spreadRadius: 2,
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      controller.imageToSend!,
+                      width: 70,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.platformFile!.name,
+                          style: GoogleFonts.openSans(
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          '${(controller.platformFile!.size / 1024).ceil()} KB',
+                          style: GoogleFonts.openSans(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => controller.removeFile(),
+                    icon: Icon(
+                      Icons.close,
+                      color: kMainColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

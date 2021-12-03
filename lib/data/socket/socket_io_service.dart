@@ -10,12 +10,10 @@ class SocketIOService {
   late io.Socket socket;
   List<DoctorInApp> listDoctor = [];
 
-
-
   // init SocketIO Service
   Future<void> initService() async {
     socket = io.io(
-        "${dotenv.env['DEV_URL']}",
+        "${dotenv.env['BASE_URL']}",
         io.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -74,19 +72,28 @@ class SocketIOService {
   }
 
   //emit event send message
-  sendMessage(
-      {required String content,
-      required String roomId,
-      required String userId}) {
-    Map<String, String> msg = {
-      "message": content,
+  sendMessage({
+    required dynamic content,
+    required String roomId,
+    required String userId,
+    required String contentType,
+  }) {
+    Map<String, dynamic> msg = {
+      "content": content,
       "roomId": roomId,
+      "type": contentType,
       "userId": userId
     };
     print(msg);
-    socket.emitWithAck('send-message', msg, ack: (data) {
-      print("send mess data: $data");
-    });
+    if (msg["contentType"] == "image") {
+      socket.emitWithAck('send-message', msg, binary: true, ack: (data) {
+        print("send mess data: $data");
+      });
+    } else {
+      socket.emitWithAck('send-message', msg, ack: (data) {
+        print("send mess data: $data");
+      });
+    }
   }
 
   //emit event leave chat room
@@ -99,5 +106,4 @@ class SocketIOService {
       print("leave chat room data: $data");
     });
   }
-
 }

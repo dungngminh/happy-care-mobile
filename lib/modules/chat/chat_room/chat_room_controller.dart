@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'dart:collection';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:happy_care/data/repositories/mess_repository.dart';
 import 'package:happy_care/data/socket/socket_io_service.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 
 enum ChatRoomStatus { loading, idle, error }
 
@@ -23,6 +25,9 @@ class ChatRoomController extends GetxController {
   late TextEditingController textMessController;
   var listMess = RxList<ChatMess>([]);
   var isTyping = false.obs;
+  var isHadImage = false.obs;
+  File? imageToSend;
+  PlatformFile? platformFile;
 
   ChatRoomController({this.messRepo, this.ioService});
 
@@ -46,10 +51,10 @@ class ChatRoomController extends GetxController {
         //TODO : add more mess
       }
     });
-    scrollToBottom();
+
     ioService!.socket.on('receive-message', (data) async {
       print(data);
-      listMess.insert(0, ChatMess.fromMap2(data));
+      listMess.insert(0, ChatMess.fromMap(data));
       scrollToBottom();
     });
   }
@@ -64,22 +69,26 @@ class ChatRoomController extends GetxController {
     }
   }
 
-  sendMessage({required String roomId}) async {
-    listMess.insert(
-      0,
-      ChatMess(
-        content: textMessController.text,
-        user: userController.user.value.id,
-        time: DateTime.now().toLocal().toString(),
-      ),
-    );
-    ioService!.sendMessage(
-        content: textMessController.text,
-        roomId: roomId,
-        userId: userController.user.value.id);
-    scrollToBottom();
-    textMessController.clear();
-    focusNode.requestFocus();
+  void sendMessage({required String roomId}) {
+    if (textMessController.text != "") {
+      listMess.insert(
+        0,
+        ChatMess(
+          content: textMessController.text,
+          user: userController.user.value.id,
+          type: "text",
+          time: DateTime.now().toLocal().toString(),
+        ),
+      );
+      ioService!.sendMessage(
+          content: textMessController.text,
+          roomId: roomId,
+          contentType: "text",
+          userId: userController.user.value.id);
+      scrollToBottom();
+      textMessController.clear();
+      focusNode.requestFocus();
+    }
   }
 
   leaveChatRoom({required String roomId}) {
@@ -87,9 +96,47 @@ class ChatRoomController extends GetxController {
     return true;
   }
 
+  Future<void> getImageToSend() async {
+    final _file = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg']);
+
+    if (_file != null) {
+      imageToSend = File(_file.files.single.path!);
+      platformFile = _file.files.first;
+      isHadImage(true);
+      update();
+    }
+  }
+
+  removeFile() {
+    imageToSend = null;
+    platformFile = null;
+    isHadImage(false);
+    update();
+  }
+
   @override
   void onClose() {
     scrollController.dispose();
     super.onClose();
+  }
+
+  sendImage({required String roomId}) async {
+    final bytes = await imageToSend!.readAsBytes();
+    listMess.insert(
+      0,
+      ChatMess(
+        content: base64Encode(bytes),
+        user: userController.user.value.id,
+        type: "image",
+        time: DateTime.now().toLocal().toString(),
+      ),
+    );
+    ioService!.sendMessage(
+        content: bytes,
+        roomId: roomId,
+        contentType: "image",
+        userId: userController.user.value.id);
+    scrollToBottom();
   }
 }

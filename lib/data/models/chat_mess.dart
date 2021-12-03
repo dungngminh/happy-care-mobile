@@ -21,17 +21,11 @@ class ChatMess {
   }
 
   factory ChatMess.fromMap(Map<String, dynamic> data) => ChatMess(
-        content: data['content'] ?? data['message'] as String?,
+        content: data['content'] as String?,
         type: data['type'] as String?,
         time: data['time'] as String?,
         user: data['user'] as String?,
         room: data['room'] as String?,
-      );
-
-  factory ChatMess.fromMap2(Map<String, dynamic> data) => ChatMess(
-        content: data['message'] as String?,
-        user: data['user'] as String?,
-        time: data['time'] as String?,
       );
 
   Map<String, dynamic> toMap() => {
