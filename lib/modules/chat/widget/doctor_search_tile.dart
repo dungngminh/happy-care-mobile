@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
@@ -9,14 +10,14 @@ class DoctorSearchTile extends StatelessWidget {
     Key? key,
     this.fullname,
     this.specialization,
-    this.isOnline,
+    this.status,
     required this.function,
     this.avatar,
   }) : super(key: key);
 
   final String? fullname;
   final String? specialization;
-  final bool? isOnline;
+  final int? status;
   final String? avatar;
   final void Function() function;
 
@@ -49,8 +50,19 @@ class DoctorSearchTile extends StatelessWidget {
         ),
         subtitle: Text(specialization ?? "Chưa có thông tin",
             style: GoogleFonts.openSans()),
-        trailing:
-            isOnline! ? Icon(Icons.wifi_rounded, color: kMainColor) : null,
+        trailing: status == 1
+            ? Badge(
+                toAnimate: false,
+                shape: BadgeShape.circle,
+                badgeColor: Colors.red,
+              )
+            : (status == 2
+                ? Badge(
+                    toAnimate: false,
+                    shape: BadgeShape.circle,
+                    badgeColor: Colors.green,
+                  )
+                : Icon(Icons.wifi_off_rounded, color: Colors.grey[300])),
         onTap: function,
       ),
     );

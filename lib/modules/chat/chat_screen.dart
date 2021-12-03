@@ -148,15 +148,18 @@ class ChatScreen extends GetWidget<ChatController> {
                                           .joinToChatRoom(
                                               notUserId: docController
                                                   .listDoctor[index].id)
-                                          .then((value) => Get.toNamed(
+                                          .then(
+                                            (value) => Get.toNamed(
                                               AppRoutes.rChatRoom,
                                               arguments: RoomChatPass(
-                                                  value!,
-                                                  docController
-                                                      .listDoctor[index])));
+                                                value!,
+                                                docController.listDoctor[index],
+                                              ),
+                                            ),
+                                          );
                                     },
-                                    isOnline: docController
-                                        .listDoctor[index].isOnline!,
+                                    status: docController
+                                        .listDoctor[index].status!,
                                   );
                                 },
                               );

@@ -84,7 +84,7 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                             controller.listDoctor[index].profile?.fullname,
                         specialization:
                             controller.listDoctor[index].specializations!.first,
-                        isOnline: controller.listDoctor[index].isOnline,
+                        status: controller.listDoctor[index].status,
                         avatar: controller.listDoctor[index].profile?.avatar,
                         function: () async {
                           await controller.chatController

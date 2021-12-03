@@ -2,19 +2,24 @@ import 'package:get/get.dart';
 import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
+import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/data/socket/socket_io_service.dart';
+import 'package:happy_care/modules/user/user_controller.dart';
 
 enum DocStatus { loading, error, idle }
 
 class DoctorController extends GetxController {
   List<User> listDoctor = [];
-final DoctorRepository? _doctorRepository;
+  final DoctorRepository? _doctorRepository;
+  final UserController userController = Get.find();
   final SocketIOService? _ioService;
   final status = DocStatus.idle.obs;
   List<DoctorInApp> listInApp = [];
 
   DoctorController(
-      {SocketIOService? ioService, DoctorRepository? doctorRepository})
+      {UserRepository? userRepository,
+      SocketIOService? ioService,
+      DoctorRepository? doctorRepository})
       : _doctorRepository = doctorRepository,
         _ioService = ioService;
 
@@ -24,7 +29,7 @@ final DoctorRepository? _doctorRepository;
     status(DocStatus.loading);
     listDoctor = await getDoctorMaybeBySpecId(id: null);
     _ioService?.initService();
-    await getDoctorOnline();
+    if (userController.user.value.role == "member") await getDoctorOnline();
   }
 
   Future<void> getDoctorOnline() async {
@@ -40,7 +45,7 @@ final DoctorRepository? _doctorRepository;
       });
       checkOnlineAndSort();
       update();
-      await Future.delayed(Duration(minutes: 4));
+      await Future.delayed(Duration(minutes: 2));
     }
   }
 
@@ -48,24 +53,22 @@ final DoctorRepository? _doctorRepository;
     return await _doctorRepository!.getDoctorMaybeBySpecId(specId: id);
   }
 
-  
-
   void checkOnlineAndSort() {
     if (listInApp.isNotEmpty) {
       for (var doctor in listDoctor) {
         for (var inApp in listInApp) {
           if (inApp.userId == doctor.id) {
-            doctor.isOnline = true;
+            doctor.status = inApp.status;
             break;
           } else {
             continue;
           }
         }
       }
-      listDoctor.sort((a, b) => b.isOnline! ? 1 : -1);
+      listDoctor.sort((a, b) => b.status!.compareTo(a.status!));
     } else {
       for (var doctor in listDoctor) {
-        doctor.isOnline = false;
+        doctor.status = 0;
       }
       return;
     }

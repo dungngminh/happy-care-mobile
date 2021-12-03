@@ -8,14 +8,12 @@ import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
-import 'package:intl/intl.dart';
 
-class ChatRoomScreen extends GetWidget<ChatRoomController> {
+class ChatRoomScreen extends GetView<ChatRoomController> {
   const ChatRoomScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final roomPass = Get.arguments as RoomChatPass;
-    final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
         return controller.leaveChatRoom(roomId: roomPass.id);
@@ -79,76 +77,121 @@ class ChatRoomScreen extends GetWidget<ChatRoomController> {
               ),
             ],
           ),
-          body: Container(
-            height: double.infinity,
-            padding: EdgeInsets.only(bottom: 5, top: 5),
-            color: kSecondColor,
-            child: Obx(
-              () {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.listMess.length,
-                  itemBuilder: (context, index) {
-                    final formater = DateFormat("HH:mm");
-                    print(controller.listMess[index].user);
-                    print("userchatwithId" + roomPass.userChatWith.id);
-                    if (controller.listMess[index].user !=
-                        roomPass.userChatWith.id) {
-                      return OwnMessenger(
-                        messenge: controller.listMess[index].content,
-                        time: formater.format(
-                          DateTime.now().toLocal(),
-                        ),
-                      );
+          body: Column(
+            children: [
+              Expanded(
+                child: Obx(
+                  () {
+                    final status = controller.status.value;
+                    if (status == ChatRoomStatus.loading) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: kMainColor,
+                      ));
                     } else {
-                      return NotOwnMessenger(
-                        messenge: controller.listMess[index].content,
-                        avatar: roomPass.userChatWith.profile?.avatar,
-                        time: formater.format(
-                          DateTime.parse(
-                            controller.listMess[index].time!,
-                          ).toLocal(),
-                        ),
+                      return ListView.builder(
+                        reverse: true,
+                        controller: controller.scrollController,
+                        itemCount: controller.listMess.length,
+                        itemBuilder: (context, index) {
+                          if (controller.listMess[index].user !=
+                              roomPass.userChatWith.id) {
+                            return OwnMessenger(
+                                messenge: controller.listMess[index].content!,
+                                time: controller.formater.format(DateTime.parse(
+                                        controller.listMess[index].time!)
+                                    .toLocal()));
+                          } else {
+                            return NotOwnMessenger(
+                              messenge: controller.listMess[index].content!,
+                              avatar: roomPass.userChatWith.profile?.avatar,
+                              time: controller.formater.format(
+                                DateTime.parse(
+                                  controller.listMess[index].time!,
+                                ).toLocal(),
+                              ),
+                            );
+                          }
+                        },
                       );
                     }
                   },
-                );
-              },
-            ),
-          ),
-          bottomNavigationBar: Transform.translate(
-            offset: Offset(0.0, -1 * MediaQuery.of(context).viewInsets.bottom),
-            child: BottomAppBar(
-              child: Container(
-                height: size.height * 0.06,
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                child: Row(
-                  children: [
-                    IconButton(
-                      color: kMainColor,
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.image_rounded,
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controller.textMessController,
-                        textAlignVertical: TextAlignVertical.center,
-                      ),
-                    ),
-                    IconButton(
-                      color: kMainColor,
-                      onPressed: () =>
-                          controller.sendMessage(roomId: roomPass.id),
-                      icon: Icon(
-                        Icons.send_rounded,
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.image_rounded,
+                              size: 25.0,
+                              color: kMainColor,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            focusNode: controller.focusNode,
+                            controller: controller.textMessController,
+                            maxLines: null,
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.only(left: 5) + EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
+                              ),
+                              hintText: 'Aa',
+                              filled: true,
+                              fillColor: Colors.grey.shade200,
+                              hintStyle: GoogleFonts.openSans(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[600],
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.emoji_emotions,
+                                  size: 25.0,
+                                  color: kMainColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: IconButton(
+                            onPressed: () =>
+                                controller.sendMessage(roomId: roomPass.id),
+                            icon: Icon(
+                              Icons.send_rounded,
+                              size: 25.0,
+                              color: kMainColor,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

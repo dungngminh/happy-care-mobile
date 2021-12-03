@@ -11,14 +11,14 @@ class ProfileItem extends StatelessWidget {
     Key? key,
     required this.size,
     required this.function,
-    required this.isOnline,
+    required this.status,
     this.fullName,
     this.avatar,
   }) : super(key: key);
 
   final Size size;
   final void Function() function;
-  final bool isOnline;
+  final int status;
   final String? fullName;
   final String? avatar;
 
@@ -52,13 +52,19 @@ class ProfileItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  isOnline
+                  status == 1
+                      ? Badge(
+                          toAnimate: false,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.red,
+                        )
+                      : (status == 2
                       ? Badge(
                           toAnimate: false,
                           shape: BadgeShape.circle,
                           badgeColor: Colors.green,
                         )
-                      : SizedBox(),
+                      : SizedBox()),
                 ],
               ),
               SizedBox(

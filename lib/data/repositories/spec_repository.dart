@@ -7,7 +7,6 @@ class SpecializationRepository {
 
   SpecializationRepository({this.specApi});
 
-
   Future<List<Specialization>> getAllSpecAvaliable() async {
     try {
       var response = await specApi!.getAllSpecAvailable();

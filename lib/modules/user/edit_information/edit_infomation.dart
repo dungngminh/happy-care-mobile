@@ -1,12 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/edit_information/edit_information_controller.dart';
-
 
 class EditInformationScreen extends GetView<EditInformationController> {
   const EditInformationScreen({Key? key}) : super(key: key);
@@ -92,7 +89,6 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                   : CircleAvatar(
                                       backgroundImage:
                                           FileImage(controller.profileImage!));
-                            
                             }),
                           ),
                         ),

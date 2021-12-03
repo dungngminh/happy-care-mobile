@@ -34,4 +34,5 @@ class ChatSearchController extends GetxController {
     }
     update();
   }
+  
 }

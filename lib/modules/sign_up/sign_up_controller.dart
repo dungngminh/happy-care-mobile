@@ -40,7 +40,7 @@ class SignUpController extends GetxController {
     isHideRepassword.value = !isHideRepassword.value;
     update();
   }
-  
+
   Future<void> createNewUser(BuildContext context) async {
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||

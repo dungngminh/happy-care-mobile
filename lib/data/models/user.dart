@@ -16,7 +16,7 @@ class User {
     required this.role,
     this.specializations,
     this.background,
-    this.isOnline = false,
+    this.status = 0,
   });
 
   Profile? profile;
@@ -25,7 +25,7 @@ class User {
   late String role;
   List<String>? specializations;
   List<Background>? background;
-  bool? isOnline;
+  int? status;
 
   User.init();
 
@@ -99,7 +99,6 @@ class Profile {
         phone: json["phone"],
         address: json["address"],
         avatar: json["avatar"],
-
       );
 
   Map<String, dynamic> toJson() => {

@@ -8,14 +8,15 @@ class DoctorInApp {
 
   String id;
   String userId;
-  String status;
+  int status;
   String userRole;
 
   factory DoctorInApp.fromJson(Map<String, dynamic> json) => DoctorInApp(
         id: json["id"],
         userId: json["userId"],
         userRole: json["userRole"],
-        status: json["status"],
+        status:
+            json["status"] == "busy" ? 1 : (json["status"] == "online" ? 2 : 0),
       );
 
   Map<String, dynamic> toJson() => {

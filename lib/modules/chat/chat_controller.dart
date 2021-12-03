@@ -21,10 +21,6 @@ class ChatController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await loadMyRooms();
-    // if (userController.user.value.role == "member") {
-    //   doctorController = Get.find();
-    //   refreshDoctorOnline();
-    // }
   }
 
   Future<void> loadMyRooms() async {
@@ -44,9 +40,6 @@ class ChatController extends GetxController {
     });
   }
 
-  // Future<void> refreshDoctorOnline() async {
-  //   await doctorController!.getDoctorOnline();
-  // }
 
   Future<String?> joinToChatRoom({required String notUserId}) async {
     String? roomId;

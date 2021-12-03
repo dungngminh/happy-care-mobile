@@ -1,10 +1,11 @@
-
 import 'package:get/get.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
+import 'package:happy_care/data/repositories/mess_repository.dart';
 import 'package:happy_care/data/repositories/room_repository.dart';
 import 'package:happy_care/data/repositories/spec_repository.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/data/services/doctor_api.dart';
+import 'package:happy_care/data/services/mess_api.dart';
 import 'package:happy_care/data/services/room_api.dart';
 import 'package:happy_care/data/services/spec_api.dart';
 import 'package:happy_care/data/services/user_api.dart';
@@ -26,7 +27,6 @@ class MainBinding extends Bindings {
     Get.lazyPut<DoctorApi?>(() => DoctorApi(Client()));
     Get.lazyPut<RoomApi?>(() => RoomApi(Client()));
     Get.lazyPut<SocketIOService?>(() => SocketIOService());
-
     Get.lazyPut<UserRepository?>(() => UserRepository(userApi: Get.find()));
     Get.lazyPut<SpecializationRepository?>(
         () => SpecializationRepository(specApi: Get.find()));

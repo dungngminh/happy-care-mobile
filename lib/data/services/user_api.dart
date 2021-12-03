@@ -136,7 +136,7 @@ class UserApi {
       return false;
     }
   }
-  
+
   Future<String> getUserById(String userId) async {
     var response = await http.get(
       // Uri.parse("${dotenv.env['BASE_URL']}/api/users/$userId"),

@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      enableLog: true,
       title: "Happy Care",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -36,3 +37,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
