@@ -1,16 +1,20 @@
 import 'package:get/get.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
+import 'package:happy_care/data/services/socket_io_service.dart';
+import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/my_toast.dart';
 
-enum Status { loading, done, error }
+enum UserStatus { loading, done, error }
 
 class UserController extends GetxController {
   var user = User.init().obs;
-  final status = Status.loading.obs;
+  final status = UserStatus.loading.obs;
   final UserRepository? userRepository;
-
-  UserController({this.userRepository});
+  final SocketIOService? socketIOService;
+  final ImageController imageController = Get.find();
+  UserController({this.userRepository, this.socketIOService});
 
   @override
   Future<void> onInit() async {
@@ -19,18 +23,22 @@ class UserController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await userRepository!.signOut();
-    Get.offAllNamed(AppRoutes.rSignIn);
+    socketIOService!.signOut();
+    await userRepository!.signOut().then((value) {
+      MyToast.showToast("Đăng xuất thành công");
+      Get.offAllNamed(AppRoutes.rSignIn);
+    });
   }
 
   Future<void> getUserInformation() async {
-    status(Status.loading);
+    status(UserStatus.loading);
     await userRepository!.getUserData().then((data) {
       user(data);
-      status(Status.done);
+      status(UserStatus.done);
+      update();
     }).onError((error, stackTrace) {
       print("$error");
-      status(Status.error);
+      status(UserStatus.error);
     });
   }
 }

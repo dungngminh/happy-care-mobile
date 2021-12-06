@@ -1,4 +1,4 @@
-package com.example.happy_care
+package com.komkat.happy_care
 
 import io.flutter.embedding.android.FlutterActivity
 

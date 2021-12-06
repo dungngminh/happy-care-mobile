@@ -8,7 +8,7 @@ class PrescriptionScreen extends GetView<PrescriptionController> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("prescription"),
+      child: Text("Đơn thuốc UI"),
     );
   }
 }

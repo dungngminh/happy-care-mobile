@@ -1,17 +1,28 @@
+
+import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem({
     Key? key,
-    required this.size,
     required this.function,
+    required this.status,
+    this.fullName,
+    this.avatar,
+    required this.width,
   }) : super(key: key);
 
-  final Size size;
   final void Function() function;
+  final int status;
+  final double width;
+  final String? fullName;
+  final String? avatar;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,24 +34,51 @@ class ProfileItem extends StatelessWidget {
           right: 10.0,
         ),
         child: SizedBox(
-          width: size.width * 0.17,
+          width: width,
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: Image.asset("assets/images/icon.png").image,
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: kMainColor,
+                    radius: 29,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: CircleAvatar(
+                        radius: 29,
+                        backgroundImage: avatar == null
+                            ? Image.asset("assets/images/icon.png").image
+                            : CachedNetworkImageProvider(avatar!),
+                      ),
+                    ),
+                  ),
+                  status == 1
+                      ? Badge(
+                          toAnimate: false,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.red,
+                        )
+                      : (status == 2
+                          ? Badge(
+                              toAnimate: false,
+                              shape: BadgeShape.circle,
+                              badgeColor: Colors.green,
+                            )
+                          : SizedBox()),
+                ],
               ),
               SizedBox(
-                height: 10,
+                height: 0.8.h,
               ),
               Text(
-                "Minh Đức Bie Nguyễn",
+                fullName ?? "Bác sĩ giấu tên",
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.openSans(
                   color: kMainColor,
                   fontWeight: FontWeight.w600,
-                  fontSize: 12,
+                  fontSize: 8.sp,
                 ),
               ),
             ],

@@ -16,26 +16,31 @@ class User {
     required this.role,
     this.specializations,
     this.background,
+    this.status = 0,
   });
 
   Profile? profile;
   late String id;
   late String email;
   late String role;
-  late List<String?>? specializations;
-  late List<Background?>? background;
+  List<String>? specializations;
+  List<Background>? background;
+  int? status;
 
   User.init();
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        profile: Profile.fromJson(json["profile"]),
+        profile:
+            json["profile"] != null ? Profile.fromJson(json["profile"]) : null,
         id: json["_id"],
         email: json["email"],
         role: json["role"],
         specializations:
             List<String>.from(json["specializations"].map((x) => x)),
-        background: List<Background>.from(
-            json["background"].map((x) => Background.fromJson(x))),
+        background: json["background"] != null
+            ? List<Background>.from(
+                json["background"].map((x) => Background.fromJson(x)))
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,8 +48,7 @@ class User {
         "_id": id,
         "email": email,
         "role": role,
-        "specializations": List<dynamic>.from(specializations!.map((x) => x)),
-        "background": List<dynamic>.from(background!.map((x) => x?.toJson())),
+        "background": List<dynamic>.from(background!.map((x) => x.toJson())),
       };
 }
 
@@ -78,6 +82,7 @@ class Profile {
     this.age,
     this.phone,
     this.address,
+    this.avatar,
   });
 
   String? fullname;
@@ -85,6 +90,7 @@ class Profile {
   int? age;
   String? phone;
   String? address;
+  String? avatar;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         fullname: json["fullname"],
@@ -92,6 +98,7 @@ class Profile {
         age: json["age"],
         phone: json["phone"],
         address: json["address"],
+        avatar: json["avatar"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -100,5 +107,6 @@ class Profile {
         "age": age,
         "phone": phone,
         "address": address,
+        "avatar": avatar,
       };
 }

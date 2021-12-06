@@ -1,20 +1,24 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/edit_information/edit_information_controller.dart';
-// ignore: import_of_legacy_library_into_null_safe
+import 'package:happy_care/widgets/custom_text_field.dart';
+import 'package:sizer/sizer.dart';
 
 class EditInformationScreen extends GetView<EditInformationController> {
   const EditInformationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
-        final shouldPop = await controller.showConfirmDialog(context);
+        final shouldPop = await controller.showConfirmDialog(context,
+            title: "Hủy thay đổi",
+            contentDialog: "Bạn có muốn hủy thay đổi?",
+            confirmFunction: () => Get.back(result: true));
         return shouldPop;
       },
       child: GestureDetector(
@@ -22,7 +26,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
         child: Scaffold(
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+              padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 5.h),
               child: Column(
                 children: [
                   Row(
@@ -30,8 +34,12 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          final shouldPop =
-                              await controller.showConfirmDialog(context);
+                          final shouldPop = await controller.showConfirmDialog(
+                              context,
+                              title: "Hủy thay đổi",
+                              contentDialog: "Bạn có muốn hủy thay đổi?",
+                              confirmFunction: () => Get.back(result: true));
+
                           if (shouldPop) Get.back();
                         },
                         icon: Icon(
@@ -43,13 +51,14 @@ class EditInformationScreen extends GetView<EditInformationController> {
                       Text(
                         'Chỉnh sửa thông tin',
                         style: GoogleFonts.openSans(
-                          fontSize: 20,
+                          fontSize: 15.sp,
                           color: kMainColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       IconButton(
-                        onPressed: () => controller.saveUserInformation(),
+                        onPressed: () =>
+                            controller.saveUserInformation(context),
                         icon: Icon(
                           Icons.save,
                           color: kMainColor,
@@ -59,29 +68,37 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     ],
                   ),
                   SizedBox(
-                    height: size.height * 0.03,
+                    height: 2.h,
                   ),
                   Stack(
                     children: [
                       SizedBox(
-                        height: 160,
-                        width: 160,
+                        height: 20.h,
+                        width: 20.h,
                         child: CircleAvatar(
                           backgroundColor: kMainColor,
                           child: SizedBox(
-                            height: 150,
-                            width: 150,
+                            height: 19.h,
+                            width: 19.h,
                             child: GetBuilder<EditInformationController>(
-                                builder: (context) {
-                              return controller.profileImage == null
-                                  ? CircleAvatar(
-                                      backgroundImage:
-                                          Image.asset("assets/images/icon.png")
-                                              .image,
-                                    )
-                                  : CircleAvatar(
-                                      backgroundImage:
-                                          FileImage(controller.profileImage!));
+                                builder: (controller) {
+                              if (controller.user.profile?.avatar == null) {
+                                return controller.profileImage == null
+                                    ? CircleAvatar(
+                                        backgroundImage: Image.asset(
+                                                "assets/images/icon.png")
+                                            .image)
+                                    : CircleAvatar(
+                                        backgroundColor: kMainColor,
+                                        backgroundImage: FileImage(
+                                            controller.profileImage!));
+                              } else {
+                                return CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                    controller.user.profile!.avatar!,
+                                  ),
+                                );
+                              }
                             }),
                           ),
                         ),
@@ -108,7 +125,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                             style: GoogleFonts.openSans(
                                               color: kMainColor,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 16,
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                         ),
@@ -122,7 +139,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                             style: GoogleFonts.openSans(
                                               color: kMainColor,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 16,
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                         ),
@@ -136,7 +153,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                             style: GoogleFonts.openSans(
                                               color: kMainColor,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 16,
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                         ),
@@ -157,156 +174,56 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     ],
                   ),
                   SizedBox(
-                    height: size.height * 0.06,
+                    height: 5.h,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Column(
                       children: [
-                        TextFormField(
-                          readOnly: true,
+                        CustomTextField(
                           initialValue: controller.user.email,
-                          style: GoogleFonts.openSans(color: kMainColor),
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.mail, color: kMainColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor.withOpacity(0.7),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor,
-                              ),
-                            ),
-                            focusColor: kMainColor,
-                            border: OutlineInputBorder(),
-                            labelText: 'Email',
-                            labelStyle: GoogleFonts.openSans(color: kMainColor),
-                            hintText: 'Nhập email của bạn..',
-                            hintStyle: GoogleFonts.openSans(color: kMainColor),
-                          ),
+                          icon: Icons.mail,
+                          canReadOnly: true,
+                          labelText: "Email (không được thay đổi)",
                         ),
                         SizedBox(
-                          height: size.height * 0.03,
+                          height: 3.h,
                         ),
-                        TextFormField(
-                          autofocus: false,
-                          initialValue: controller.user.profile?.fullname,
-                          style: GoogleFonts.openSans(color: kMainColor),
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person, color: kMainColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor.withOpacity(0.7),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor,
-                              ),
-                            ),
-                            focusColor: kMainColor,
-                            border: OutlineInputBorder(),
-                            labelText: 'Tên',
-                            labelStyle: GoogleFonts.openSans(color: kMainColor),
-                            hintText: 'Nhập tên của bạn..',
-                            hintStyle: GoogleFonts.openSans(color: kMainColor),
-                          ),
+                        CustomTextField(
+                          icon: Icons.person_rounded,
+                          labelText: "Tên",
+                          hintText: "Nhập vào tên của bạn...",
+                          controller: controller.nameController,
                         ),
                         SizedBox(
-                          height: size.height * 0.03,
+                          height: 3.h,
                         ),
-                        TextFormField(
-                          initialValue: controller.user.profile?.phone,
-                          style: GoogleFonts.openSans(color: kMainColor),
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.phone, color: kMainColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor.withOpacity(0.7),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor,
-                              ),
-                            ),
-                            focusColor: kMainColor,
-                            border: OutlineInputBorder(),
-                            labelText: 'Số điện thoại',
-                            labelStyle: GoogleFonts.openSans(color: kMainColor),
-                            hintText: 'Nhập số điện thoại của bạn..',
-                            hintStyle: GoogleFonts.openSans(color: kMainColor),
-                          ),
+                        CustomTextField(
+                          icon: Icons.badge_rounded,
+                          labelText: "Tuổi",
+                          hintText: "Nhập vào tuổi của bạn...",
+                          controller: controller.ageController,
+                          keyboardType: TextInputType.number,
                         ),
                         SizedBox(
-                          height: size.height * 0.03,
+                          height: 3.h,
                         ),
-                        TextFormField(
-                          initialValue: controller.user.profile?.address,
-                          style: GoogleFonts.openSans(color: kMainColor),
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person, color: kMainColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor.withOpacity(0.7),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kMainColor,
-                              ),
-                            ),
-                            focusColor: kMainColor,
-                            border: OutlineInputBorder(),
-                            labelText: 'Địa chỉ',
-                            labelStyle: GoogleFonts.openSans(color: kMainColor),
-                            hintText: 'Nhập địa chỉ của bạn..',
-                            hintStyle: GoogleFonts.openSans(color: kMainColor),
-                          ),
+                        CustomTextField(
+                          icon: Icons.phone,
+                          labelText: "Số điện thoại",
+                          hintText: "Nhập vào số điện thoại của bạn...",
+                          keyboardType: TextInputType.phone,
+                          controller: controller.phoneController,
                         ),
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   child: DecoratedBox(
-                        //     decoration: BoxDecoration(
-                        //       border: Border.all(color: Colors.grey),
-                        //       borderRadius:
-                        //           const BorderRadius.all(Radius.circular(4.0)),
-                        //     ),
-                        //     child: Padding(
-                        //       padding:
-                        //           const EdgeInsets.symmetric(horizontal: 8.0),
-                        //       child: GetBuilder<EditInformationController>(
-                        //           builder: (controller) {
-                        //         return DropdownButton<String>(
-                        //           hint: Text(" Địa chỉ"),
-                        //           alignment: Alignment.centerLeft,
-                        //           isExpanded: true,
-                        //           iconSize: 24,
-                        //           elevation: 16,
-                        //           onChanged: (String? newValue) => {},
-                        //           items: <String>[
-                        //             'Tranh vẽ',
-                        //             'Âm nhạc',
-                        //             'Nhiếp ảnh'
-                        //           ].map<DropdownMenuItem<String>>(
-                        //               (String value) {
-                        //             return DropdownMenuItem<String>(
-                        //               value: value,
-                        //               child: Text(value,
-                        //                   style: GoogleFonts.openSans()),
-                        //             );
-                        //           }).toList(),
-                        //         );
-                        //       }),
-                        //     ),
-                        //   ),
-                        // ),
+                        SizedBox(
+                          height: 3.h,
+                        ),
+                        CustomTextField(
+                          icon: Icons.place_rounded,
+                          labelText: "Địa chỉ",
+                          hintText: "Nhập vào địa chỉ của bạn...",
+                          controller: controller.addressController,
+                        ),
                       ],
                     ),
                   ),
