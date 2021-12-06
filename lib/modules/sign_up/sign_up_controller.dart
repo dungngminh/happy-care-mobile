@@ -3,30 +3,31 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/validator.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
+import 'package:happy_care/widgets/custom_snack_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-
-enum Status { loading, success, error }
 
 class SignUpController extends GetxController {
   //obs variable
   final isHidePassword = true.obs;
   final isHideRepassword = true.obs;
-  final status = Status.loading.obs;
   File? profileImage;
 
   //controller
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController rePasswordController = TextEditingController();
-  final RoundedLoadingButtonController btnController =
-      RoundedLoadingButtonController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final rePasswordController = TextEditingController();
+  final btnController = RoundedLoadingButtonController();
+
+  final passFocus = FocusNode();
+  final rePassFocus = FocusNode();
 
   //repository
-  final UserRepository repository = UserRepository();
+  final UserRepository? userRepository;
+
+  SignUpController({this.userRepository});
 
   void turnOnOffHiddenPassword() {
     isHidePassword.value = !isHidePassword.value;
@@ -44,59 +45,56 @@ class SignUpController extends GetxController {
         rePasswordController.text.isEmpty) {
       btnController.error();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: kBackgroundColor,
-          content: Text(
-            "Vui lòng điền đủ thông tin",
-            style: GoogleFonts.openSans(
-              color: kMainColor,
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        customSnackBar(
+            message: "Vui lòng điền đầy đủ thông tin", isError: true),
       );
-      await Future.delayed(Duration(seconds: 1));
-      btnController.reset();
+      await Future.delayed(Duration(seconds: 2))
+          .then((value) => btnController.reset());
+    } else if (!ValidatorUtils.checkEmail(emailController.text)) {
+      btnController.error();
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(message: "Email không hợp lệ", isError: true),
+      );
+      await Future.delayed(Duration(seconds: 2))
+          .then((value) => btnController.reset());
+    } else if (passwordController.text.compareTo(rePasswordController.text) !=
+        0) {
+      btnController.error();
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(
+            message: "Nhập lại mật khẩu không trùng với mật khẩu đã nhập",
+            isError: true),
+      );
+      await Future.delayed(Duration(seconds: 2))
+          .then((value) => btnController.reset());
+    } else if (!ValidatorUtils.checkPassword(passwordController.text)) {
+      btnController.error();
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(
+            message:
+                "Mật khẩu phải có ít nhất 1 chữ in hoa, 1 chữ thường, 1 chữ số",
+            isError: true),
+      );
+      await Future.delayed(Duration(seconds: 2))
+          .then((value) => btnController.reset());
     } else {
-      print(emailController.text);
-      print(passwordController.text);
-      bool isOK = await repository.createNewUser(
+      bool isOK = await userRepository!.createNewUser(
           email: emailController.text, password: passwordController.text);
       if (isOK) {
         btnController.success();
-        await Future.delayed(Duration(seconds: 1));
-        Get.back();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: kBackgroundColor,
-            content: Text(
-              "Đăng ký thành công",
-              style: GoogleFonts.openSans(
-                color: kMainColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        );
+        await Future.delayed(Duration(seconds: 1)).then((value) => Get.back());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(customSnackBar(message: "Đăng nhập thành công"));
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: kBackgroundColor,
-            content: Text(
-              "Đăng ký thất bại",
-              style: GoogleFonts.openSans(
-                color: kMainColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          customSnackBar(
+            message: "Đăng ký không thành công, vui lòng thử lại",
+            isError: true,
           ),
         );
-        await Future.delayed(Duration(seconds: 1));
-        btnController.reset();
+        await Future.delayed(Duration(seconds: 2))
+            .then((value) => btnController.reset());
       }
     }
   }

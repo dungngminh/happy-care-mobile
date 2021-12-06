@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/widgets/logo_title.dart';
+import 'package:sizer/sizer.dart';
 
 class OnboardingCustom extends StatelessWidget {
   const OnboardingCustom({
@@ -18,69 +21,53 @@ class OnboardingCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size);
     return Container(
       // padding: const EdgeInsets.symmetric(horizontal: 30),
       margin: const EdgeInsets.only(top: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (isFirstPage)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: SvgPicture.asset("assets/logos/happy_care.svg"),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Happy Care".toUpperCase(),
-                    style: GoogleFonts.openSans(
-                      color: kMainColor,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (isFirstPage)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: LogoTitle(),
+              ),
+            SizedBox(
+              height: isFirstPage ? 2.5.h : 10.h,
+            ),
+            SizedBox(
+              height: 30.h,
+              width: 100.w,
+              child: SvgPicture.asset(
+                pathSvg,
               ),
             ),
-          SizedBox(
-            height: isFirstPage ? 10 : 73,
-          ),
-          SizedBox(
-            height: 228,
-            width: 312,
-            child: SvgPicture.asset(
-              pathSvg,
+            SizedBox(
+              height: 5.h,
             ),
-          ),
-          SizedBox(
-            height: 37,
-          ),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.openSans(
-              color: kMainColor,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.openSans(
+                color: kMainColor,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            description,
-            style: GoogleFonts.openSans(
-              fontSize: 15,
+            SizedBox(
+              height: 20,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+            Text(
+              description,
+              style: GoogleFonts.openSans(
+                fontSize: 11.sp,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
