@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,7 +49,7 @@ class ProfileItem extends StatelessWidget {
                         radius: 30,
                         backgroundImage: avatar == null
                             ? Image.asset("assets/images/icon.png").image
-                            : Image.memory(base64Decode(avatar!)).image,
+                            : CachedNetworkImageProvider(avatar!),
                       ),
                     ),
                   ),
@@ -59,12 +60,12 @@ class ProfileItem extends StatelessWidget {
                           badgeColor: Colors.red,
                         )
                       : (status == 2
-                      ? Badge(
-                          toAnimate: false,
-                          shape: BadgeShape.circle,
-                          badgeColor: Colors.green,
-                        )
-                      : SizedBox()),
+                          ? Badge(
+                              toAnimate: false,
+                              shape: BadgeShape.circle,
+                              badgeColor: Colors.green,
+                            )
+                          : SizedBox()),
                 ],
               ),
               SizedBox(

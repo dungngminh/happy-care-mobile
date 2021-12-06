@@ -2,7 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/user.dart';
-import 'package:happy_care/data/services/user_api.dart';
+import 'package:happy_care/data/api/user_api.dart';
 
 class UserRepository {
   final UserApi? userApi;
@@ -76,7 +76,7 @@ class UserRepository {
       String response = await userApi!.getUserById(userId);
       var converted = convert.jsonDecode(response);
       print(
-          "=============CHECK_GET_USER_BY_ID${userId}_INSTANCE=======\n${User.fromJson(converted['data']['user'])}");
+          "=============CHECK_GET_USER_BY_ID_${userId}_INSTANCE=======\n${User.fromJson(converted['data']['user'])}");
       return User.fromJson(converted['data']['user']);
     } catch (_) {
       print(

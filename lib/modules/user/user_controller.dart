@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
-import 'package:happy_care/data/socket/socket_io_service.dart';
+import 'package:happy_care/data/services/socket_io_service.dart';
+import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/my_toast.dart';
 
@@ -12,6 +13,7 @@ class UserController extends GetxController {
   final status = UserStatus.loading.obs;
   final UserRepository? userRepository;
   final SocketIOService? socketIOService;
+  final ImageController imageController = Get.find();
   UserController({this.userRepository, this.socketIOService});
 
   @override

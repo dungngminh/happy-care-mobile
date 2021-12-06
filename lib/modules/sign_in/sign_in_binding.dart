@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
-import 'package:happy_care/data/services/user_api.dart';
+import 'package:happy_care/data/api/user_api.dart';
 import 'package:happy_care/modules/sign_in/sign_in_controller.dart';
 import 'package:http/http.dart';
 

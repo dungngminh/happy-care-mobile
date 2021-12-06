@@ -76,9 +76,9 @@ class UserScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.memory(base64Decode(
+                                    backgroundImage: Image.network(
                                             controller
-                                                .user.value.profile!.avatar!))
+                                                .user.value.profile!.avatar!)
                                         .image,
                                   );
                           }),

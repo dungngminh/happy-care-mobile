@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,13 +7,13 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/information_tile.dart';
+import 'package:sizer/sizer.dart';
 
 class UserDoctorScreen extends GetView<UserController> {
   const UserDoctorScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
@@ -23,7 +22,7 @@ class UserDoctorScreen extends GetView<UserController> {
           child: ListView(
             children: [
               Container(
-                height: size.height * 0.42,
+                height: 41.h,
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -52,7 +51,7 @@ class UserDoctorScreen extends GetView<UserController> {
                                       : "",
                               style: GoogleFonts.openSans(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                               ));
                         }),
@@ -75,16 +74,16 @@ class UserDoctorScreen extends GetView<UserController> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 1.5.h,
                     ),
                     SizedBox(
-                      height: 160,
-                      width: 160,
+                      height: 20.h,
+                      width: 20.h,
                       child: CircleAvatar(
                         backgroundColor: kSecondColor,
                         child: SizedBox(
-                          height: 150,
-                          width: 150,
+                          height: 19.h,
+                          width: 19.h,
                           child:
                               GetBuilder<UserController>(builder: (controller) {
                             return controller.user.value.profile?.avatar == null
@@ -94,17 +93,15 @@ class UserDoctorScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.memory(base64Decode(
-                                            controller
-                                                .user.value.profile!.avatar!))
-                                        .image,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        controller.user.value.profile!.avatar!),
                                   );
                           }),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 3.h,
                     ),
                     Obx(() {
                       final status = controller.status.value;
@@ -120,8 +117,8 @@ class UserDoctorScreen extends GetView<UserController> {
                           color: Colors.white,
                           fontSize:
                               controller.user.value.profile?.fullname != null
-                                  ? 24
-                                  : 20,
+                                  ? 18.sp
+                                  : 16.sp,
                         ),
                       );
                     }),
@@ -188,7 +185,7 @@ class UserDoctorScreen extends GetView<UserController> {
                         child: Container(
                           height: 50,
                           margin: EdgeInsets.symmetric(
-                              horizontal: 60, vertical: 30),
+                              horizontal: 11.h, vertical: 2.h),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
@@ -198,7 +195,7 @@ class UserDoctorScreen extends GetView<UserController> {
                             child: Text(
                               "Đăng xuất".toUpperCase(),
                               style: GoogleFonts.openSans(
-                                fontSize: 18,
+                                fontSize: 14.sp,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

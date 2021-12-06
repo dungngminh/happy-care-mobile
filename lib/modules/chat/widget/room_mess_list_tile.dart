@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,7 +39,7 @@ class RoomMessListTile extends StatelessWidget {
                 radius: 25,
                 backgroundImage: avatar == null
                     ? Image.asset("assets/images/icon.png").image
-                    : Image.memory(base64Decode(avatar!)).image,
+                    : CachedNetworkImageProvider(avatar!),
               ),
             ),
           ),

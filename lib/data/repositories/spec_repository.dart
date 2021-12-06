@@ -1,5 +1,5 @@
 import 'package:happy_care/data/models/specialization.dart';
-import 'package:happy_care/data/services/spec_api.dart';
+import 'package:happy_care/data/api/spec_api.dart';
 import 'dart:convert' as convert;
 
 class SpecializationRepository {

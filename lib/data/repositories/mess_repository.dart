@@ -1,6 +1,6 @@
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/chat_mess.dart';
-import 'package:happy_care/data/services/mess_api.dart';
+import 'package:happy_care/data/api/mess_api.dart';
 import 'dart:convert' as convert;
 
 class MessRepository {

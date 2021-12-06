@@ -13,7 +13,7 @@ class OnboardingScreen extends StatelessWidget {
     PageModel(
       widget: OnboardingCustom(
         pathSvg: 'assets/images/undraw_doctors_hwty.svg',
-        title: 'Tư vấn sức khỏe ngay tại nhà với bác sĩ, chuyên gia',
+        title: 'Tư vấn sức khỏe tại nhà với bác sĩ, chuyên gia',
         description:
             'Ngay tại nhà với chiếc điện thoại, bạn có thể được tư vấn sức khỏe '
             'với các bác sĩ, chuyên gia chuyên khoa.',
@@ -46,49 +46,52 @@ class OnboardingScreen extends StatelessWidget {
         title: 'Đội ngũ\nbác sĩ, chuyên gia uy tín',
         description:
             'Happy Care mang tới bạn đội ngũ bác sĩ, chuyên gia từ các bệnh viện uy tín.'
-            'Giúp những lời khuyên, đơn thuốc mà đội ngũ mang tới bạn đáng tin cậy cho sức khỏe của bạn',
+            'Giúp những lời khuyên, đơn thuốc mà đội ngũ mang tới đáng tin cậy cho sức khỏe của bạn',
       ),
     )
   ];
   @override
   Widget build(BuildContext context) {
-    return Onboarding(
-      background: kBackgroundColor,
-      proceedButtonStyle: ProceedButtonStyle(
-          proceedButtonPadding:
-              EdgeInsets.symmetric(horizontal: 17.0, vertical: 1.7),
-          proceedButtonColor: kMainColor,
-          proceedpButtonText: Text(
-            "Đăng nhập",
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontSize: 16,
-              letterSpacing: 1.0,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Onboarding(
+        background: kBackgroundColor,
+        proceedButtonStyle: ProceedButtonStyle(
+            proceedButtonPadding:
+                EdgeInsets.symmetric(horizontal: 17.0, vertical: 1.7),
+            proceedButtonColor: kMainColor,
+            proceedpButtonText: Text(
+              "Đăng nhập",
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontSize: 16,
+                letterSpacing: 1.0,
+              ),
+            ),
+            proceedButtonRoute: (context) async {
+              await SharedPrefUtils.setBoolKey('first_time', false);
+              Get.offAndToNamed(AppRoutes.rSignIn);
+            }),
+        isSkippable: false,
+        pages: onboardingPagesList,
+        indicator: Indicator(
+          indicatorDesign: IndicatorDesign.polygon(
+            polygonDesign: PolygonDesign(
+              polygon: DesignType.polygon_circle,
             ),
           ),
-          proceedButtonRoute: (context) async {
-            await SharedPrefUtils.setBoolKey('first_time', false);
-            Get.offAndToNamed(AppRoutes.rSignIn);
-          }),
-      isSkippable: false,
-      pages: onboardingPagesList,
-      indicator: Indicator(
-        indicatorDesign: IndicatorDesign.polygon(
-          polygonDesign: PolygonDesign(
-            polygon: DesignType.polygon_circle,
+          activeIndicator: ActiveIndicator(
+            color: kMainColor,
           ),
+          closedIndicator: ClosedIndicator(color: kMainColor),
         ),
-        activeIndicator: ActiveIndicator(
-          color: kMainColor,
-        ),
-        closedIndicator: ClosedIndicator(color: kMainColor),
+        //-------------Other properties--------------
+        //Color background,
+        //EdgeInsets pagesContentPadding
+        //EdgeInsets titleAndInfoPadding
+        //EdgeInsets footerPadding
+        //SkipButtonStyle skipButtonStyle
       ),
-      //-------------Other properties--------------
-      //Color background,
-      //EdgeInsets pagesContentPadding
-      //EdgeInsets titleAndInfoPadding
-      //EdgeInsets footerPadding
-      //SkipButtonStyle skipButtonStyle
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,9 +43,9 @@ class ChatScreen extends GetWidget<ChatController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.memory(base64Decode(
+                                    backgroundImage: Image.network(
                                             controller
-                                                .user.value.profile!.avatar!))
+                                                .user.value.profile!.avatar!)
                                         .image,
                                   );
                           },
@@ -145,7 +146,7 @@ class ChatScreen extends GetWidget<ChatController> {
                                         .listDoctor[index].profile?.avatar,
                                     function: () async {
                                       await controller
-                                          .joinToChatRoom(
+                                          .joinFirstToChatRoom(
                                               notUserId: docController
                                                   .listDoctor[index].id)
                                           .then(
@@ -158,8 +159,8 @@ class ChatScreen extends GetWidget<ChatController> {
                                             ),
                                           );
                                     },
-                                    status: docController
-                                        .listDoctor[index].status!,
+                                    status:
+                                        docController.listDoctor[index].status!,
                                   );
                                 },
                               );
@@ -225,34 +226,43 @@ class ChatScreen extends GetWidget<ChatController> {
                           ],
                         );
                       } else {
-                        return ListView.builder(
-                          padding: const EdgeInsets.only(),
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: controller.listRoom.length,
-                          itemBuilder: (context, index) {
-                            return RoomMessListTile(
-                              function: () async {
-                                print(controller.listRoom[index]!.id!);
-                                await controller
-                                    .joinToChatRoom(
-                                        notUserId: controller
-                                            .listUserChatWithByRoom[index].id)
-                                    .then((value) => Get.toNamed(
-                                        AppRoutes.rChatRoom,
-                                        arguments: RoomChatPass(
-                                            controller.listRoom[index]!.id!,
-                                            controller.listUserChatWithByRoom[
-                                                index])));
-                              },
-                              title: controller.listUserChatWithByRoom[index]
-                                      .profile?.fullname ??
-                                  'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
-                              avatar: controller.listUserChatWithByRoom[index]
-                                  .profile?.avatar,
-                                  subtitle: controller.listRoom[index]!.newestMessage,
-                            );
-                          },
+                        return AnimationLimiter(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(),
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: controller.listRoom.length,
+                            itemBuilder: (context, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(seconds: 1),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: RoomMessListTile(
+                                      function: () =>
+                                          controller.joinExistChatRoom(
+                                        roomId: controller.listRoom[index]!.id!,
+                                        userChatWithId: controller
+                                            .listUserChatWithByRoom[index],
+                                      ),
+                                      title: controller
+                                              .listUserChatWithByRoom[index]
+                                              .profile
+                                              ?.fullname ??
+                                          'Bác sĩ ${controller.listUserChatWithByRoom[index].email}',
+                                      avatar: controller
+                                          .listUserChatWithByRoom[index]
+                                          .profile
+                                          ?.avatar,
+                                      subtitle: controller
+                                          .listRoom[index]!.newestMessage,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       }
                     }

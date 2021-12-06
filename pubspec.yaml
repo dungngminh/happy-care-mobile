@@ -50,7 +50,9 @@ dependencies:
   path_provider: ^2.0.7
   intl: ^0.17.0
   flutter_staggered_animations: ^1.0.0
-  file_picker: ^4.2.7
+  sizer: ^2.0.15
+  cloudinary_public: ^0.11.0
+  cached_network_image: ^3.2.0
 
 
 dev_dependencies:

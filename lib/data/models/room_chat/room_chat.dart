@@ -7,20 +7,20 @@ class RoomChat {
   String? name;
   List<Member>? members;
   bool? isRead;
-  bool? haveMessage;
+  bool? hasMessages;
   String? newestMessage;
   RoomChat({
     this.id,
     this.name,
     this.members,
     this.isRead,
-    this.haveMessage,
+    this.hasMessages,
     this.newestMessage,
   });
 
   @override
   String toString() {
-    return 'RoomChat(id: $id, name: $name, members: $members, isRead: $isRead, haveMessage: $haveMessage)';
+    return 'RoomChat(id: $id, name: $name, members: $members, isRead: $isRead, hasMessage: $hasMessages)';
   }
 
   factory RoomChat.fromJson(Map<String, dynamic> data) => RoomChat(
@@ -30,7 +30,7 @@ class RoomChat {
             ?.map((e) => Member.fromMap(e as Map<String, dynamic>))
             .toList(),
         isRead: data['isRead'] as bool?,
-        haveMessage: data['haveMessage'] as bool?,
+        hasMessages: data['hasMessages'] as bool?,
       );
 
   Map<String, dynamic> toMap() => {
@@ -38,7 +38,7 @@ class RoomChat {
         'name': name,
         'members': members?.map((e) => e.toMap()).toList(),
         'isRead': isRead,
-        'haveMessage': haveMessage,
+        'hasMessages': hasMessages,
       };
 
   /// `dart:convert`

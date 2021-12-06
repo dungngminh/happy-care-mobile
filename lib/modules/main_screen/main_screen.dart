@@ -12,6 +12,7 @@ import 'package:happy_care/modules/main_screen/controller/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
 import 'package:happy_care/modules/user/user_screen.dart';
 import 'package:happy_care/modules/user/user_screen_doctor.dart';
+import 'package:sizer/sizer.dart';
 
 class MainScreen extends GetWidget<MainController> {
   const MainScreen({Key? key}) : super(key: key);
@@ -32,12 +33,21 @@ class MainScreen extends GetWidget<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => IndexedStack(
-          index: controller.currentIndex.value,
-          children: controller.role.value == "doctor" ? doctorRole : memberRole,
-        ),
-      ),
+      body: Obx(() {
+        final mainStatus = controller.status.value;
+
+        return mainStatus == MainStatus.loading
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: kMainColor,
+                ),
+              )
+            : IndexedStack(
+                index: controller.currentIndex.value,
+                children:
+                    controller.role.value == "doctor" ? doctorRole : memberRole,
+              );
+      }),
       bottomNavigationBar: Obx(
         () => BottomNavyBar(
           showElevation: false,
@@ -48,6 +58,7 @@ class MainScreen extends GetWidget<MainController> {
               title: Text(
                 'Trang chủ',
                 style: GoogleFonts.openSans(
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -60,6 +71,7 @@ class MainScreen extends GetWidget<MainController> {
               title: Text(
                 'Trò chuyện',
                 style: GoogleFonts.openSans(
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -72,6 +84,7 @@ class MainScreen extends GetWidget<MainController> {
               title: Text(
                 'Đơn thuốc',
                 style: GoogleFonts.openSans(
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -84,6 +97,7 @@ class MainScreen extends GetWidget<MainController> {
               title: Text(
                 'Cá nhân',
                 style: GoogleFonts.openSans(
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),

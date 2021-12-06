@@ -7,10 +7,11 @@ import 'package:get/get.dart';
 import 'package:happy_care/data/models/chat_mess.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/data/repositories/mess_repository.dart';
-import 'package:happy_care/data/socket/socket_io_service.dart';
+import 'package:happy_care/data/services/socket_io_service.dart';
+import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:file_picker/file_picker.dart';
 
 enum ChatRoomStatus { loading, idle, error }
 
@@ -21,13 +22,13 @@ class ChatRoomController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final status = ChatRoomStatus.idle.obs;
   final UserController userController = Get.find();
+  final ImageController imageController = Get.find();
   final formater = DateFormat("HH:mm");
   late TextEditingController textMessController;
   var listMess = RxList<ChatMess>([]);
   var isTyping = false.obs;
   var isHadImage = false.obs;
   File? imageToSend;
-  PlatformFile? platformFile;
 
   ChatRoomController({this.messRepo, this.ioService});
 
@@ -97,12 +98,11 @@ class ChatRoomController extends GetxController {
   }
 
   Future<void> getImageToSend() async {
-    final _file = await FilePicker.platform.pickFiles(
-        type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg']);
+    final _picker = ImagePicker();
+    final _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (_file != null) {
-      imageToSend = File(_file.files.single.path!);
-      platformFile = _file.files.first;
+    if (_pickedFile != null) {
+      imageToSend = File(_pickedFile.path);
       isHadImage(true);
       update();
     }
@@ -110,7 +110,6 @@ class ChatRoomController extends GetxController {
 
   removeFile() {
     imageToSend = null;
-    platformFile = null;
     isHadImage(false);
     update();
   }
@@ -121,22 +120,27 @@ class ChatRoomController extends GetxController {
     super.onClose();
   }
 
-  sendImage({required String roomId}) async {
-    final bytes = await imageToSend!.readAsBytes();
-    listMess.insert(
-      0,
-      ChatMess(
-        content: base64Encode(bytes),
-        user: userController.user.value.id,
-        type: "image",
-        time: DateTime.now().toLocal().toString(),
-      ),
-    );
-    ioService!.sendMessage(
-        content: bytes,
-        roomId: roomId,
-        contentType: "image",
-        userId: userController.user.value.id);
+  Future<void> sendImage({required String roomId}) async {
+    await imageController.myCloudinaryService
+        .uploadFileOnCloudinary(filePath: imageToSend!.path)
+        .then((imageUrl) {
+      print(imageUrl);
+      listMess.insert(
+        0,
+        ChatMess(
+          content: imageUrl,
+          user: userController.user.value.id,
+          type: "image",
+          time: DateTime.now().toLocal().toString(),
+        ),
+      );
+      ioService!.sendMessage(
+          content: imageUrl,
+          roomId: roomId,
+          contentType: "image",
+          userId: userController.user.value.id);
+    });
+    removeFile();
     scrollToBottom();
   }
 }

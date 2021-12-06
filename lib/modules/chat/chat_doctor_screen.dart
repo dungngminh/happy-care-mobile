@@ -1,16 +1,13 @@
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
-import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
-import 'package:happy_care/routes/app_pages.dart';
 
 class ChatDoctorScreen extends GetWidget<ChatController> {
   const ChatDoctorScreen({Key? key}) : super(key: key);
@@ -43,10 +40,9 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.memory(base64Decode(
-                                            controller
-                                                .user.value.profile!.avatar!))
-                                        .image,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      controller.user.value.profile!.avatar!,
+                                    ),
                                   );
                           },
                         ),
@@ -154,25 +150,13 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                     verticalOffset: 50.0,
                                     child: FadeInAnimation(
                                       child: RoomMessListTile(
-                                        function: () async {
-                                          await controller
-                                              .joinToChatRoom(
-                                                  notUserId: controller
-                                                      .listUserChatWithByRoom[
-                                                          index]
-                                                      .id)
-                                              .then(
-                                                (value) => Get.toNamed(
-                                                  AppRoutes.rChatRoom,
-                                                  arguments: RoomChatPass(
-                                                      controller
-                                                          .listRoom[index]!.id!,
-                                                      controller
-                                                              .listUserChatWithByRoom[
-                                                          index]),
-                                                ),
-                                              );
-                                        },
+                                        function: () =>
+                                            controller.joinExistChatRoom(
+                                          roomId:
+                                              controller.listRoom[index]!.id!,
+                                          userChatWithId: controller
+                                              .listUserChatWithByRoom[index],
+                                        ),
                                         title: controller
                                                 .listUserChatWithByRoom[index]
                                                 .profile

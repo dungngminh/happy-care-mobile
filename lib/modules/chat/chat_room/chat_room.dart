@@ -30,12 +30,11 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: CircleAvatar(
-                    backgroundImage:
-                        roomPass.userChatWith.profile?.avatar == null
-                            ? Image.asset("assets/images/icon.png").image
-                            : Image.memory(base64Decode(
-                                    roomPass.userChatWith.profile!.avatar!))
-                                .image,
+                    backgroundImage: roomPass.userChatWith.profile?.avatar ==
+                            null
+                        ? Image.asset("assets/images/icon.png").image
+                        : Image.network(roomPass.userChatWith.profile!.avatar!)
+                            .image,
                   ),
                 ),
               ),
@@ -98,19 +97,22 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                               roomPass.userChatWith.id) {
                             return OwnMessenger(
                                 messenge: controller.listMess[index].content!,
-                                time: controller.formater.format(DateTime.parse(
-                                        controller.listMess[index].time!)
-                                    .toLocal()));
+                                time: controller.formater.format(
+                                  DateTime.parse(
+                                          controller.listMess[index].time!)
+                                      .toLocal(),
+                                ),
+                                type: controller.listMess[index].type!);
                           } else {
                             return NotOwnMessenger(
-                              messenge: controller.listMess[index].content!,
-                              avatar: roomPass.userChatWith.profile?.avatar,
-                              time: controller.formater.format(
-                                DateTime.parse(
-                                  controller.listMess[index].time!,
-                                ).toLocal(),
-                              ),
-                            );
+                                messenge: controller.listMess[index].content!,
+                                avatar: roomPass.userChatWith.profile?.avatar,
+                                time: controller.formater.format(
+                                  DateTime.parse(
+                                    controller.listMess[index].time!,
+                                  ).toLocal(),
+                                ),
+                                type: controller.listMess[index].type!);
                           }
                         },
                       );
@@ -176,11 +178,12 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Obx(() =>IconButton(
-                            onPressed: () =>
-                               !controller.isHadImage.value? controller.sendMessage(roomId: roomPass.id) :controller.sendImage(roomId: roomPass.id),
-                            icon: 
-                              Icon(
+                          child: Obx(
+                            () => IconButton(
+                              onPressed: () => !controller.isHadImage.value
+                                  ? controller.sendMessage(roomId: roomPass.id)
+                                  : controller.sendImage(roomId: roomPass.id),
+                              icon: Icon(
                                 !controller.isHadImage.value
                                     ? Icons.send_rounded
                                     : Icons.attach_file,
@@ -257,7 +260,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.platformFile!.name,
+                          controller.imageToSend!.path.split('/').last,
                           style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: Colors.black,
@@ -267,7 +270,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                           height: 5,
                         ),
                         Text(
-                          '${(controller.platformFile!.size / 1024).ceil()} KB',
+                          '${(controller.imageToSend!.lengthSync() / 1024).ceil()} KB',
                           style: GoogleFonts.openSans(
                             fontSize: 13,
                             color: Colors.grey.shade600,

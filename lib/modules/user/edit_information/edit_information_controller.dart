@@ -7,16 +7,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/user.dart';
+import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/widgets/my_toast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:sizer/sizer.dart';
 
 class EditInformationController extends GetxController {
   final UserController _userController = Get.find();
+  final ImageController _imageController = Get.find();
   User get user => _userController.user.value;
   File? profileImage;
-
   late TextEditingController nameController;
   late TextEditingController ageController;
   late TextEditingController phoneController;
@@ -30,14 +31,6 @@ class EditInformationController extends GetxController {
     ageController = TextEditingController(
         text: user.profile?.age != null ? user.profile!.age!.toString() : null);
     addressController = TextEditingController(text: user.profile?.address);
-    if (user.profile?.avatar != null) {
-      final tempDir = await getTemporaryDirectory();
-      profileImage =
-          await File('${tempDir.path}-${DateTime.now().toIso8601String()}.png')
-              .create();
-      profileImage!.writeAsBytesSync(base64Decode(user.profile!.avatar!));
-      print(profileImage);
-    }
     update();
   }
 
@@ -110,21 +103,33 @@ class EditInformationController extends GetxController {
         title: "Cập nhật thông tin",
         contentDialog: "Xác nhận cập nhật thông tin",
         confirmFunction: () async {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(color: kMainColor),
+            );
+          });
+      String? url = profileImage != null
+          ? await _imageController.myCloudinaryService
+              .uploadFileOnCloudinary(filePath: profileImage!.path)
+          : user.profile?.avatar;
       bool result = await _userController.userRepository!.updateInformation(
         fullname: nameController.text == "" ? null : nameController.text,
         age: ageController.text == "" ? null : int.parse(ageController.text),
         phone: phoneController.text == "" ? null : phoneController.text,
         address: addressController.text == "" ? null : addressController.text,
-        avatar: profileImage == null
-            ? null
-            : base64Encode(profileImage!.readAsBytesSync()),
+        avatar: url,
       );
 
       if (result) {
         Get.back();
+        Get.back();
         MyToast.showToast("Cập nhật thông tin thành công");
         Get.back(result: true);
       } else {
+        Get.back();
         Get.back();
         MyToast.showToast("Cập nhật không thành công, vui lòng thử lại");
       }

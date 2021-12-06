@@ -3,7 +3,7 @@ import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
-import 'package:happy_care/data/socket/socket_io_service.dart';
+import 'package:happy_care/data/services/socket_io_service.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 
 enum DocStatus { loading, error, idle }

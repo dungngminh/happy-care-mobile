@@ -88,7 +88,7 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                         avatar: controller.listDoctor[index].profile?.avatar,
                         function: () async {
                           await controller.chatController
-                              .joinToChatRoom(
+                              .joinFirstToChatRoom(
                                   notUserId: controller.listDoctor[index].id)
                               .then((value) => Get.toNamed(AppRoutes.rChatRoom,
                                   arguments: RoomChatPass(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:happy_care/core/utils/logger.dart';
 
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/routes/app_pages.dart';
-
+import 'package:sizer/sizer.dart';
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
   var isNotFirstTime = await SharedPrefUtils.getBoolKey("first_time") ?? true;
@@ -23,17 +24,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      enableLog: true,
-      title: "Happy Care",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: isNotFirstTime
-          ? AppRoutes.rOnboarding
-          : (token != null ? AppRoutes.rMain : AppRoutes.rSignIn),
-      getPages: AppPages.routes,
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return GetMaterialApp(
+          enableLog: true,
+          logWriterCallback: Logger.write,
+          title: "Happy Care",
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: isNotFirstTime
+              ? AppRoutes.rOnboarding
+              : (token != null ? AppRoutes.rMain : AppRoutes.rSignIn),
+          getPages: AppPages.routes,
+        );
+      }
     );
   }
 }

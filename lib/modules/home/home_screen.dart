@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/home/home_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class HomeScreen extends GetView<HomeController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 3.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -28,12 +29,12 @@ class HomeScreen extends GetView<HomeController> {
                         children: [
                           Text(
                             status != UserStatus.loading
-                                ? "Chào, ${controller.user.value.role == "doctor" ? "Bác sĩ ${controller.user.value.profile?.fullname}" : "${controller.user.value.profile?.fullname ?? "người dùng"} "}"
+                                ? "Chào, ${controller.user.value.profile?.fullname ?? controller.user.value.email}"
                                 : "Chào",
                             style: GoogleFonts.openSans(
                               color: kMainColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                              fontSize: 14.sp,
                             ),
                           ),
                         ],
