@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +14,9 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
     final roomPass = Get.arguments as RoomChatPass;
     return WillPopScope(
       onWillPop: () async {
-        return controller.leaveChatRoom(roomId: roomPass.id);
+        Get.back(result: true);
+        controller.leaveChatRoom(roomId: roomPass.id);
+        return true;
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -77,6 +77,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
             ],
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Obx(
@@ -91,8 +92,11 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                       return ListView.builder(
                         reverse: true,
                         controller: controller.scrollController,
-                        itemCount: controller.listMess.length,
+                        itemCount: controller.listMess.length + 1,
                         itemBuilder: (context, index) {
+                          if (index == controller.listMess.length) {
+                            return _buildProgressIndicator();
+                          }
                           if (controller.listMess[index].user !=
                               roomPass.userChatWith.id) {
                             return OwnMessenger(
@@ -120,6 +124,15 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                   },
                 ),
               ),
+              Obx(
+                () => controller.isTyping.value
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                            "${roomPass.userChatWith.profile?.fullname ?? roomPass.userChatWith.email} đang nhập..."),
+                      )
+                    : SizedBox(),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -146,7 +159,8 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                             focusNode: controller.focusNode,
                             controller: controller.textMessController,
                             maxLines: null,
-                            onChanged: (value) {},
+                            onChanged: (value) =>
+                                controller.onTypingMessage(roomPass.id),
                             decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.only(left: 5) + EdgeInsets.all(10),
@@ -180,16 +194,22 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Obx(
                             () => IconButton(
+                              iconSize: 22,
                               onPressed: () => !controller.isHadImage.value
                                   ? controller.sendMessage(roomId: roomPass.id)
                                   : controller.sendImage(roomId: roomPass.id),
-                              icon: Icon(
-                                !controller.isHadImage.value
-                                    ? Icons.send_rounded
-                                    : Icons.attach_file,
-                                size: 25.0,
-                                color: kMainColor,
-                              ),
+                              icon: controller.isSendingImage.value
+                                  ? CircularProgressIndicator(
+                                      color: kMainColor,
+                                      strokeWidth: 2.0,
+                                    )
+                                  : Icon(
+                                      !controller.isHadImage.value
+                                          ? Icons.send_rounded
+                                          : Icons.attach_file,
+                                      size: 24.0,
+                                      color: kMainColor,
+                                    ),
                             ),
                           ),
                         )
@@ -290,6 +310,20 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProgressIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Center(
+        child: Opacity(
+          opacity: controller.isMoreLoading.value ? 1.0 : 0.0,
+          child: CircularProgressIndicator(
+            color: kMainColor,
+          ),
         ),
       ),
     );

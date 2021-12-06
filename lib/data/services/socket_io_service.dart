@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:happy_care/core/utils/shared_pref.dart';
-import 'package:happy_care/data/models/chat_mess.dart';
 import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -10,7 +9,7 @@ class SocketIOService {
   late io.Socket socket;
   List<DoctorInApp> listDoctor = [];
 
-  // init SocketIO Service
+  /// init SocketIO Service
   Future<void> initService() async {
     socket = io.io(
         "${dotenv.env['BASE_URL']}",
@@ -33,7 +32,7 @@ class SocketIOService {
     });
   }
 
-  //Get all Doctor activity in app
+  ///Get all Doctor activity in app
   getDoctorInApp() {
     socket.emitWithAck('get-doctors-in-app', "hello", ack: (data) {
       if (data["message"] != 'cannot found any doctors') {
@@ -54,12 +53,12 @@ class SocketIOService {
     });
   }
 
-  //disconnect socket when sign out
+  ///disconnect socket when sign out
   signOut() {
     socket.disconnect();
   }
 
-  //emit event join room
+  ///emit event join room
   joinToRoom({required String roomId, required String userId}) {
     Map<String, String> msg = {"roomId": roomId, "userId": userId};
     socket.emitWithAck('join-chat-room', msg, ack: (data) {
@@ -71,7 +70,7 @@ class SocketIOService {
     });
   }
 
-  //emit event send message
+  ///emit event send message
   sendMessage({
     required dynamic content,
     required String roomId,
@@ -96,7 +95,7 @@ class SocketIOService {
     }
   }
 
-  //emit event leave chat room
+  ///emit event leave chat room
   leaveChatRoom({required String roomId}) {
     Map<String, String> msg = {
       "roomId": roomId,
@@ -104,6 +103,21 @@ class SocketIOService {
     print("leaving");
     socket.emitWithAck('leave-chat-room', msg, ack: (data) {
       print("leave chat room data: $data");
+    });
+  }
+
+  isTypingAction(
+      {required String roomId,
+      required String userId,
+      required bool isTyping}) {
+    print(isTyping);
+    Map<String, dynamic> msg = {
+      "roomId": roomId,
+      "userId": userId,
+      "isTyping": isTyping,
+    };
+    socket.emitWithAck('typing-message', msg, ack: (data) {
+      print(data);
     });
   }
 }

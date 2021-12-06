@@ -20,11 +20,11 @@ class SignUpScreen extends GetWidget<SignUpController> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 48, left: 40, right: 40),
+            padding: EdgeInsets.only(top: 5.8.h, left: 9.w, right: 9.w),
             child: Column(
               children: [
                 LogoTitle(),
-                SizedBox(height: 4.h),
+                SizedBox(height: 3.h),
                 Stack(
                   children: [
                     SizedBox(
@@ -119,7 +119,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ],
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 3.h,
                 ),
                 Row(
                   children: [
@@ -137,7 +137,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                     ),
                   ],
                 ),
-                SizedBox(height: 1.5.h),
+                SizedBox(height: 1.2.h),
                 SizedBox(
                   height: 50,
                   width: double.infinity,
@@ -176,7 +176,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ),
                 ),
                 SizedBox(
-                  height: 1.5.h,
+                  height: 1.2.h,
                 ),
                 SizedBox(
                   height: 50,
@@ -242,7 +242,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ),
                 ),
                 SizedBox(
-                  height: 1.5.h,
+                  height: 1.2.h,
                 ),
                 SizedBox(
                   height: 50,
@@ -308,7 +308,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ),
                 ),
                 SizedBox(
-                  height: 2.2.h,
+                  height: 2.h,
                 ),
                 RoundedLoadingButton(
                   borderRadius: 35,
@@ -327,7 +327,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 2.5.h),
+                SizedBox(height: 2.3.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -355,7 +355,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                   ],
                 ),
                 SizedBox(
-                  height: 1.5.h,
+                  height: 1.2.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -389,22 +389,22 @@ class SignUpScreen extends GetWidget<SignUpController> {
                     ],
                   ),
                 ),
-                SizedBox(height: 1.5.h),
+                SizedBox(height: 1.2.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 26.w),
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(3),
-                        height: 5.h,
-                        width: 5.h,
+                        height: 5.5.h,
+                        width: 5.5.h,
                         child: SvgPicture.asset("assets/logos/google.svg"),
                       ),
                       Spacer(),
                       Container(
                         padding: const EdgeInsets.all(3),
-                        height: 5.h,
-                        width: 5.h,
+                        height: 5.5.h,
+                        width: 5.5.h,
                         child:
                             SvgPicture.asset("assets/logos/facebook-logo.svg"),
                       ),

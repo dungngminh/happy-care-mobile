@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -13,18 +12,18 @@ import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:sizer/sizer.dart';
 
 class ChatScreen extends GetWidget<ChatController> {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 40),
+            padding: EdgeInsets.only(left: 15, right: 15, top: 5.h),
             child: Row(
               children: [
                 Row(
@@ -43,9 +42,8 @@ class ChatScreen extends GetWidget<ChatController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.network(
-                                            controller
-                                                .user.value.profile!.avatar!)
+                                    backgroundImage: Image.network(controller
+                                            .user.value.profile!.avatar!)
                                         .image,
                                   );
                           },
@@ -53,13 +51,13 @@ class ChatScreen extends GetWidget<ChatController> {
                       ),
                     ),
                     SizedBox(
-                      width: size.width * 0.04,
+                      width: 4.w,
                     ),
                     Text(
                       "Trò chuyện",
                       style: GoogleFonts.openSans(
                           color: kMainColor,
-                          fontSize: 22,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -80,7 +78,7 @@ class ChatScreen extends GetWidget<ChatController> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.02,
+            height: 1.5.h,
           ),
           Expanded(
             child: RefreshIndicator(
@@ -90,7 +88,7 @@ class ChatScreen extends GetWidget<ChatController> {
                 padding: const EdgeInsets.only(),
                 children: [
                   SizedBox(
-                    height: size.height * 0.256,
+                    height: 25.h,
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +97,7 @@ class ChatScreen extends GetWidget<ChatController> {
                           Get.toNamed(AppRoutes.rChatSearch);
                         }),
                         SizedBox(
-                          height: size.height * 0.018,
+                          height: 1.8.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -108,28 +106,17 @@ class ChatScreen extends GetWidget<ChatController> {
                               Text(
                                 "Bác sĩ đang trực tuyến",
                                 style: GoogleFonts.openSans(
+                                  fontSize: 10.sp,
                                   color: kMainColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              // IconButton(
-                              //   padding: EdgeInsets.only(),
-                              //   splashRadius: 20,
-                              //   iconSize: 20,
-                              //   color: kMainColor,
-                              //   onPressed: () =>
-                              //       controller.refreshDoctorOnline(),
-                              //   icon: Icon(Icons.refresh_rounded),
-                              // ),
                             ],
                           ),
                         ),
                         SizedBox(
                           width: double.infinity,
-                          height: size.height * 0.16,
+                          height: 15.45.h,
                           child: GetBuilder<DoctorController>(
                               builder: (docController) {
                             final status = docController.status.value;
@@ -141,9 +128,9 @@ class ChatScreen extends GetWidget<ChatController> {
                                   return ProfileItem(
                                     fullName: docController
                                         .listDoctor[index].profile?.fullname,
-                                    size: size,
                                     avatar: docController
                                         .listDoctor[index].profile?.avatar,
+                                    width: 16.w,
                                     function: () async {
                                       await controller
                                           .joinFirstToChatRoom(
@@ -188,7 +175,7 @@ class ChatScreen extends GetWidget<ChatController> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: size.height * 0.2),
+                          SizedBox(height: 20.h),
                           CircularProgressIndicator(
                             color: kMainColor,
                           ),
@@ -198,7 +185,7 @@ class ChatScreen extends GetWidget<ChatController> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: size.height * 0.2),
+                          SizedBox(height: 20.h),
                           Icon(
                             Icons.error,
                             color: kMainColor,
@@ -216,7 +203,7 @@ class ChatScreen extends GetWidget<ChatController> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: size.height * 0.2),
+                            SizedBox(height: 20.h),
                             Text(
                               "Bạn chưa có cuộc tư vấn nào",
                               style: GoogleFonts.openSans(

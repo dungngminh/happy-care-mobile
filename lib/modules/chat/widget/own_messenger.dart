@@ -1,10 +1,10 @@
-import 'dart:convert';
+
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:sizer/sizer.dart';
 
 class OwnMessenger extends StatelessWidget {
   const OwnMessenger(
@@ -28,7 +28,7 @@ class OwnMessenger extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(time, style: GoogleFonts.openSans(color: kMainColor)),
-          SizedBox(width: 10),
+          SizedBox(width: 8),
           Align(
             alignment: Alignment.centerRight,
             child: ConstrainedBox(
@@ -49,7 +49,7 @@ class OwnMessenger extends StatelessWidget {
                         child: Text(
                           messenge,
                           style: GoogleFonts.openSans(
-                            fontSize: 18,
+                            fontSize: 14.sp,
                             color: Colors.white,
                           ),
                         ),

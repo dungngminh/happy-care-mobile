@@ -11,6 +11,7 @@ class MainController extends GetxController {
   final role = "".obs;
   final status = MainStatus.idle.obs;
 
+
   void changeCurrentIndex(int newIndex) {
     currentIndex.value = newIndex;
   }

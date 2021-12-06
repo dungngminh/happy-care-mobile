@@ -15,20 +15,22 @@ class ChatController extends GetxController {
   final SocketIOService? socketService;
   final RoomRepository? roomRepository;
   final MyCloudinaryService? cloudinaryService;
-  late final MessRepository messRepository;
+  final MessRepository? messRepository;
   final UserController userController = Get.find();
   // DoctorController? doctorController;
   final listRoom = RxList<RoomChat?>([]);
   final listUserChatWithByRoom = RxList<User>([]);
   final status = ChatStatus.idle.obs;
   ChatController(
-      {this.socketService, this.roomRepository, this.cloudinaryService});
+      {this.messRepository,
+      this.socketService,
+      this.roomRepository,
+      this.cloudinaryService});
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await loadMyRooms();
-    messRepository = MessRepository();
   }
 
   Future<void> loadMyRooms() async {
@@ -44,8 +46,24 @@ class ChatController extends GetxController {
           listUserChatWithByRoom.add(await getUserById(room!.members![0].id!));
         }
       }
+      await getNewMessages();
       status(ChatStatus.idle);
+    }).onError((error, stackTrace) {
+      status(ChatStatus.error);
     });
+  }
+
+  Future<void> getNewMessages() async {
+    if (listRoom.isNotEmpty) {
+      for (var room in listRoom) {
+        await messRepository!
+            .getMessageHistory(roomId: room!.id!, limit: 1)
+            .then((value) {
+          print("dadad");
+          room.newestMessage = value.first.content;
+        });
+      }
+    }
   }
 
   Future<String?> joinFirstToChatRoom({required String notUserId}) async {
@@ -62,11 +80,15 @@ class ChatController extends GetxController {
     return roomId;
   }
 
-  joinExistChatRoom({required String roomId, required User userChatWithId}) {
+  joinExistChatRoom(
+      {required String roomId, required User userChatWithId}) async {
     socketService!
         .joinToRoom(roomId: roomId, userId: userController.user.value.id);
-    Get.toNamed(AppRoutes.rChatRoom,
+    bool result = await Get.toNamed(AppRoutes.rChatRoom,
         arguments: RoomChatPass(roomId, userChatWithId));
+    if (result) {
+      await getNewMessages();
+    }
   }
 
   Future<User> getUserById(String userId) async {

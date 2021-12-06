@@ -35,7 +35,6 @@ class MainScreen extends GetWidget<MainController> {
     return Scaffold(
       body: Obx(() {
         final mainStatus = controller.status.value;
-
         return mainStatus == MainStatus.loading
             ? Center(
                 child: CircularProgressIndicator(

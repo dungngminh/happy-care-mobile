@@ -22,8 +22,8 @@ class UserDoctorScreen extends GetView<UserController> {
           child: ListView(
             children: [
               Container(
-                height: 41.h,
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                height: 40.h,
+                padding: EdgeInsets.symmetric(vertical: 1.8.h),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: kMainColor,
@@ -51,7 +51,7 @@ class UserDoctorScreen extends GetView<UserController> {
                                       : "",
                               style: GoogleFonts.openSans(
                                 color: Colors.white,
-                                fontSize: 18.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.bold,
                               ));
                         }),
@@ -101,7 +101,7 @@ class UserDoctorScreen extends GetView<UserController> {
                       ),
                     ),
                     SizedBox(
-                      height: 3.h,
+                      height: 2.h,
                     ),
                     Obx(() {
                       final status = controller.status.value;
@@ -117,7 +117,7 @@ class UserDoctorScreen extends GetView<UserController> {
                           color: Colors.white,
                           fontSize:
                               controller.user.value.profile?.fullname != null
-                                  ? 18.sp
+                                  ? 19.sp
                                   : 16.sp,
                         ),
                       );
@@ -185,7 +185,7 @@ class UserDoctorScreen extends GetView<UserController> {
                         child: Container(
                           height: 50,
                           margin: EdgeInsets.symmetric(
-                              horizontal: 11.h, vertical: 2.h),
+                              horizontal: 18.w, vertical: 2.h),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),

@@ -59,7 +59,7 @@ class SignInController extends GetxController {
           customSnackBar(message: "Đăng nhập thành công"),
         );
         await Future.delayed(Duration(seconds: 2))
-            .then((value) => Get.toNamed(AppRoutes.rMain));
+            .then((value) => Get.offAndToNamed(AppRoutes.rMain));
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(

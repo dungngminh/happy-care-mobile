@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -21,14 +20,18 @@ class ChatRoomController extends GetxController {
   FocusNode focusNode = FocusNode();
   final ScrollController scrollController = ScrollController();
   final status = ChatRoomStatus.idle.obs;
+  final isMoreLoading = false.obs;
   final UserController userController = Get.find();
   final ImageController imageController = Get.find();
   final formater = DateFormat("HH:mm");
   late TextEditingController textMessController;
   var listMess = RxList<ChatMess>([]);
-  var isTyping = false.obs;
-  var isHadImage = false.obs;
+  final isTyping = false.obs;
+  final isHadImage = false.obs;
+  final isSendingImage = false.obs;
+
   File? imageToSend;
+  int lap = 10;
 
   ChatRoomController({this.messRepo, this.ioService});
 
@@ -46,17 +49,22 @@ class ChatRoomController extends GetxController {
       print(error);
       status(ChatRoomStatus.error);
     });
-    scrollController.addListener(() {
+    scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        //TODO : add more mess
+        await getMoreData(roomId: roomPass.id);
       }
     });
 
-    ioService!.socket.on('receive-message', (data) async {
+    ioService!.socket.on('receive-message', (data) {
       print(data);
       listMess.insert(0, ChatMess.fromMap(data));
       scrollToBottom();
+    });
+
+    ioService!.socket.on('receive-typing-message', (data) {
+      print(data);
+      data['userId'] != null ? isTyping(true) : isTyping(false);
     });
   }
 
@@ -68,6 +76,18 @@ class ChatRoomController extends GetxController {
         duration: Duration(milliseconds: 100),
       );
     }
+  }
+
+  Future<void> getMoreData({required String roomId}) async {
+    isMoreLoading(true);
+    await messRepo!.getMessageHistory(roomId: roomId, start: lap).then((value) {
+      isMoreLoading(false);
+      listMess.addAll(value);
+    }).onError((error, stackTrace) {
+      isMoreLoading(false);
+      print(stackTrace);
+    });
+    lap += 10;
   }
 
   void sendMessage({required String roomId}) {
@@ -94,7 +114,6 @@ class ChatRoomController extends GetxController {
 
   leaveChatRoom({required String roomId}) {
     ioService!.leaveChatRoom(roomId: roomId);
-    return true;
   }
 
   Future<void> getImageToSend() async {
@@ -121,10 +140,12 @@ class ChatRoomController extends GetxController {
   }
 
   Future<void> sendImage({required String roomId}) async {
+    isSendingImage(true);
     await imageController.myCloudinaryService
         .uploadFileOnCloudinary(filePath: imageToSend!.path)
         .then((imageUrl) {
       print(imageUrl);
+      isSendingImage(false);
       listMess.insert(
         0,
         ChatMess(
@@ -142,5 +163,18 @@ class ChatRoomController extends GetxController {
     });
     removeFile();
     scrollToBottom();
+  }
+
+  onTypingMessage(String roomId) {
+    print(textMessController.text);
+    if (textMessController.text != "") {
+      ioService!.isTypingAction(
+          roomId: roomId, userId: userController.user.value.id, isTyping: true);
+    } else {
+      ioService!.isTypingAction(
+          roomId: roomId,
+          userId: userController.user.value.id,
+          isTyping: false);
+    }
   }
 }

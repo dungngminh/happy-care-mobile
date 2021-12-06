@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';

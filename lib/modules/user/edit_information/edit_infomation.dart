@@ -68,7 +68,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     ],
                   ),
                   SizedBox(
-                    height: 3.h,
+                    height: 2.h,
                   ),
                   Stack(
                     children: [
@@ -174,7 +174,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                     ],
                   ),
                   SizedBox(
-                    height: 6.h,
+                    height: 5.h,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -236,4 +236,3 @@ class EditInformationScreen extends GetView<EditInformationController> {
     );
   }
 }
-

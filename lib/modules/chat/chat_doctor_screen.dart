@@ -8,13 +8,13 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:sizer/sizer.dart';
 
 class ChatDoctorScreen extends GetWidget<ChatController> {
   const ChatDoctorScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,13 +49,13 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                       ),
                     ),
                     SizedBox(
-                      width: size.width * 0.04,
+                      width: 4.w,
                     ),
                     Text(
                       "Tư vấn sức khỏe",
                       style: GoogleFonts.openSans(
                           color: kMainColor,
-                          fontSize: 22,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -74,7 +74,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.02,
+            height: 1.5.h,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -82,13 +82,13 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
               "Danh sách tư vấn",
               style: GoogleFonts.openSans(
                 color: kMainColor,
-                fontSize: 20,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           SizedBox(
-            height: size.height * 0.02,
+            height: 1.h,
           ),
           Expanded(
             child: RefreshIndicator(

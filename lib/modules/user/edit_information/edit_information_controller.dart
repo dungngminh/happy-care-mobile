@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,7 +11,6 @@ import 'package:happy_care/modules/main_screen/controller/image_controller.dart'
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/widgets/my_toast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sizer/sizer.dart';
 
 class EditInformationController extends GetxController {
   final UserController _userController = Get.find();

@@ -4,17 +4,16 @@ import 'package:happy_care/core/themes/colors.dart';
 import 'package:sizer/sizer.dart';
 
 SnackBar customSnackBar({required String message, bool isError = false}) {
-    return SnackBar(
-      backgroundColor: kBackgroundColor,
-      content: Text(
-        message,
-        style: GoogleFonts.openSans(
-          color: isError ? kErorColor : kMainColor,
-          fontSize: 10.sp,
-          fontWeight: FontWeight.bold,
-        ),
+  return SnackBar(
+    backgroundColor: kBackgroundColor,
+    content: Text(
+      message,
+      style: GoogleFonts.openSans(
+        color: isError ? kErorColor : kMainColor,
+        fontSize: 10.sp,
+        fontWeight: FontWeight.bold,
       ),
-      duration: Duration(seconds: 2),
-    );
-  }
-
+    ),
+    duration: Duration(seconds: 1),
+  );
+}
