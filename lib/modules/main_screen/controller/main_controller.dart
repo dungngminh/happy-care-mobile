@@ -31,7 +31,7 @@ class MainController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     status(MainStatus.loading);
-    
+
     await userRepository!.getUserData().then((value) {
       role(value.role);
       status(MainStatus.idle);

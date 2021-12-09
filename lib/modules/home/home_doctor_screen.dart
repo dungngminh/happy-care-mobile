@@ -23,41 +23,39 @@ class HomeDoctorScreen extends GetView<HomeController> {
                 GetBuilder<UserController>(
                   builder: (controller) {
                     final status = controller.status.value;
-                    return 
-                    status == UserStatus.loading
+                    return status == UserStatus.loading
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
                         : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          status != UserStatus.loading
-                              ? "Chào, Bác sĩ ${controller.user.value.profile?.fullname ?? controller.user.value.email}"
-                              : "Chào",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.openSans(
-                            color: kMainColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        CircleAvatar(
-                          backgroundColor: kMainColor,
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: CircleAvatar(
-                              backgroundImage: CachedNetworkImageProvider(
-                                  controller.user.value.profile!.avatar!),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                status != UserStatus.loading
+                                    ? "Chào, Bác sĩ ${controller.user.value.profile?.fullname ?? controller.user.value.email}"
+                                    : "Chào",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.openSans(
+                                  color: kMainColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                              CircleAvatar(
+                                backgroundColor: kMainColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: CircleAvatar(
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        controller.user.value.profile!.avatar!),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
                   },
                 ),
-                
               ],
             ),
           ),

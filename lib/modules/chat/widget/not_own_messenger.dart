@@ -1,18 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/modules/chat/widget/view_image.dart';
 import 'package:sizer/sizer.dart';
 
 class NotOwnMessenger extends StatelessWidget {
   const NotOwnMessenger(
       {Key? key,
-      required this.messenge,
+      required this.message,
       required this.time,
       this.avatar,
       this.type = "text"})
       : super(key: key);
-  final String messenge;
+  final String message;
   final String time;
   final String? avatar;
   final String type;
@@ -56,52 +58,50 @@ class NotOwnMessenger extends StatelessWidget {
                       ),
                       color: Colors.white,
                       child: Padding(
-                        padding: type == "text"
-                            ? EdgeInsets.all(12.0)
-                            : EdgeInsets.all(6.0),
-                        child: type == "text"
-                            ? Text(
-                                messenge,
-                                style: GoogleFonts.openSans(
-                                  fontSize: 14.sp,
-                                  color: kMainColor,
-                                ),
-                              )
-                            : Image.network(
-                                messenge,
-                                width: 200,
-                                height: 300,
-                              ),
-                      ),
-                    ),
-                  )
-                : CachedNetworkImage(
-                    imageUrl: messenge,
-                    imageBuilder: (context, imageProvider) => Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.contain),
-                      ),
-                    ),
-                    progressIndicatorBuilder: (context, string, progress) {
-                      return SizedBox(
-                        height: 200,
-                        width: 200,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: progress.progress,
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                          message,
+                          style: GoogleFonts.openSans(
+                            fontSize: 14.sp,
                             color: kMainColor,
                           ),
                         ),
-                      );
-                    },
-                    errorWidget: (context, string, dymamic) => SizedBox(
-                      height: 200,
-                      width: 170,
-                      child: Center(
-                        child: Icon(Icons.error),
+                      ),
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () => Get.to(() => ViewImage(imgUrl: message)),
+                    child: Hero(
+                      tag: message,
+                      child: CachedNetworkImage(
+                        imageUrl: message,
+                        imageBuilder: (context, imageProvider) => Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.contain),
+                          ),
+                        ),
+                        progressIndicatorBuilder: (context, string, progress) {
+                          return SizedBox(
+                            height: 200,
+                            width: 200,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                value: progress.progress,
+                                color: kMainColor,
+                              ),
+                            ),
+                          );
+                        },
+                        errorWidget: (context, string, dymamic) => SizedBox(
+                          height: 200,
+                          width: 170,
+                          child: Center(
+                            child: Icon(Icons.error),
+                          ),
+                        ),
                       ),
                     ),
                   ),

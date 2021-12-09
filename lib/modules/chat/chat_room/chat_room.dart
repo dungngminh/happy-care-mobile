@@ -100,7 +100,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                           if (controller.listMess[index].user !=
                               roomPass.userChatWith.id) {
                             return OwnMessenger(
-                                messenge: controller.listMess[index].content!,
+                                message: controller.listMess[index].content!,
                                 time: controller.formater.format(
                                   DateTime.parse(
                                           controller.listMess[index].time!)
@@ -109,7 +109,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                                 type: controller.listMess[index].type!);
                           } else {
                             return NotOwnMessenger(
-                                messenge: controller.listMess[index].content!,
+                                message: controller.listMess[index].content!,
                                 avatar: roomPass.userChatWith.profile?.avatar,
                                 time: controller.formater.format(
                                   DateTime.parse(
