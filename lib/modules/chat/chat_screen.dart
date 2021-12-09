@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -104,7 +103,7 @@ class ChatScreen extends GetWidget<ChatController> {
                           child: Row(
                             children: [
                               Text(
-                                "Bác sĩ đang trực tuyến",
+                                "Bác sĩ tham gia tư vấn",
                                 style: GoogleFonts.openSans(
                                   fontSize: 10.sp,
                                   color: kMainColor,
@@ -242,8 +241,21 @@ class ChatScreen extends GetWidget<ChatController> {
                                           .listUserChatWithByRoom[index]
                                           .profile
                                           ?.avatar,
-                                      subtitle: controller
-                                          .listRoom[index]!.newestMessage,
+                                      subtitle: controller.listRoom[index]
+                                                  ?.newestMessage?.type !=
+                                              null
+                                          ? (controller.listRoom[index]!
+                                                      .newestMessage!.type! ==
+                                                  "image"
+                                              ? (controller.listRoom[index]!
+                                                          .members![0].id ==
+                                                      controller.userController
+                                                          .user.value.id
+                                                  ? "Bạn đã gửi một hình ảnh"
+                                                  : "Bạn đã nhận được một hình ảnh")
+                                              : controller.listRoom[index]!
+                                                  .newestMessage!.content)
+                                          : null,
                                     ),
                                   ),
                                 ),

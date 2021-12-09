@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:happy_care/data/models/chat_mess.dart';
+
 import 'member.dart';
 
 class RoomChat {
@@ -8,7 +10,7 @@ class RoomChat {
   List<Member>? members;
   bool? isRead;
   bool? hasMessages;
-  String? newestMessage;
+  ChatMess? newestMessage;
   RoomChat({
     this.id,
     this.name,

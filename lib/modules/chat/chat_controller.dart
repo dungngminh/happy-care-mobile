@@ -10,6 +10,7 @@ import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
 enum ChatStatus { loading, error, idle }
+enum GetChatMessStatus { loading, error, idle }
 
 class ChatController extends GetxController {
   final SocketIOService? socketService;
@@ -21,6 +22,8 @@ class ChatController extends GetxController {
   final listRoom = RxList<RoomChat?>([]);
   final listUserChatWithByRoom = RxList<User>([]);
   final status = ChatStatus.idle.obs;
+  final messStatus = GetChatMessStatus.idle.obs;
+
   ChatController(
       {this.messRepository,
       this.socketService,
@@ -54,17 +57,23 @@ class ChatController extends GetxController {
   }
 
   Future<void> getNewMessages() async {
+    messStatus(GetChatMessStatus.loading);
     if (listRoom.isNotEmpty) {
       for (var room in listRoom) {
         await messRepository!
             .getMessageHistory(roomId: room!.id!, limit: 1)
             .then((value) {
-          print("dadad");
-          room.newestMessage = value.first.content;
+          messStatus(GetChatMessStatus.idle);
+          room.newestMessage = value.first;
+        }).onError((error, stackTrace) {
+          messStatus(GetChatMessStatus.error);
         });
       }
     }
   }
+
+  ///Get Message of Last Room we joined
+  Future<void> getNewMessageOfLastRoomChat({required String roomId}) async {}
 
   Future<String?> joinFirstToChatRoom({required String notUserId}) async {
     String? roomId;

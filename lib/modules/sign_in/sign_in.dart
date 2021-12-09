@@ -100,33 +100,34 @@ class SignInScreen extends GetWidget<SignInController> {
                       children: [
                         Obx(
                           () => TextFormField(
-                            controller: controller.passwordController,
-                            style: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w600,
-                              textBaseline: TextBaseline.alphabetic,
-                            ),
-                            focusNode: controller.passFocus,
-                            textAlignVertical: TextAlignVertical.center,
-                            obscureText: controller.isHidePassword.value,
-                            decoration: InputDecoration(
-                              fillColor: kMainColor,
-                              prefixIcon: Icon(
-                                Icons.lock,
+                              controller: controller.passwordController,
+                              style: GoogleFonts.openSans(
                                 color: kMainColor,
-                              ),
-                              hintText: 'Password...',
-                              contentPadding: const EdgeInsets.only(right: 40),
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.openSans(
-                                color: kMainColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
-                            ),
-                            onFieldSubmitted: (value) =>
-                                controller.signIn(context),
-                          ),
+                              focusNode: controller.passFocus,
+                              textAlignVertical: TextAlignVertical.center,
+                              obscureText: controller.isHidePassword.value,
+                              decoration: InputDecoration(
+                                fillColor: kMainColor,
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: kMainColor,
+                                ),
+                                hintText: 'Password...',
+                                contentPadding:
+                                    const EdgeInsets.only(right: 40),
+                                border: InputBorder.none,
+                                hintStyle: GoogleFonts.openSans(
+                                  color: kMainColor,
+                                  fontWeight: FontWeight.w500,
+                                  textBaseline: TextBaseline.alphabetic,
+                                ),
+                              ),
+                              onFieldSubmitted: (value) {
+                                controller.btnController.start();
+                              }),
                         ),
                         GestureDetector(
                           onTap: () {

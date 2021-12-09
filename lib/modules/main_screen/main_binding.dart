@@ -24,25 +24,24 @@ import 'package:http/http.dart';
 class MainBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<UserApi?>(() => UserApi(Client()));
-    Get.lazyPut<SpecApi?>(() => SpecApi(Client()));
-    Get.lazyPut<DoctorApi?>(() => DoctorApi(Client()));
-    Get.lazyPut<MessApi?>(() => MessApi(Client()));
-    Get.lazyPut<RoomApi?>(() => RoomApi(Client()));
-    Get.lazyPut<SocketIOService?>(() => SocketIOService());
-    Get.lazyPut<MyCloudinaryService?>(() => MyCloudinaryService());
-    Get.lazyPut<UserRepository?>(() => UserRepository(userApi: Get.find()));
-    Get.lazyPut<SpecializationRepository?>(
-        () => SpecializationRepository(specApi: Get.find()));
-    Get.lazyPut<DoctorRepository?>(
-        () => DoctorRepository(doctorApi: Get.find()));
-    Get.lazyPut<MessRepository?>(() => MessRepository(messApi: Get.find()));
-    Get.lazyPut<RoomRepository?>(() => RoomRepository(roomApi: Get.find()));
+    Get.lazyPut<UserApi?>(() =>UserApi(Client()));
+    Get.lazyPut<SpecApi?>(() =>SpecApi(Client()));
+    Get.lazyPut<RoomApi?>(() =>RoomApi(Client()));
+    Get.lazyPut<DoctorApi?>(() =>DoctorApi(Client()));
+    Get.lazyPut<MessApi?>(() =>MessApi(Client()));
+    Get.lazyPut<SocketIOService?>(() =>SocketIOService());
+    Get.lazyPut<MyCloudinaryService?>(() =>MyCloudinaryService());
+    Get.lazyPut<UserRepository?>(() =>UserRepository(userApi: Get.find()));
+    Get.lazyPut<SpecializationRepository?>(() =>
+        SpecializationRepository(specApi: Get.find()));
+    Get.lazyPut<DoctorRepository?>(() =>DoctorRepository(doctorApi: Get.find()));
+    Get.lazyPut<MessRepository?>(() =>MessRepository(messApi: Get.find()));
+    Get.lazyPut<RoomRepository?>(() =>RoomRepository(roomApi: Get.find()));
     Get.lazyPut(() => SpecController(specRepo: Get.find()));
     Get.lazyPut(() => ImageController());
     Get.lazyPut(() =>
         DoctorController(doctorRepository: Get.find(), ioService: Get.find()));
-    Get.lazyPut(() => MainController());
+    Get.lazyPut(() => MainController(userRepository: Get.find()));
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => ChatController(
           socketService: Get.find(),

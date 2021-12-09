@@ -8,7 +8,8 @@ class SignInBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<UserApi?>(() => UserApi(Client()));
-    Get.lazyPut<UserRepository?>(() => UserRepository(userApi: Get.find()));
+    Get.lazyPut<UserRepository?>(
+        () => UserRepository(userApi: Get.find()));
     Get.lazyPut(() => SignInController(userRepository: Get.find()));
   }
 }

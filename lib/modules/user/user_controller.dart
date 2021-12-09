@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
 import 'package:happy_care/data/services/socket_io_service.dart';
@@ -22,9 +25,18 @@ class UserController extends GetxController {
     await getUserInformation();
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(color: kMainColor),
+          );
+        });
     socketIOService!.signOut();
     await userRepository!.signOut().then((value) {
+      Get.back();
       MyToast.showToast("Đăng xuất thành công");
       Get.offAllNamed(AppRoutes.rSignIn);
     });

@@ -144,7 +144,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: EdgeInsets.only(left: 5.0),
                           child: IconButton(
                             icon: Icon(
                               Icons.image_rounded,
@@ -154,6 +154,16 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                             onPressed: () => controller.getImageToSend(),
                           ),
                         ),
+                        controller.userController.user.value.role == "doctor"
+                            ? IconButton(
+                                icon: Icon(
+                                  Icons.healing_rounded,
+                                  size: 25.0,
+                                  color: kMainColor,
+                                ),
+                                onPressed: () {},
+                              )
+                            : SizedBox(),
                         Expanded(
                           child: TextField(
                             focusNode: controller.focusNode,
@@ -316,16 +326,15 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
   }
 
   Widget _buildProgressIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Center(
-        child: Opacity(
-          opacity: controller.isMoreLoading.value ? 1.0 : 0.0,
-          child: CircularProgressIndicator(
-            color: kMainColor,
-          ),
-        ),
-      ),
-    );
+    return controller.isMoreLoading.value
+        ? Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: kMainColor,
+              ),
+            ),
+          )
+        : SizedBox();
   }
 }

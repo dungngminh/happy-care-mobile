@@ -60,16 +60,18 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                     ),
                   ],
                 ),
-                controller.listRoom.isEmpty
-                    ? IconButton(
-                        splashRadius: 26,
-                        padding: const EdgeInsets.only(),
-                        onPressed: () => controller.loadMyRooms(),
-                        icon: Icon(Icons.refresh_rounded),
-                        color: kMainColor,
-                        iconSize: 26,
-                      )
-                    : SizedBox(),
+                Obx(
+                  () => controller.listRoom.isEmpty
+                      ? IconButton(
+                          splashRadius: 26,
+                          padding: const EdgeInsets.only(),
+                          onPressed: () => controller.loadMyRooms(),
+                          icon: Icon(Icons.refresh_rounded),
+                          color: kMainColor,
+                          iconSize: 26,
+                        )
+                      : SizedBox(),
+                ),
               ],
             ),
           ),
@@ -149,28 +151,78 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                   child: SlideAnimation(
                                     verticalOffset: 50.0,
                                     child: FadeInAnimation(
-                                      child: RoomMessListTile(
-                                        function: () =>
-                                            controller.joinExistChatRoom(
-                                          roomId:
-                                              controller.listRoom[index]!.id!,
-                                          userChatWithId: controller
-                                              .listUserChatWithByRoom[index],
-                                        ),
-                                        title: controller
-                                                .listUserChatWithByRoom[index]
-                                                .profile
-                                                ?.fullname ??
-                                            controller
-                                                .listUserChatWithByRoom[index]
-                                                .email,
-                                        avatar: controller
-                                            .listUserChatWithByRoom[index]
-                                            .profile
-                                            ?.avatar,
-                                        subtitle: controller
-                                            .listRoom[index]!.newestMessage,
-                                      ),
+                                      child: Obx(() {
+                                        final messStatus =
+                                            controller.messStatus.value;
+                                        return RoomMessListTile(
+                                          function: () =>
+                                              controller.joinExistChatRoom(
+                                            roomId:
+                                                controller.listRoom[index]!.id!,
+                                            userChatWithId: controller
+                                                .listUserChatWithByRoom[index],
+                                          ),
+                                          title: controller
+                                                  .listUserChatWithByRoom[index]
+                                                  .profile
+                                                  ?.fullname ??
+                                              controller
+                                                  .listUserChatWithByRoom[index]
+                                                  .email,
+                                          avatar: controller
+                                              .listUserChatWithByRoom[index]
+                                              .profile
+                                              ?.avatar,
+                                          subtitle: messStatus ==
+                                                  GetChatMessStatus.loading
+                                              ? "Đang cập nhật"
+                                              : (messStatus ==
+                                                      GetChatMessStatus.error
+                                                  ? "Có lỗi xảy ra!"
+                                                  : controller
+                                                              .listRoom[index]
+                                                              ?.newestMessage
+                                                              ?.type !=
+                                                          null
+                                                      ? (controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .type! ==
+                                                              "image"
+                                                          ? (controller
+                                                                      .listRoom[
+                                                                          index]!
+                                                                      .members![
+                                                                          1]
+                                                                      .id ==
+                                                                  controller
+                                                                      .userController
+                                                                      .user
+                                                                      .value
+                                                                      .id
+                                                              ? "Bạn đã gửi một hình ảnh"
+                                                              : "Bạn đã nhận được một hình ảnh")
+                                                          : (controller
+                                                                      .listRoom[
+                                                                          index]!
+                                                                      .members![
+                                                                          1]
+                                                                      .id ==
+                                                                  controller
+                                                                      .userController
+                                                                      .user
+                                                                      .value
+                                                                      .id
+                                                              ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
+                                                              : controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .content))
+                                                      : null),
+                                        );
+                                      }),
                                     ),
                                   ),
                                 );

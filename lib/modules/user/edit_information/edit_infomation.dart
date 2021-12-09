@@ -82,21 +82,21 @@ class EditInformationScreen extends GetView<EditInformationController> {
                             width: 19.h,
                             child: GetBuilder<EditInformationController>(
                                 builder: (controller) {
-                              if (controller.user.profile?.avatar == null) {
-                                return controller.profileImage == null
+                              if (controller.profileImage == null) {
+                                return controller.user.profile?.avatar != null
                                     ? CircleAvatar(
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                        controller.user.profile!.avatar!,
+                                      ))
+                                    : CircleAvatar(
                                         backgroundImage: Image.asset(
                                                 "assets/images/icon.png")
-                                            .image)
-                                    : CircleAvatar(
-                                        backgroundColor: kMainColor,
-                                        backgroundImage: FileImage(
-                                            controller.profileImage!));
+                                            .image);
                               } else {
                                 return CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    controller.user.profile!.avatar!,
-                                  ),
+                                  backgroundImage:
+                                      FileImage(controller.profileImage!),
                                 );
                               }
                             }),
