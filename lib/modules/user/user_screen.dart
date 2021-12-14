@@ -74,6 +74,7 @@ class UserScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
+                                    backgroundColor: kMainColor,
                                     backgroundImage: Image.network(controller
                                             .user.value.profile!.avatar!)
                                         .image,

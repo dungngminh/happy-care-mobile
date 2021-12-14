@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/data/models/specialization.dart';
-import 'package:happy_care/modules/chat/search/chat_search_controller.dart';
+import 'package:happy_care/modules/chat/doctor_detail/doctor_detail_screen.dart';
+import 'package:happy_care/modules/chat/search/search_controller.dart';
 import 'package:happy_care/modules/chat/widget/doctor_search_tile.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class ChatSearchScreen extends GetWidget<ChatSearchController> {
-  const ChatSearchScreen({Key? key}) : super(key: key);
+class SearchScreen extends GetWidget<SearchController> {
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                       width: 10,
                     ),
                     Expanded(
-                      child: GetBuilder<ChatSearchController>(
-                          builder: (controller) {
+                      child:
+                          GetBuilder<SearchController>(builder: (controller) {
                         return DropdownButton<Specialization>(
                           hint: Text("Chuyên khoa",
                               style: GoogleFonts.openSans(color: kMainColor)),
@@ -75,7 +76,27 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                 ),
               ),
               Expanded(
-                child: GetBuilder<ChatSearchController>(builder: (controller) {
+                child: GetBuilder<SearchController>(builder: (controller) {
+                  final status = controller.status.value;
+                  if (status == SearchStatus.loading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: kMainColor,
+                      ),
+                    );
+                  } else if (status == SearchStatus.error) {
+                    return Center(
+                      child: Column(
+                        children: const [
+                          Icon(
+                            Icons.error,
+                            color: kMainColor,
+                          ),
+                          Text("Có lỗi xảy ra! Vui lòng thử lại")
+                        ],
+                      ),
+                    );
+                  }
                   return ListView.builder(
                     itemCount: controller.listDoctor.length,
                     itemBuilder: (context, index) {
@@ -86,14 +107,19 @@ class ChatSearchScreen extends GetWidget<ChatSearchController> {
                             controller.listDoctor[index].specializations!.first,
                         status: controller.listDoctor[index].status,
                         avatar: controller.listDoctor[index].profile?.avatar,
-                        function: () async {
-                          await controller.chatController
-                              .joinFirstToChatRoom(
-                                  notUserId: controller.listDoctor[index].id)
-                              .then((value) => Get.toNamed(AppRoutes.rChatRoom,
-                                  arguments: RoomChatPass(
-                                      value!, controller.listDoctor[index])));
-                        },
+                        function: () => Get.to(() => DoctorDetailScreen(
+                              doctor: controller.listDoctor[index],
+                              function: () async {
+                                await controller.chatController
+                                    .joinFirstToChatRoom(
+                                        notUserId:
+                                            controller.listDoctor[index].id)
+                                    .then((value) => Get.toNamed(
+                                        AppRoutes.rChatRoom,
+                                        arguments: RoomChatPass(value!,
+                                            controller.listDoctor[index])));
+                              },
+                            )),
                       );
                     },
                   );

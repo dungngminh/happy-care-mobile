@@ -55,6 +55,7 @@ dependencies:
   cached_network_image: ^3.2.0
   animated_size_and_fade: ^3.0.0
   webview_flutter: ^3.0.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

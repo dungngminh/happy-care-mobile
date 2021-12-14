@@ -1,18 +1,21 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:sizer/sizer.dart';
 
-
 class CustomNewsListTile extends StatelessWidget {
   const CustomNewsListTile({
-    Key? key,  required this.imgUrl,  required this.title,  required this.description, required this.function,
-
+    Key? key,
+    required this.imgUrl,
+    required this.title,
+    required this.description,
+    required this.function,
   }) : super(key: key);
 
   final String imgUrl;
-  final String title ;
+  final String title;
   final String description;
   final void Function() function;
 
@@ -40,25 +43,20 @@ class CustomNewsListTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
-                  imageUrl:
-                      imgUrl,
-                  imageBuilder: (context, imageProvider) =>
-                      Container(
+                  imageUrl: imgUrl,
+                  imageBuilder: (context, imageProvider) => Container(
                     width: 14.h,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
                         fit: BoxFit.fitHeight,
                       ),
-                      borderRadius:
-                          BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  progressIndicatorBuilder:
-                      (context, string, progress) {
+                  progressIndicatorBuilder: (context, string, progress) {
                     return SizedBox(
-                      height: 12.h,
-                      width: 12.h,
+                      width: 14.h,
                       child: Center(
                         child: CircularProgressIndicator(
                           value: progress.progress,
@@ -67,10 +65,8 @@ class CustomNewsListTile extends StatelessWidget {
                       ),
                     );
                   },
-                  errorWidget: (context, string, dymamic) =>
-                      SizedBox(
-                    height: 12.h,
-                    width: 12.h,
+                  errorWidget: (context, string, dymamic) => SizedBox(
+                    width: 14.h,
                     child: Center(
                       child: Icon(
                         Icons.error,
@@ -83,33 +79,32 @@ class CustomNewsListTile extends StatelessWidget {
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 18.0,
-                  bottom: 18.0,
+                  top: 10.0,
+                  bottom: 10.0,
                   right: 15,
                   left: 8,
                 ),
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       title,
                       style: GoogleFonts.openSans(
                         color: Colors.black,
-                        fontSize: 10.sp,
+                        // fontSize: 10.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 0.5.h,
                     ),
-                    Text(
+                    AutoSizeText(
                       description,
                       style: GoogleFonts.openSans(
                         color: Colors.grey[500],
-                        fontSize: 8.sp,
+                        fontSize: 9.sp,
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.justify,

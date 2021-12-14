@@ -6,9 +6,10 @@ class NewsApi {
 
   NewsApi(this.http);
 
-  Future<String> getAllNews() async {
+  Future<String> getAllNews({int start = 0, int limit = 10}) async {
     var response = await http
-        .get(Uri.parse("${dotenv.env['BASE_URL']}/api/news"))
+        .get(Uri.parse(
+            "${dotenv.env['BASE_URL']}/api/news?start=$start&limit=$limit"))
         .timeout(Duration(minutes: 1));
     if (response.statusCode == 200) {
       print("==================GET_ALLNEW_SUCCESS===============");

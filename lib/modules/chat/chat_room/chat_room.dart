@@ -6,6 +6,7 @@ import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
+import 'package:happy_care/routes/app_pages.dart';
 
 class ChatRoomScreen extends GetView<ChatRoomController> {
   const ChatRoomScreen({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: CircleAvatar(
+                    backgroundColor: kMainColor,
                     backgroundImage: roomPass.userChatWith.profile?.avatar ==
                             null
                         ? Image.asset("assets/images/icon.png").image

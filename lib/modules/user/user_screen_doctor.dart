@@ -93,6 +93,7 @@ class UserDoctorScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
+                                    backgroundColor: kMainColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                         controller.user.value.profile!.avatar!),
                                   );

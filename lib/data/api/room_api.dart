@@ -41,7 +41,6 @@ class RoomApi {
       print("============ERROR_CHECK_ROOM_API_RESPONSE===========");
       throw Exception();
     }
-    
   }
 
   Future<String> getMyRoom(String token) async {
@@ -67,6 +66,5 @@ class RoomApi {
       print("============ERROR_GET_ROOM_API_RESPONSE===========");
       throw Exception();
     }
-    
   }
 }

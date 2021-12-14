@@ -10,11 +10,13 @@ class ViewImage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-        child: Center(
-          child: Hero(
-            tag: imgUrl,
-            child: CachedNetworkImage(
-              imageUrl: imgUrl,
+        child: InteractiveViewer(
+          child: Center(
+            child: Hero(
+              tag: imgUrl,
+              child: CachedNetworkImage(
+                imageUrl: imgUrl,
+              ),
             ),
           ),
         ),

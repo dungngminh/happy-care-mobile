@@ -7,9 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/home/home_controller.dart';
 import 'package:happy_care/modules/home/more_news/more_news.dart';
+import 'package:happy_care/modules/home/more_symptom/more_symptom.dart';
 import 'package:happy_care/modules/home/web_view_screen/web_view_screen.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/custom_news_list_tile.dart';
+import 'package:happy_care/widgets/search_doctor_bar.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -23,32 +26,38 @@ class HomeScreen extends GetView<HomeController> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                  top: 2.2.h, right: 15.0, left: 15.0, bottom: 1.h),
+                  top: 2.2.h, right: 15.0, left: 15.0, bottom: 2.h),
               child: GetBuilder<UserController>(
-                builder: (controller) {
-                  final status = controller.status.value;
+                builder: (userController) {
+                  final status = userController.status.value;
                   return status == UserStatus.loading
                       ? Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: kMainColor,
+                          ),
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Chào, ${controller.user.value.profile?.fullname ?? controller.user.value.email}",
+                              "Chào, ${userController.user.value.profile?.fullname ?? userController.user.value.email}",
                               style: GoogleFonts.openSans(
                                 color: kMainColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14.sp,
                               ),
                             ),
-                            CircleAvatar(
-                              backgroundColor: kMainColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    controller.user.value.profile!.avatar!,
+                            InkWell(
+                              onTap: () => controller.userStatus(0),
+                              child: CircleAvatar(
+                                backgroundColor: kMainColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: CircleAvatar(
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      userController
+                                          .user.value.profile!.avatar!,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -58,16 +67,48 @@ class HomeScreen extends GetView<HomeController> {
                 },
               ),
             ),
-            Obx(
-              () => AnimatedSizeAndFade(
-                fadeDuration: Duration(milliseconds: 400),
-                sizeDuration: Duration(milliseconds: 400),
-                child: _buildUserStatus(),
+            Obx(() {
+              final userTodayStatus = controller.userTodayStatus.value;
+              return userTodayStatus == UserTodayStatus.loading
+                  ? Center(
+                      child: Text("Đang cập nhật trạng thái người dùng"),
+                    )
+                  : AnimatedSizeAndFade(
+                      fadeDuration: Duration(milliseconds: 400),
+                      sizeDuration: Duration(milliseconds: 400),
+                      child: _buildUserStatus(),
+                    );
+            }),
+            // ElevatedButton(
+            //   onPressed: () => controller.userStatus(0),
+            //   child: Text("hello"),
+            // ),
+            SizedBox(
+              height: 1.2.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Tìm kiếm bác sĩ theo chuyên khoa",
+                    style: GoogleFonts.openSans(
+                      color: kMainColor,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
               ),
             ),
-            ElevatedButton(
-              onPressed: () => controller.userStatus(0),
-              child: Text("hello"),
+            SizedBox(
+              height: 1.2.h,
+            ),
+            SearchDoctorBar(
+              function: () => Get.toNamed(AppRoutes.rSearch),
+            ),
+            SizedBox(
+              height: 1.2.h,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -150,7 +191,8 @@ class HomeScreen extends GetView<HomeController> {
                                         controller.listNews[index].description!,
                                     function: () => Get.to(
                                       () => WebViewScreen(
-                                        title: controller.listNews[index].title!,
+                                        title:
+                                            controller.listNews[index].title!,
                                         linkUrl:
                                             controller.listNews[index].link!,
                                       ),
@@ -185,7 +227,7 @@ class HomeScreen extends GetView<HomeController> {
               "Hôm nay,\nbạn cảm thấy thế nào?",
               style: GoogleFonts.openSans(
                 color: kTextMainColor,
-                fontSize: 16.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -207,7 +249,7 @@ class HomeScreen extends GetView<HomeController> {
                           margin: const EdgeInsets.only(bottom: 5),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
-                            vertical: 18,
+                            vertical: 15,
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
@@ -235,7 +277,7 @@ class HomeScreen extends GetView<HomeController> {
                                     ),
                                   )),
                               SizedBox(
-                                height: 2.2.h,
+                                height: 2.h,
                               ),
                               Text(
                                 "Tôi cảm thấy\n rất tuyệt vời",
@@ -261,7 +303,7 @@ class HomeScreen extends GetView<HomeController> {
                           margin: const EdgeInsets.only(bottom: 5),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
-                            vertical: 18,
+                            vertical: 15,
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
@@ -289,7 +331,7 @@ class HomeScreen extends GetView<HomeController> {
                                     ),
                                   )),
                               SizedBox(
-                                height: 2.2.h,
+                                height: 2.h,
                               ),
                               Text(
                                 "Tôi cảm thấy\nkhông được khỏe",
@@ -321,21 +363,33 @@ class HomeScreen extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Triệu chứng của bạn là gì?",
+                  "Triệu chứng của bạn là gì? (" +
+                      controller.listChoice
+                          .where((choice) => choice == true)
+                          .toList()
+                          .length
+                          .toString() +
+                      "/" +
+                      "3)",
                   style: GoogleFonts.openSans(
                     fontSize: 14.sp,
                     color: kTextMainColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  "Xem thêm",
-                  style: GoogleFonts.openSans(
-                    fontSize: 12.sp,
-                    color: Colors.red,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                controller.listChoice
+                        .where((choice) => choice == true)
+                        .toList()
+                        .isNotEmpty
+                    ? InkWell(
+                        borderRadius: BorderRadius.circular(24),
+                        onTap: () => controller.deleteAllChoices(),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -347,19 +401,27 @@ class HomeScreen extends GetView<HomeController> {
               itemCount: 10,
               itemBuilder: (context, index) {
                 return ChoiceChip(
-                  label: Row(
-                    children: [
-                      Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      Text("Đau đầu"),
-                    ],
-                  ),
-                  selected: false,
+                  label: Text(controller.listSymptom[index].name!),
+                  labelStyle: GoogleFonts.openSans(
+                      color:
+                          controller.listChoice[index] ? Colors.white : null),
+                  selected: controller.listChoice[index],
+                  onSelected: (newBool) {
+                    if (controller.listChoice
+                                .where((choice) => choice == true)
+                                .toList()
+                                .length <
+                            3 &&
+                        controller.listChoice[index] == false) {
+                      controller.listMax.add(controller.listSymptom[index].id!);
+                      controller.listChoice[index] = newBool;
+                    } else if (controller.listChoice[index] == true) {
+                      controller.listChoice[index] = newBool;
+                      controller.listMax
+                          .remove(controller.listSymptom[index].id!);
+                    }
+                  },
+                  selectedColor: kMainColor,
                 );
               },
               separatorBuilder: (context, index) {
@@ -367,6 +429,48 @@ class HomeScreen extends GetView<HomeController> {
                   width: 10,
                 );
               },
+            ),
+          ),
+          SizedBox(
+            height: 0.8.h,
+          ),
+          InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () => Get.to(() => MoreSymptomScreen()),
+            child: Text(
+              "Xem thêm triệu chứng",
+              style: GoogleFonts.openSans(
+                color: kMainColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Divider(
+            color: kMainColor,
+            thickness: 2,
+            indent: 40.w,
+            endIndent: 40.w,
+          ),
+          Obx(
+            () => ElevatedButton(
+              style: controller.listChoice
+                      .where((choice) => choice == true)
+                      .toList()
+                      .isNotEmpty
+                  ? ElevatedButton.styleFrom(
+                      primary: kMainColor,
+                      elevation: 4,
+                      textStyle: GoogleFonts.openSans(),
+                    )
+                  : ElevatedButton.styleFrom(
+                      primary: Colors.grey.shade200,
+                      onPrimary: Colors.grey,
+                      elevation: 1,
+                      textStyle: GoogleFonts.openSans(),
+                    ),
+              onPressed: () => controller.findingSpecBySymptom(),
+              child: Text("Tìm kiếm bác sĩ"),
             ),
           ),
         ],
@@ -381,7 +485,7 @@ class HomeScreen extends GetView<HomeController> {
                 Text(
                   "Chúc bạn ngày mới tốt lành",
                   style: GoogleFonts.openSans(
-                    fontSize: 14.sp,
+                    fontSize: 15.sp,
                     color: kTextMainColor,
                     fontWeight: FontWeight.bold,
                   ),

@@ -7,9 +7,9 @@ class NewsReposity {
 
   NewsReposity({this.newsApi});
 
-  Future<List<NewsDetail>> getAllNews() async {
+  Future<List<NewsDetail>> getAllNews({int start = 0, int limit = 10}) async {
     try {
-      String response = await newsApi!.getAllNews();
+      String response = await newsApi!.getAllNews(start: start, limit: limit);
       var converted = convert.jsonDecode(response);
       print("converted news oke");
       Iterable list = converted['data'];

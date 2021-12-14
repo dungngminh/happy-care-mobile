@@ -20,7 +20,7 @@ class MoreNews extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
               child: Text(
                 "Tin tức",
                 style: GoogleFonts.openSans(
@@ -30,33 +30,46 @@ class MoreNews extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: AnimationLimiter(
-                child: ListView.builder(
-                  itemCount: homeController.listNews.length,
-                  itemBuilder: (context, index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: Duration(seconds: 1),
-                      child: SlideAnimation(
-                        verticalOffset: 50.0,
-                        child: FadeInAnimation(
-                          child: CustomNewsListTile(
-                            imgUrl: homeController.listNews[index].imgUrl!,
-                            title: homeController.listNews[index].title!,
-                            description:
-                                homeController.listNews[index].description!,
-                            function: () => Get.to(
-                              () => WebViewScreen(
-                                title: homeController.listNews[index].title!,
-                                linkUrl: homeController.listNews[index].link!,
+            Obx(
+              () => Expanded(
+                child: AnimationLimiter(
+                  child: ListView.builder(
+                    controller: homeController.scrollController,
+                    itemCount: homeController.listNews.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == homeController.listNews.length) {
+                        return homeController.isMoreLoading.value
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: kMainColor,
+                                ),
+                              )
+                            : SizedBox();
+                      }
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: Duration(seconds: 1),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: CustomNewsListTile(
+                              imgUrl: homeController.listNews[index].imgUrl!,
+                              title: homeController.listNews[index].title!,
+                              description:
+                                  homeController.listNews[index].description ??
+                                      "",
+                              function: () => Get.to(
+                                () => WebViewScreen(
+                                  title: homeController.listNews[index].title!,
+                                  linkUrl: homeController.listNews[index].link!,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

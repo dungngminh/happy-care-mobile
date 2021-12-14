@@ -47,6 +47,7 @@ class HomeDoctorScreen extends GetView<HomeController> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: CircleAvatar(
+                                    backgroundColor: kSecondColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                         controller.user.value.profile!.avatar!),
                                   ),

@@ -40,6 +40,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                             .image,
                                   )
                                 : CircleAvatar(
+                                    backgroundColor: kSecondColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                       controller.user.value.profile!.avatar!,
                                     ),
@@ -55,7 +56,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                       "Tư vấn sức khỏe",
                       style: GoogleFonts.openSans(
                           color: kMainColor,
-                          fontSize: 18.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -84,7 +85,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
               "Danh sách tư vấn",
               style: GoogleFonts.openSans(
                 color: kMainColor,
-                fontSize: 16.sp,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -193,9 +194,8 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                           ? (controller
                                                                       .listRoom[
                                                                           index]!
-                                                                      .members![
-                                                                          1]
-                                                                      .id ==
+                                                                      .newestMessage!
+                                                                      .user ==
                                                                   controller
                                                                       .userController
                                                                       .user

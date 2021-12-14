@@ -24,4 +24,18 @@ class SpecApi {
       throw Exception();
     }
   }
+
+//   Future<String> getSpecBySymptom(String token,{required List<String> symptomId) async {
+//     Map<String, String> header = {
+//       "Authorization":"Bearer $token",
+//       "Content-Type":"application/json"
+//     };
+
+//     Map<String, List<String>> body = {
+//       "keywords":symptomId
+//     };
+
+//     var response = await http.get(      Uri.parse("${dotenv.env['BASE_URL']}/api/admin/specialization"),
+// headers: header);
+//   }
 }

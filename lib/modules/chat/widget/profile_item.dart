@@ -45,6 +45,7 @@ class ProfileItem extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: CircleAvatar(
+                        backgroundColor: kSecondColor,
                         radius: 29,
                         backgroundImage: avatar == null
                             ? Image.asset("assets/images/icon.png").image

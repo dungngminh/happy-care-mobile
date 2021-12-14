@@ -12,6 +12,7 @@ import 'package:happy_care/modules/main_screen/controller/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
 import 'package:happy_care/modules/user/user_screen.dart';
 import 'package:happy_care/modules/user/user_screen_doctor.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
 class MainScreen extends GetWidget<MainController> {

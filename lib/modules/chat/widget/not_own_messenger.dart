@@ -35,6 +35,7 @@ class NotOwnMessenger extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(1.5),
               child: CircleAvatar(
+                backgroundColor: kSecondColor,
                 backgroundImage: avatar == null
                     ? Image.asset("assets/images/icon.png").image
                     : CachedNetworkImageProvider(avatar!),

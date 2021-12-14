@@ -85,16 +85,18 @@ class EditInformationScreen extends GetView<EditInformationController> {
                               if (controller.profileImage == null) {
                                 return controller.user.profile?.avatar != null
                                     ? CircleAvatar(
+                                        backgroundColor: kSecondColor,
                                         backgroundImage:
                                             CachedNetworkImageProvider(
-                                        controller.user.profile!.avatar!,
-                                      ))
+                                          controller.user.profile!.avatar!,
+                                        ))
                                     : CircleAvatar(
                                         backgroundImage: Image.asset(
                                                 "assets/images/icon.png")
                                             .image);
                               } else {
                                 return CircleAvatar(
+                                  backgroundColor: kSecondColor,
                                   backgroundImage:
                                       FileImage(controller.profileImage!),
                                 );
