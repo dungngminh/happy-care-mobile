@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 import 'package:happy_care/core/utils/shared_pref.dart';
+import 'package:happy_care/modules/splash_screen/splash_screen.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart';
@@ -33,9 +34,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: isNotFirstTime
-            ? AppRoutes.rOnboarding
-            : (token != null ? AppRoutes.rMain : AppRoutes.rSignIn),
+        // initialRoute: isNotFirstTime
+        //     ? AppRoutes.rOnboarding
+        //     : (token != null ? AppRoutes.rMain : AppRoutes.rSignIn),
+        home: SplashScreen(token: token, isNotFirstTime: isNotFirstTime),
         getPages: AppPages.routes,
       );
     });

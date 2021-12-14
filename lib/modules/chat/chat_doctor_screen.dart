@@ -206,9 +206,8 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                           : (controller
                                                                       .listRoom[
                                                                           index]!
-                                                                      .members![
-                                                                          1]
-                                                                      .id ==
+                                                                      .newestMessage!
+                                                                      .user ==
                                                                   controller
                                                                       .userController
                                                                       .user
