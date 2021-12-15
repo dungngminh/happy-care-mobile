@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/modules/chat/widget/view_image.dart';
 import 'package:sizer/sizer.dart';
 
@@ -60,6 +61,7 @@ class OwnMessenger extends StatelessWidget {
                       child: Hero(
                         tag: message,
                         child: CachedNetworkImage(
+                          cacheManager: CustomCacheManager.customCacheManager,
                           imageUrl: message,
                           imageBuilder: (context, imageProvider) => Container(
                             height: 200,

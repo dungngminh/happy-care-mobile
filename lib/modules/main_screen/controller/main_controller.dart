@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
 
 import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
 import 'package:happy_care/modules/main_screen/controller/spec_controller.dart';
-import 'package:happy_care/modules/main_screen/main_screen.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 
 enum MainStatus { loading, idle, error }

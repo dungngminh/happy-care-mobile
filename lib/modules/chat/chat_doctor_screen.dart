@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
@@ -43,6 +44,8 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                     backgroundColor: kSecondColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                       controller.user.value.profile!.avatar!,
+                                      cacheManager:
+                                          CustomCacheManager.customCacheManager,
                                     ),
                                   );
                           },
@@ -59,6 +62,92 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                           fontSize: 15.sp,
                           fontWeight: FontWeight.bold),
                     ),
+                    IconButton(
+                        // onPressed: () {
+                        //   showModalBottomSheet(
+                        //     context: context,
+                        //     isScrollControlled: true,
+                        //     backgroundColor: Colors.transparent,
+                        //     builder: (context) => DraggableScrollableSheet(
+                        //       initialChildSize: 0.64,
+                        //       minChildSize: 0.2,
+                        //       maxChildSize: 1,
+                        //       builder: (context, scrollController) {
+                        //         return Container(
+                        //           color: Colors.white,
+                        //           child: ListView.builder(
+                        //             controller: scrollController,
+                        //             itemBuilder: (context, index) {
+                        //               return ListTile(
+                        //                 title: Text('Item $index'),
+                        //               );
+                        //             },
+                        //             itemCount: 20,
+                        //           ),
+                        //         );
+                        //       },
+                        //     ),
+                        //   );
+                        // },
+                        onPressed: () => showModalBottomSheet(
+                              context: context,
+                              // isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => DraggableScrollableSheet(
+                                // initialChildSize: 0.8,
+                                // minChildSize: 0.25,
+                                // maxChildSize: 1,
+                                builder: (context, scrollController) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25),
+                                        topRight: Radius.circular(25),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Column(
+                                        children: [
+                                          Divider(
+                                            indent: 40.w,
+                                            endIndent: 40.w,
+                                            thickness: 4,
+                                            color: kMainColor,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Tạo đơn thuốc mới",
+                                                  style: GoogleFonts.openSans(
+                                                    color: kMainColor,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 1.2.h,
+                                          ),
+                                          
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                        icon: Icon(Icons.ac_unit)),
                   ],
                 ),
                 Obx(

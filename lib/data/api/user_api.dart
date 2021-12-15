@@ -9,10 +9,14 @@ class UserApi {
 
   UserApi(this.http);
 
-  Future<String> createNewUser(String email, String password) async {
-    Map<String, String> bodyRequest = {
+  Future<String> createNewUser(String email, String password,
+      {String? avatar}) async {
+    Map<String, dynamic> bodyRequest = {
       'email': email,
       'password': password,
+      'profile': {
+        'avatar': avatar,
+      }
     };
     Map<String, String> headers = {
       'Content-Type': 'application/json',

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/modules/user/edit_information/edit_information_controller.dart';
 import 'package:happy_care/widgets/custom_text_field.dart';
 import 'package:sizer/sizer.dart';
@@ -89,6 +90,7 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                         backgroundImage:
                                             CachedNetworkImageProvider(
                                           controller.user.profile!.avatar!,
+                                          cacheManager: CustomCacheManager.customCacheManager,
                                         ))
                                     : CircleAvatar(
                                         backgroundImage: Image.asset(

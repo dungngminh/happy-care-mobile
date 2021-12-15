@@ -39,7 +39,7 @@ class SignInController extends GetxController {
       );
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
-    } else if (ValidatorUtils.checkPassword(passwordController.text)) {
+    } else if (!ValidatorUtils.checkPassword(passwordController.text)) {
       btnController.error();
       ScaffoldMessenger.of(context).showSnackBar(
         customSnackBar(

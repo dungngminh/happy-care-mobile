@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileItem extends StatelessWidget {
@@ -49,7 +50,11 @@ class ProfileItem extends StatelessWidget {
                         radius: 29,
                         backgroundImage: avatar == null
                             ? Image.asset("assets/images/icon.png").image
-                            : CachedNetworkImageProvider(avatar!),
+                            : CachedNetworkImageProvider(
+                                avatar!,
+                                cacheManager:
+                                    CustomCacheManager.customCacheManager,
+                              ),
                       ),
                     ),
                   ),

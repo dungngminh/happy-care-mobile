@@ -20,7 +20,7 @@ class MoreNews extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(
                 "Tin tức",
                 style: GoogleFonts.openSans(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 
 class ViewImage extends StatelessWidget {
   const ViewImage({Key? key, required this.imgUrl}) : super(key: key);
@@ -16,6 +17,7 @@ class ViewImage extends StatelessWidget {
               tag: imgUrl,
               child: CachedNetworkImage(
                 imageUrl: imgUrl,
+                cacheManager: CustomCacheManager.customCacheManager,
               ),
             ),
           ),

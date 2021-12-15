@@ -14,11 +14,14 @@ import 'package:intl/intl.dart';
 
 enum ChatRoomStatus { loading, idle, error }
 
-class ChatRoomController extends GetxController {
+class ChatRoomController extends GetxController
+    with SingleGetTickerProviderMixin {
   final SocketIOService? ioService;
   final MessRepository? messRepo;
   FocusNode focusNode = FocusNode();
   final ScrollController scrollController = ScrollController();
+  late final AnimationController animationController;
+  final Tween<Offset> tween = Tween(begin: Offset(0, 1), end: Offset(0, 0));
   final status = ChatRoomStatus.idle.obs;
   final isMoreLoading = false.obs;
   final UserController userController = Get.find();
@@ -32,14 +35,16 @@ class ChatRoomController extends GetxController {
 
   File? imageToSend;
   int lap = 10;
-
+  final roomPass = Get.arguments as RoomChatPass;
   ChatRoomController({this.messRepo, this.ioService});
 
   @override
   Future<void> onInit() async {
     super.onInit();
     textMessController = TextEditingController();
-    final roomPass = Get.arguments as RoomChatPass;
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+
     status(ChatRoomStatus.loading);
     await messRepo!.getMessageHistory(roomId: roomPass.id).then((value) {
       listMess(value);
@@ -56,13 +61,13 @@ class ChatRoomController extends GetxController {
       }
     });
 
-    ioService!.socket.on('receive-message', (data) {
+    ioService!.socket!.on('receive-message', (data) {
       print(data);
       listMess.insert(0, ChatMess.fromMap(data));
       scrollToBottom();
     });
 
-    ioService!.socket.on('receive-typing-message', (data) {
+    ioService!.socket!.on('receive-typing-message', (data) {
       print(data);
       data['userId'] != null ? isTyping(true) : isTyping(false);
     });

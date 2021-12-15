@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:happy_care/core/utils/validator.dart';
 import 'package:happy_care/data/repositories/user_repository.dart';
+import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/widgets/custom_snack_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -20,6 +20,7 @@ class SignUpController extends GetxController {
   final passwordController = TextEditingController();
   final rePasswordController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
+  final ImageController imageController = Get.find();
 
   final passFocus = FocusNode();
   final rePassFocus = FocusNode();
@@ -78,13 +79,21 @@ class SignUpController extends GetxController {
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
     } else {
+      String? url;
+      if (profileImage != null) {
+        url = await imageController.myCloudinaryService
+            .uploadFileOnCloudinary(filePath: profileImage!.path);
+      }
       bool isOK = await userRepository!.createNewUser(
-          email: emailController.text, password: passwordController.text);
+        email: emailController.text,
+        password: passwordController.text,
+        avatar: url,
+      );
       if (isOK) {
         btnController.success();
-        await Future.delayed(Duration(seconds: 1)).then((value) => Get.back());
         ScaffoldMessenger.of(context)
-            .showSnackBar(customSnackBar(message: "Đăng nhập thành công"));
+            .showSnackBar(customSnackBar(message: "Đăng ký thành công"));
+        await Future.delayed(Duration(seconds: 1)).then((value) => Get.back());
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 
 class RoomMessListTile extends StatelessWidget {
   const RoomMessListTile({
@@ -38,7 +39,7 @@ class RoomMessListTile extends StatelessWidget {
                 radius: 25,
                 backgroundImage: avatar == null
                     ? Image.asset("assets/images/icon.png").image
-                    : CachedNetworkImageProvider(avatar!),
+                    : CachedNetworkImageProvider(avatar!, cacheManager: CustomCacheManager.customCacheManager,),
               ),
             ),
           ),

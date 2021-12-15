@@ -21,21 +21,25 @@ class AppPages {
     GetPage(
       name: AppRoutes.rOnboarding,
       page: () => OnboardingScreen(),
+      transition: Transition.downToUp,
     ),
     GetPage(
       name: AppRoutes.rSignIn,
       binding: SignInBinding(),
       page: () => SignInScreen(),
+      transition: Transition.leftToRight
     ),
     GetPage(
       name: AppRoutes.rSignUp,
       binding: SignUpBinding(),
       page: () => SignUpScreen(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.rMain,
       binding: MainBinding(),
       page: () => MainScreen(),
+      transition: Transition.downToUp,
     ),
     GetPage(
       name: AppRoutes.rEdit,

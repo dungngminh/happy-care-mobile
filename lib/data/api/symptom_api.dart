@@ -7,7 +7,6 @@ class SymptomApi {
   SymptomApi(this.http);
 
   Future<String> getAllSymptom({required String token}) async {
-    final header = {"Authorization": "Bearer $token"};
     var response = await http
         .get(Uri.parse("${dotenv.env['BASE_URL']}/api/symptom-keyword"));
 

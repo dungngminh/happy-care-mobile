@@ -9,9 +9,9 @@ class UserRepository {
   UserRepository({this.userApi});
 
   Future<bool> createNewUser(
-      {required String email, required String password}) async {
+      {required String email, required String password, String? avatar}) async {
     try {
-      await userApi!.createNewUser(email, password);
+      await userApi!.createNewUser(email, password, avatar: avatar);
       return true;
     } catch (_) {
       print(_ as Exception);

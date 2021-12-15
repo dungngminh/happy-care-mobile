@@ -57,6 +57,7 @@ dependencies:
   webview_flutter: ^3.0.0
   auto_size_text: ^3.0.0
   lottie: ^1.2.1
+  flutter_cache_manager: ^3.3.0
 
 dev_dependencies:
   flutter_test:

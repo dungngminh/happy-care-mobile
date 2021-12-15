@@ -256,34 +256,34 @@ class SignUpScreen extends GetWidget<SignUpController> {
                       children: [
                         Obx(
                           () => TextFormField(
-                            controller: controller.rePasswordController,
-                            style: GoogleFonts.openSans(
-                              color: kMainColor,
-                              fontWeight: FontWeight.w600,
-                              textBaseline: TextBaseline.alphabetic,
-                            ),
-                            textAlignVertical: TextAlignVertical.center,
-                            obscureText: controller.isHideRepassword.value,
-                            decoration: InputDecoration(
-                              fillColor: kMainColor,
-                              prefixIcon: Icon(
-                                Icons.lock,
+                              controller: controller.rePasswordController,
+                              style: GoogleFonts.openSans(
                                 color: kMainColor,
-                              ),
-                              hintText: 'Nhập lại password...',
-                              contentPadding: const EdgeInsets.only(right: 40),
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.openSans(
-                                color: kMainColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
-                            ),
-                            textInputAction: TextInputAction.done,
-                            focusNode: controller.rePassFocus,
-                            onFieldSubmitted: (value) =>
-                                controller.createNewUser(context),
-                          ),
+                              textAlignVertical: TextAlignVertical.center,
+                              obscureText: controller.isHideRepassword.value,
+                              decoration: InputDecoration(
+                                fillColor: kMainColor,
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: kMainColor,
+                                ),
+                                hintText: 'Nhập lại password...',
+                                contentPadding:
+                                    const EdgeInsets.only(right: 40),
+                                border: InputBorder.none,
+                                hintStyle: GoogleFonts.openSans(
+                                  color: kMainColor,
+                                  fontWeight: FontWeight.w500,
+                                  textBaseline: TextBaseline.alphabetic,
+                                ),
+                              ),
+                              textInputAction: TextInputAction.done,
+                              focusNode: controller.rePassFocus,
+                              onFieldSubmitted: (value) =>
+                                  controller.btnController.start()),
                         ),
                         GestureDetector(
                           onTap: () {

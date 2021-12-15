@@ -1,9 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:sizer/sizer.dart';
 
@@ -48,6 +49,7 @@ class DoctorDetailScreen extends StatelessWidget {
                         Expanded(
                           child: Center(
                             child: CachedNetworkImage(
+                              cacheManager: CustomCacheManager.customCacheManager,
                               imageUrl: doctor.profile!.avatar!,
                             ),
                           ),

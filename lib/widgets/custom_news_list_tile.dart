@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomNewsListTile extends StatelessWidget {
@@ -43,6 +44,7 @@ class CustomNewsListTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
+                  cacheManager: CustomCacheManager.customCacheManager,
                   imageUrl: imgUrl,
                   imageBuilder: (context, imageProvider) => Container(
                     width: 14.h,

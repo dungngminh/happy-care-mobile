@@ -6,13 +6,12 @@ import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
-import 'package:happy_care/routes/app_pages.dart';
 
 class ChatRoomScreen extends GetView<ChatRoomController> {
-  const ChatRoomScreen({Key? key}) : super(key: key);
+   ChatRoomScreen({Key? key}) : super(key: key);
+  final roomPass = Get.arguments as RoomChatPass;
   @override
   Widget build(BuildContext context) {
-    final roomPass = Get.arguments as RoomChatPass;
     return WillPopScope(
       onWillPop: () async {
         Get.back(result: true);
@@ -163,8 +162,29 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                                   size: 25.0,
                                   color: kMainColor,
                                 ),
-                                onPressed: () {},
-                              )
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) =>
+                                        DraggableScrollableSheet(
+                                      initialChildSize: 0.64,
+                                      minChildSize: 0.25,
+                                      maxChildSize: 1,
+                                      builder: (context, scrollController) {
+                                        return Container(
+                                          color: Colors.white,
+                                          child: Column(
+                                            children: [
+                                              Text("Đơn thuốc"),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                })
                             : SizedBox(),
                         Expanded(
                           child: TextField(

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/information_tile.dart';
@@ -95,7 +96,10 @@ class UserDoctorScreen extends GetView<UserController> {
                                 : CircleAvatar(
                                     backgroundColor: kMainColor,
                                     backgroundImage: CachedNetworkImageProvider(
-                                        controller.user.value.profile!.avatar!),
+                                      controller.user.value.profile!.avatar!,
+                                      cacheManager:
+                                          CustomCacheManager.customCacheManager,
+                                    ),
                                   );
                           }),
                         ),
