@@ -63,6 +63,7 @@ class Background {
 
   String? get degree => description?.split("  ").first;
   String? get workLocation => description?.split("  ")[1];
+  String? get gioithieu => description?.split("  ")[2];
 
   factory Background.fromJson(Map<String, dynamic> json) => Background(
         description: json["description"],

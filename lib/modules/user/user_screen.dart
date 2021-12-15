@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,9 +74,9 @@ class UserScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: Image.network(
-                                            controller
-                                                .user.value.profile!.avatar!)
+                                    backgroundColor: kMainColor,
+                                    backgroundImage: Image.network(controller
+                                            .user.value.profile!.avatar!)
                                         .image,
                                   );
                           }),
@@ -148,7 +147,7 @@ class UserScreen extends GetView<UserController> {
                             : controller.user.value.profile?.address,
                       ),
                       GestureDetector(
-                        onTap: () => controller.signOut(),
+                        onTap: () => controller.signOut(context),
                         child: Container(
                           height: 50,
                           margin: EdgeInsets.symmetric(

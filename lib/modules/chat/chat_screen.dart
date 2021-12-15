@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -7,11 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
+import 'package:happy_care/modules/chat/doctor_detail/doctor_detail_screen.dart';
 import 'package:happy_care/modules/chat/widget/profile_item.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/main_screen/controller/doctor_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/search_doctor_bar.dart';
 import 'package:sizer/sizer.dart';
 
 class ChatScreen extends GetWidget<ChatController> {
@@ -93,9 +94,9 @@ class ChatScreen extends GetWidget<ChatController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildSearchBar(function: () {
-                          Get.toNamed(AppRoutes.rChatSearch);
-                        }),
+                        SearchDoctorBar(
+                          function: () => Get.toNamed(AppRoutes.rSearch),
+                        ),
                         SizedBox(
                           height: 1.8.h,
                         ),
@@ -104,7 +105,7 @@ class ChatScreen extends GetWidget<ChatController> {
                           child: Row(
                             children: [
                               Text(
-                                "Bác sĩ đang trực tuyến",
+                                "Bác sĩ tham gia trên hệ thống",
                                 style: GoogleFonts.openSans(
                                   fontSize: 10.sp,
                                   color: kMainColor,
@@ -131,21 +132,27 @@ class ChatScreen extends GetWidget<ChatController> {
                                     avatar: docController
                                         .listDoctor[index].profile?.avatar,
                                     width: 16.w,
-                                    function: () async {
-                                      await controller
-                                          .joinFirstToChatRoom(
-                                              notUserId: docController
-                                                  .listDoctor[index].id)
-                                          .then(
-                                            (value) => Get.toNamed(
-                                              AppRoutes.rChatRoom,
-                                              arguments: RoomChatPass(
-                                                value!,
-                                                docController.listDoctor[index],
-                                              ),
-                                            ),
-                                          );
-                                    },
+                                    function: () => Get.to(() =>
+                                        DoctorDetailScreen(
+                                          doctor:
+                                              docController.listDoctor[index],
+                                          function: () async {
+                                            await controller
+                                                .joinFirstToChatRoom(
+                                                    notUserId: docController
+                                                        .listDoctor[index].id)
+                                                .then(
+                                                  (value) => Get.toNamed(
+                                                    AppRoutes.rChatRoom,
+                                                    arguments: RoomChatPass(
+                                                      value!,
+                                                      docController
+                                                          .listDoctor[index],
+                                                    ),
+                                                  ),
+                                                );
+                                          },
+                                        )),
                                     status:
                                         docController.listDoctor[index].status!,
                                   );
@@ -171,6 +178,7 @@ class ChatScreen extends GetWidget<ChatController> {
                   ),
                   Obx(() {
                     final status = controller.status.value;
+                    final messStatus = controller.messStatus.value;
                     if (status == ChatStatus.loading) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -242,8 +250,50 @@ class ChatScreen extends GetWidget<ChatController> {
                                           .listUserChatWithByRoom[index]
                                           .profile
                                           ?.avatar,
-                                      subtitle: controller
-                                          .listRoom[index]!.newestMessage,
+                                      subtitle: messStatus ==
+                                              GetChatMessStatus.loading
+                                          ? "Đang cập nhật"
+                                          : (messStatus ==
+                                                  GetChatMessStatus.error
+                                              ? "Có lỗi xảy ra!"
+                                              : controller
+                                                          .listRoom[index]
+                                                          ?.newestMessage
+                                                          ?.type !=
+                                                      null
+                                                  ? (controller
+                                                              .listRoom[index]!
+                                                              .newestMessage!
+                                                              .type! ==
+                                                          "image"
+                                                      ? (controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .user ==
+                                                              controller
+                                                                  .userController
+                                                                  .user
+                                                                  .value
+                                                                  .id
+                                                          ? "Bạn đã gửi một hình ảnh"
+                                                          : "Bạn đã nhận được một hình ảnh")
+                                                      : (controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .user ==
+                                                              controller
+                                                                  .userController
+                                                                  .user
+                                                                  .value
+                                                                  .id
+                                                          ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
+                                                          : controller
+                                                              .listRoom[index]!
+                                                              .newestMessage!
+                                                              .content))
+                                                  : null),
                                     ),
                                   ),
                                 ),

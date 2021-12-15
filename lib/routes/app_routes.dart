@@ -10,6 +10,6 @@ abstract class AppRoutes {
   static const rChat = '/chat';
   static const rMed = '/med';
   static const rEdit = '/edit';
-  static const rChatSearch = '/chat_searh';
+  static const rSearch = '/searh';
   static const rChatRoom = '/chat_room';
 }

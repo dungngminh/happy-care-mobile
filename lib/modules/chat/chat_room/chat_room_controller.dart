@@ -91,18 +91,18 @@ class ChatRoomController extends GetxController {
   }
 
   void sendMessage({required String roomId}) {
-    if (textMessController.text != "") {
+    if (textMessController.text.trim() != "") {
       listMess.insert(
         0,
         ChatMess(
-          content: textMessController.text,
+          content: textMessController.text.trim(),
           user: userController.user.value.id,
           type: "text",
           time: DateTime.now().toLocal().toString(),
         ),
       );
       ioService!.sendMessage(
-          content: textMessController.text,
+          content: textMessController.text.trim(),
           roomId: roomId,
           contentType: "text",
           userId: userController.user.value.id);
@@ -172,9 +172,10 @@ class ChatRoomController extends GetxController {
           roomId: roomId, userId: userController.user.value.id, isTyping: true);
     } else {
       ioService!.isTypingAction(
-          roomId: roomId,
-          userId: userController.user.value.id,
-          isTyping: false);
+        roomId: roomId,
+        userId: userController.user.value.id,
+        isTyping: false,
+      );
     }
   }
 }

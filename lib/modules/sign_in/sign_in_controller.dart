@@ -24,7 +24,6 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn(BuildContext context) async {
-    btnController.start();
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       btnController.error();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +58,7 @@ class SignInController extends GetxController {
           customSnackBar(message: "Đăng nhập thành công"),
         );
         await Future.delayed(Duration(seconds: 2))
-            .then((value) => Get.offAndToNamed(AppRoutes.rMain));
+            .then((value) => Get.offAllNamed(AppRoutes.rMain));
       } else {
         btnController.error();
         ScaffoldMessenger.of(context).showSnackBar(

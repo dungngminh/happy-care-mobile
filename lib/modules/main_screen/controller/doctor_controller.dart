@@ -29,7 +29,9 @@ class DoctorController extends GetxController {
     status(DocStatus.loading);
     listDoctor = await getDoctorMaybeBySpecId(id: null);
     _ioService?.initService();
-    if (userController.user.value.role == "member") await getDoctorOnline();
+    await Future.delayed(Duration(seconds: 5)).then((value) async {
+      if (userController.user.value.role == "member") await getDoctorOnline();
+    });
   }
 
   Future<void> getDoctorOnline() async {

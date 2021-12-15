@@ -40,6 +40,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                             .image,
                                   )
                                 : CircleAvatar(
+                                    backgroundColor: kSecondColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                       controller.user.value.profile!.avatar!,
                                     ),
@@ -55,21 +56,23 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                       "Tư vấn sức khỏe",
                       style: GoogleFonts.openSans(
                           color: kMainColor,
-                          fontSize: 18.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                controller.listRoom.isEmpty
-                    ? IconButton(
-                        splashRadius: 26,
-                        padding: const EdgeInsets.only(),
-                        onPressed: () => controller.loadMyRooms(),
-                        icon: Icon(Icons.refresh_rounded),
-                        color: kMainColor,
-                        iconSize: 26,
-                      )
-                    : SizedBox(),
+                Obx(
+                  () => controller.listRoom.isEmpty
+                      ? IconButton(
+                          splashRadius: 26,
+                          padding: const EdgeInsets.only(),
+                          onPressed: () => controller.loadMyRooms(),
+                          icon: Icon(Icons.refresh_rounded),
+                          color: kMainColor,
+                          iconSize: 26,
+                        )
+                      : SizedBox(),
+                ),
               ],
             ),
           ),
@@ -82,7 +85,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
               "Danh sách tư vấn",
               style: GoogleFonts.openSans(
                 color: kMainColor,
-                fontSize: 16.sp,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -149,28 +152,76 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                   child: SlideAnimation(
                                     verticalOffset: 50.0,
                                     child: FadeInAnimation(
-                                      child: RoomMessListTile(
-                                        function: () =>
-                                            controller.joinExistChatRoom(
-                                          roomId:
-                                              controller.listRoom[index]!.id!,
-                                          userChatWithId: controller
-                                              .listUserChatWithByRoom[index],
-                                        ),
-                                        title: controller
-                                                .listUserChatWithByRoom[index]
-                                                .profile
-                                                ?.fullname ??
-                                            controller
-                                                .listUserChatWithByRoom[index]
-                                                .email,
-                                        avatar: controller
-                                            .listUserChatWithByRoom[index]
-                                            .profile
-                                            ?.avatar,
-                                        subtitle: controller
-                                            .listRoom[index]!.newestMessage,
-                                      ),
+                                      child: Obx(() {
+                                        final messStatus =
+                                            controller.messStatus.value;
+                                        return RoomMessListTile(
+                                          function: () =>
+                                              controller.joinExistChatRoom(
+                                            roomId:
+                                                controller.listRoom[index]!.id!,
+                                            userChatWithId: controller
+                                                .listUserChatWithByRoom[index],
+                                          ),
+                                          title: controller
+                                                  .listUserChatWithByRoom[index]
+                                                  .profile
+                                                  ?.fullname ??
+                                              controller
+                                                  .listUserChatWithByRoom[index]
+                                                  .email,
+                                          avatar: controller
+                                              .listUserChatWithByRoom[index]
+                                              .profile
+                                              ?.avatar,
+                                          subtitle: messStatus ==
+                                                  GetChatMessStatus.loading
+                                              ? "Đang cập nhật"
+                                              : (messStatus ==
+                                                      GetChatMessStatus.error
+                                                  ? "Có lỗi xảy ra!"
+                                                  : controller
+                                                              .listRoom[index]
+                                                              ?.newestMessage
+                                                              ?.type !=
+                                                          null
+                                                      ? (controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .type! ==
+                                                              "image"
+                                                          ? (controller
+                                                                      .listRoom[
+                                                                          index]!
+                                                                      .newestMessage!
+                                                                      .user ==
+                                                                  controller
+                                                                      .userController
+                                                                      .user
+                                                                      .value
+                                                                      .id
+                                                              ? "Bạn đã gửi một hình ảnh"
+                                                              : "Bạn đã nhận được một hình ảnh")
+                                                          : (controller
+                                                                      .listRoom[
+                                                                          index]!
+                                                                      .newestMessage!
+                                                                      .user ==
+                                                                  controller
+                                                                      .userController
+                                                                      .user
+                                                                      .value
+                                                                      .id
+                                                              ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
+                                                              : controller
+                                                                  .listRoom[
+                                                                      index]!
+                                                                  .newestMessage!
+                                                                  .content))
+                                                      : null),
+                                        );
+                                      }),
                                     ),
                                   ),
                                 );

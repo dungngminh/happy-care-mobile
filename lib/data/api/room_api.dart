@@ -36,11 +36,11 @@ class RoomApi {
     if (response.statusCode == 200) {
       print("============CHECK_ROOM_API_RESPONSE===========");
       print(response.body);
+      return response.body;
     } else {
       print("============ERROR_CHECK_ROOM_API_RESPONSE===========");
-      print(response.body);
+      throw Exception();
     }
-    return response.body;
   }
 
   Future<String> getMyRoom(String token) async {
@@ -61,10 +61,10 @@ class RoomApi {
     if (response.statusCode == 200) {
       print("============GET_ROOM_API_RESPONSE===========");
       print(response.body);
+      return response.body;
     } else {
       print("============ERROR_GET_ROOM_API_RESPONSE===========");
-      print(response.body);
+      throw Exception();
     }
-    return response.body;
   }
 }

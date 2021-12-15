@@ -93,6 +93,7 @@ class UserDoctorScreen extends GetView<UserController> {
                                             .image,
                                   )
                                 : CircleAvatar(
+                                    backgroundColor: kMainColor,
                                     backgroundImage: CachedNetworkImageProvider(
                                         controller.user.value.profile!.avatar!),
                                   );
@@ -181,7 +182,7 @@ class UserDoctorScreen extends GetView<UserController> {
                             : controller.user.value.profile?.address,
                       ),
                       GestureDetector(
-                        onTap: () => controller.signOut(),
+                        onTap: () => controller.signOut(context),
                         child: Container(
                           height: 50,
                           margin: EdgeInsets.symmetric(

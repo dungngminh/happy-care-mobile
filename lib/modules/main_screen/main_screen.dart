@@ -12,12 +12,13 @@ import 'package:happy_care/modules/main_screen/controller/main_controller.dart';
 import 'package:happy_care/modules/prescription/prescription.dart';
 import 'package:happy_care/modules/user/user_screen.dart';
 import 'package:happy_care/modules/user/user_screen_doctor.dart';
+import 'package:happy_care/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
 class MainScreen extends GetWidget<MainController> {
-  const MainScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
-  final memberRole = const <Widget>[
+  final memberRole = <Widget>[
     HomeScreen(),
     ChatScreen(),
     PrescriptionScreen(),
@@ -66,7 +67,7 @@ class MainScreen extends GetWidget<MainController> {
               inactiveColor: kUnselectedIconColor,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.message),
+              icon: Icon(Icons.message_rounded),
               title: Text(
                 'Trò chuyện',
                 style: GoogleFonts.openSans(
@@ -79,7 +80,7 @@ class MainScreen extends GetWidget<MainController> {
               inactiveColor: kUnselectedIconColor,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.healing),
+              icon: Icon(Icons.healing_rounded),
               title: Text(
                 'Đơn thuốc',
                 style: GoogleFonts.openSans(
@@ -92,7 +93,7 @@ class MainScreen extends GetWidget<MainController> {
               inactiveColor: kUnselectedIconColor,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person_rounded),
               title: Text(
                 'Cá nhân',
                 style: GoogleFonts.openSans(

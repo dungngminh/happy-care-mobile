@@ -35,7 +35,7 @@ class MessApi {
     } else {
       print(
           "==================GET_MESS_HISTORY_RESPONSE_ERROR=====================\n");
-      print(response.body);
+      throw Exception();
     }
   }
 }

@@ -53,7 +53,10 @@ dependencies:
   sizer: ^2.0.15
   cloudinary_public: ^0.11.0
   cached_network_image: ^3.2.0
-
+  animated_size_and_fade: ^3.0.0
+  webview_flutter: ^3.0.0
+  auto_size_text: ^3.0.0
+  lottie: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +85,7 @@ flutter:
     - assets/icons/
     - assets/logos/
     - assets/.env
+    - assets/splash.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

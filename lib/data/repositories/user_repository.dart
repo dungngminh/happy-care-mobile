@@ -33,6 +33,7 @@ class UserRepository {
 
   Future<bool> signOut() async {
     String token = await SharedPrefUtils.getStringKey('token');
+    await SharedPrefUtils.removeStringKey("status");
     await userApi!.signOut(token: token);
     print(
         "Token is deleted ?${await SharedPrefUtils.removeStringKey('token')}");

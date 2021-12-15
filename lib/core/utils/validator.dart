@@ -6,8 +6,7 @@ class ValidatorUtils {
   }
 
   static bool checkPassword(String text) {
-    return RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
+    return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
         .hasMatch(text);
   }
 }
