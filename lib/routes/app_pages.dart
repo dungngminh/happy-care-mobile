@@ -27,13 +27,11 @@ class AppPages {
       name: AppRoutes.rSignIn,
       binding: SignInBinding(),
       page: () => SignInScreen(),
-      transition: Transition.leftToRight
     ),
     GetPage(
       name: AppRoutes.rSignUp,
       binding: SignUpBinding(),
       page: () => SignUpScreen(),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.rMain,
