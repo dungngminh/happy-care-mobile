@@ -442,37 +442,39 @@ class HomeScreen extends GetView<HomeController> {
               style: GoogleFonts.openSans(
                 color: kMainColor,
                 fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
           Divider(
             color: kMainColor,
-            thickness: 2,
+            thickness: 1,
             indent: 40.w,
             endIndent: 40.w,
           ),
-          Obx(
-            () => ElevatedButton(
-              style: controller.listChoice
-                      .where((choice) => choice == true)
-                      .toList()
-                      .isNotEmpty
-                  ? ElevatedButton.styleFrom(
-                      primary: kMainColor,
-                      elevation: 4,
-                      textStyle: GoogleFonts.openSans(),
-                    )
-                  : ElevatedButton.styleFrom(
-                      primary: Colors.grey.shade200,
-                      onPrimary: Colors.grey,
-                      elevation: 1,
-                      textStyle: GoogleFonts.openSans(),
-                    ),
-              onPressed: () => controller.findingSpecBySymptom(),
-              child: Text("Tìm kiếm bác sĩ"),
-            ),
-          ),
+          Builder(builder: (context) {
+            return Obx(
+              () => ElevatedButton(
+                style: controller.listChoice
+                        .where((choice) => choice == true)
+                        .toList()
+                        .isNotEmpty
+                    ? ElevatedButton.styleFrom(
+                        primary: kMainColor,
+                        elevation: 4,
+                        textStyle: GoogleFonts.openSans(),
+                      )
+                    : ElevatedButton.styleFrom(
+                        primary: Colors.grey.shade200,
+                        onPrimary: Colors.grey,
+                        elevation: 1,
+                        textStyle: GoogleFonts.openSans(),
+                      ),
+                onPressed: () => controller.findingSpecBySymptom(context),
+                child: Text("Tìm kiếm bác sĩ"),
+              ),
+            );
+          }),
         ],
       );
     } else {

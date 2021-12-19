@@ -13,13 +13,16 @@ class OnboardingScreen extends StatelessWidget {
 
   final listPage = <PageViewModel>[
     PageViewModel(
-      titleWidget: Text(
-        'Tư vấn sức khỏe tại nhà với bác sĩ, chuyên gia',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.openSans(
-          color: kMainColor,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w700,
+      titleWidget: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'Tư vấn sức khỏe tại nhà với bác sĩ, chuyên gia',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.openSans(
+            color: kMainColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       image: SizedBox(
@@ -30,7 +33,7 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
       bodyWidget: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
         child: Text(
           'Ngay tại nhà với chiếc điện thoại, bạn có thể được tư vấn sức khỏe '
           'với các bác sĩ, chuyên gia chuyên khoa.',
@@ -42,13 +45,16 @@ class OnboardingScreen extends StatelessWidget {
       ),
     ),
     PageViewModel(
-      titleWidget: Text(
-        'Giải đáp thắc mắc liên quan tới sức khỏe',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.openSans(
-          color: kMainColor,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w700,
+      titleWidget: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'Giải đáp thắc mắc liên quan tới sức khỏe',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.openSans(
+            color: kMainColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       image: SizedBox(
@@ -59,7 +65,7 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
       bodyWidget: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
         child: Text(
           'Các bác sĩ, chuyên gia sẽ giải đáp các thắc mắc của bạn liên quan tới sức khỏe '
           'Đưa ra những lời khuyên giúp bạn hiểu rõ hơn về tình trạng, sức khỏe của bạn hiện tại',
@@ -71,13 +77,16 @@ class OnboardingScreen extends StatelessWidget {
       ),
     ),
     PageViewModel(
-      titleWidget: Text(
-        'Đưa ra\nđơn thuốc hiệu quả',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.openSans(
-          color: kMainColor,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w700,
+      titleWidget: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'Đưa ra\nđơn thuốc hiệu quả',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.openSans(
+            color: kMainColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       image: SizedBox(
@@ -87,23 +96,29 @@ class OnboardingScreen extends StatelessWidget {
           'assets/images/undraw_medicine_b1ol.svg',
         ),
       ),
-      bodyWidget: Text(
-        'Các bác sĩ, chuyên gia có thể sẽ cung cấp cho bạn đơn thuốc với các triệu chứng lâm sàng '
-        'Đảm bảo sức khỏe của bạn nhanh chóng với những triệu chứng rõ ràng.',
-        style: GoogleFonts.openSans(
-          fontSize: 11.sp,
+      bodyWidget: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
+        child: Text(
+          'Các bác sĩ, chuyên gia có thể sẽ cung cấp cho bạn đơn thuốc cho các triệu chứng lâm sàng '
+          'Đảm bảo sức khỏe của bạn nhanh chóng với những triệu chứng rõ ràng.',
+          style: GoogleFonts.openSans(
+            fontSize: 11.sp,
+          ),
+          textAlign: TextAlign.justify,
         ),
-        textAlign: TextAlign.justify,
       ),
     ),
     PageViewModel(
-      titleWidget: Text(
-        'Đội ngũ\nbác sĩ, chuyên gia uy tín',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.openSans(
-          color: kMainColor,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w700,
+      titleWidget: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'Đội ngũ\nbác sĩ, chuyên gia uy tín',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.openSans(
+            color: kMainColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       image: SizedBox(
@@ -114,7 +129,7 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
       bodyWidget: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
         child: Text(
           'Happy Care mang tới bạn đội ngũ bác sĩ, chuyên gia từ các bệnh viện uy tín.'
           ' Giúp những lời khuyên, đơn thuốc mà đội ngũ mang tới đáng tin cậy cho sức khỏe của bạn',
@@ -146,6 +161,7 @@ class OnboardingScreen extends StatelessWidget {
         style: GoogleFonts.openSans(
           fontWeight: FontWeight.w600,
           color: kMainColor,
+          fontSize: 11.sp,
         ),
       ),
       next: Text(
@@ -153,6 +169,7 @@ class OnboardingScreen extends StatelessWidget {
         style: GoogleFonts.openSans(
           fontWeight: FontWeight.w600,
           color: kMainColor,
+          fontSize: 11.sp,
         ),
       ),
       done: Text(
@@ -160,6 +177,7 @@ class OnboardingScreen extends StatelessWidget {
         style: GoogleFonts.openSans(
           fontWeight: FontWeight.w600,
           color: kMainColor,
+          fontSize: 11.sp,
         ),
       ),
       curve: Curves.fastLinearToSlowEaseIn,
@@ -172,7 +190,7 @@ class OnboardingScreen extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      controlsPadding: EdgeInsets.only(bottom: 3.h),
+      controlsPadding: EdgeInsets.only(bottom: 3.5.h),
     );
   }
 }
