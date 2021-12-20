@@ -27,11 +27,12 @@ class MoreSymptomScreen extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(26),
                           onTap: () => Get.back(),
                           child: Icon(
                             Icons.arrow_back,
                             color: kMainColor,
+                            size: 26,
                           ),
                         ),
                         SizedBox(
@@ -49,8 +50,8 @@ class MoreSymptomScreen extends StatelessWidget {
                                 "3)",
                             style: GoogleFonts.openSans(
                               fontSize: 14.sp,
-                              color: kTextMainColor,
-                              fontWeight: FontWeight.bold,
+                              color: kMainColor,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),

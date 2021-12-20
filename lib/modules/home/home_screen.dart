@@ -13,6 +13,7 @@ import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/custom_news_list_tile.dart';
 import 'package:happy_care/widgets/search_doctor_bar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -43,7 +44,7 @@ class HomeScreen extends GetView<HomeController> {
                               "Chào, ${userController.user.value.profile?.fullname ?? userController.user.value.email}",
                               style: GoogleFonts.openSans(
                                 color: kMainColor,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 14.sp,
                               ),
                             ),
@@ -226,129 +227,126 @@ class HomeScreen extends GetView<HomeController> {
             Text(
               "Hôm nay,\nbạn cảm thấy thế nào?",
               style: GoogleFonts.openSans(
-                color: kTextMainColor,
+                color: kMainColor,
                 fontSize: 17.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
               ),
             ),
             SizedBox(
               height: 1.5.h,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: SizedBox(
-                height: 18.h,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(22),
-                        onTap: () => controller.onTapAction(false),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22),
-                            color: kMainColor,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(-1, 4),
-                                color: kShadowColor,
-                                blurRadius: 2,
+            SizedBox(
+              height: 18.h,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(22),
+                      onTap: () => controller.onTapAction(false),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          color: kMainColor,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(-1, 4),
+                              color: kShadowColor,
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Color(0xffF9F9F9),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        Image.asset("assets/icons/happy.png")
+                                            .image,
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              "Tôi cảm thấy\n rất tuyệt vời",
+                              style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w700,
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                  radius: 22,
-                                  backgroundColor: Color(0xffF9F9F9),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      backgroundImage:
-                                          Image.asset("assets/icons/happy.png")
-                                              .image,
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Text(
-                                "Tôi cảm thấy\n rất tuyệt vời",
-                                style: GoogleFonts.openSans(
-                                  color: Colors.white,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Spacer(),
-                    Expanded(
-                      flex: 5,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(22),
-                        onTap: () => controller.onTapAction(true),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(-1, 2),
-                                color: kShadowColor,
-                                blurRadius: 4,
+                  ),
+                  Spacer(),
+                  Expanded(
+                    flex: 5,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(22),
+                      onTap: () => controller.onTapAction(true),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(-1, 2),
+                              color: kShadowColor,
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Color(0xffF0EEFA),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        Image.asset("assets/icons/sick.png")
+                                            .image,
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              "Tôi cảm thấy\nkhông được khỏe",
+                              style: GoogleFonts.openSans(
+                                color: kTextMainColor,
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w700,
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                  radius: 22,
-                                  backgroundColor: Color(0xffF0EEFA),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      backgroundImage:
-                                          Image.asset("assets/icons/sick.png")
-                                              .image,
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Text(
-                                "Tôi cảm thấy\nkhông được khỏe",
-                                style: GoogleFonts.openSans(
-                                  color: kTextMainColor,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -373,8 +371,8 @@ class HomeScreen extends GetView<HomeController> {
                       "3)",
                   style: GoogleFonts.openSans(
                     fontSize: 14.sp,
-                    color: kTextMainColor,
-                    fontWeight: FontWeight.bold,
+                    color: kMainColor,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 controller.listChoice
@@ -442,7 +440,7 @@ class HomeScreen extends GetView<HomeController> {
               style: GoogleFonts.openSans(
                 color: kMainColor,
                 fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -485,16 +483,17 @@ class HomeScreen extends GetView<HomeController> {
             child: Row(
               children: [
                 Text(
-                  "Chúc bạn ngày mới tốt lành",
+                  "Chúc bạn ngày mới tốt lành!!!",
                   style: GoogleFonts.openSans(
-                    fontSize: 15.sp,
-                    color: kTextMainColor,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                    color: kMainColor,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ],
             ),
           ),
+          Lottie.asset("assets/lottie/happy.json", height: 15.h),
         ],
       );
     }
