@@ -39,7 +39,10 @@ class RoomMessListTile extends StatelessWidget {
                 radius: 25,
                 backgroundImage: avatar == null
                     ? Image.asset("assets/images/icon.png").image
-                    : CachedNetworkImageProvider(avatar!, cacheManager: CustomCacheManager.customCacheManager,),
+                    : CachedNetworkImageProvider(
+                        avatar!,
+                        cacheManager: CustomCacheManager.customCacheManager,
+                      ),
               ),
             ),
           ),

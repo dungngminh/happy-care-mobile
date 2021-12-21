@@ -18,6 +18,4 @@ class SpecializationRepository {
       throw Exception(_);
     }
   }
-
-  
 }

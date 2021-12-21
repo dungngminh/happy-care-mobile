@@ -39,7 +39,10 @@ class NotOwnMessenger extends StatelessWidget {
                 backgroundColor: kSecondColor,
                 backgroundImage: avatar == null
                     ? Image.asset("assets/images/icon.png").image
-                    : CachedNetworkImageProvider(avatar!, cacheManager: CustomCacheManager.customCacheManager,),
+                    : CachedNetworkImageProvider(
+                        avatar!,
+                        cacheManager: CustomCacheManager.customCacheManager,
+                      ),
               ),
             ),
           ),

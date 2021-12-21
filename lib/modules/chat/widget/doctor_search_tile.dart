@@ -35,7 +35,10 @@ class DoctorSearchTile extends StatelessWidget {
               radius: 30,
               backgroundImage: avatar == null
                   ? Image.asset("assets/images/icon.png").image
-                  : CachedNetworkImageProvider(avatar!, cacheManager: CustomCacheManager.customCacheManager,),
+                  : CachedNetworkImageProvider(
+                      avatar!,
+                      cacheManager: CustomCacheManager.customCacheManager,
+                    ),
               backgroundColor: Colors.white,
               foregroundColor: kMainColor,
             ),

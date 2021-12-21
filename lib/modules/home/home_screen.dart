@@ -394,40 +394,59 @@ class HomeScreen extends GetView<HomeController> {
           SizedBox(height: 0.5.h),
           SizedBox(
             height: 50,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ChoiceChip(
-                  label: Text(controller.listSymptom[index].name!),
-                  labelStyle: GoogleFonts.openSans(
-                      color:
-                          controller.listChoice[index] ? Colors.white : null),
-                  selected: controller.listChoice[index],
-                  onSelected: (newBool) {
-                    if (controller.listChoice
-                                .where((choice) => choice == true)
-                                .toList()
-                                .length <
-                            3 &&
-                        controller.listChoice[index] == false) {
-                      controller.listMax.add(controller.listSymptom[index].id!);
-                      controller.listChoice[index] = newBool;
-                    } else if (controller.listChoice[index] == true) {
-                      controller.listChoice[index] = newBool;
-                      controller.listMax
-                          .remove(controller.listSymptom[index].id!);
-                    }
+            child: Obx(() {
+              if (controller.symptomStatus.value == SymptomStatus.loading) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+                  child: LinearProgressIndicator(
+                    color: kMainColor,
+                  ),
+                );
+              } else if (controller.symptomStatus.value ==
+                  SymptomStatus.error) {
+                return Center(
+                  child: Icon(Icons.error, color: kMainColor),
+                );
+              } else {
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return ChoiceChip(
+                      label: Text(controller.listSymptom[index].name!),
+                      labelStyle: GoogleFonts.openSans(
+                          color: controller.listChoice[index]
+                              ? Colors.white
+                              : null),
+                      selected: controller.listChoice[index],
+                      onSelected: (newBool) {
+                        if (controller.listChoice
+                                    .where((choice) => choice == true)
+                                    .toList()
+                                    .length <
+                                3 &&
+                            controller.listChoice[index] == false) {
+                          controller.listMax
+                              .add(controller.listSymptom[index].id!);
+                          controller.listChoice[index] = newBool;
+                        } else if (controller.listChoice[index] == true) {
+                          controller.listChoice[index] = newBool;
+                          controller.listMax
+                              .remove(controller.listSymptom[index].id!);
+                        }
+                      },
+                      selectedColor: kMainColor,
+                    );
                   },
-                  selectedColor: kMainColor,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      width: 10,
+                    );
+                  },
                 );
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  width: 10,
-                );
-              },
-            ),
+              }
+            }),
           ),
           SizedBox(
             height: 0.8.h,

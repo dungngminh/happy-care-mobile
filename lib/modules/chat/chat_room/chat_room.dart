@@ -6,9 +6,11 @@ import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/modules/chat/chat_room/chat_room_controller.dart';
 import 'package:happy_care/modules/chat/widget/not_own_messenger.dart';
 import 'package:happy_care/modules/chat/widget/own_messenger.dart';
+import 'package:happy_care/widgets/custom_text_field.dart';
+import 'package:sizer/sizer.dart';
 
 class ChatRoomScreen extends GetView<ChatRoomController> {
-   ChatRoomScreen({Key? key}) : super(key: key);
+  ChatRoomScreen({Key? key}) : super(key: key);
   final roomPass = Get.arguments as RoomChatPass;
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,11 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                 () => controller.isTyping.value
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
+                        child: Text((controller
+                                        .userController.user.value.role ==
+                                    "member"
+                                ? "Bác sĩ "
+                                : "") +
                             "${roomPass.userChatWith.profile?.fullname ?? roomPass.userChatWith.email} đang nhập..."),
                       )
                     : SizedBox(),
@@ -163,28 +169,12 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                                   color: kMainColor,
                                 ),
                                 onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (context) =>
-                                        DraggableScrollableSheet(
-                                      initialChildSize: 0.64,
-                                      minChildSize: 0.25,
-                                      maxChildSize: 1,
-                                      builder: (context, scrollController) {
-                                        return Container(
-                                          color: Colors.white,
-                                          child: Column(
-                                            children: [
-                                              Text("Đơn thuốc"),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                })
+                                  controller.addNewDrug();
+                                  _buildCreatePrescriptionBottomSheet(context)
+                                      .whenComplete(
+                                          () => controller.resetBottomSheet());
+                                },
+                              )
                             : SizedBox(),
                         Expanded(
                           child: TextField(
@@ -192,7 +182,7 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
                             controller: controller.textMessController,
                             maxLines: null,
                             onChanged: (value) =>
-                                controller.onTypingMessage(roomPass.id),
+                                controller.onTypingMessage(roomPass.id, value),
                             decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.only(left: 5) + EdgeInsets.all(10),
@@ -258,6 +248,180 @@ class ChatRoomScreen extends GetView<ChatRoomController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Future<dynamic> _buildCreatePrescriptionBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.65,
+        minChildSize: 0.25,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(
+                    indent: 40.w,
+                    endIndent: 40.w,
+                    thickness: 4,
+                    color: kMainColor,
+                  ),
+                  SizedBox(
+                    height: 1.2.h,
+                  ),
+                  Text(
+                    "Tạo đơn thuốc mới",
+                    style: GoogleFonts.openSans(
+                      color: kMainColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1.7.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                    ),
+                    child: CustomTextField(
+                      controller: controller.diagnoseController,
+                      icon: Icons.search_rounded,
+                      labelText: "Chuẩn đoán",
+                      hintText: "Nhập vào chuẩn đoán...",
+                      // controller:
+                      //     controller.ageController,
+                    ),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  SizedBox(height: 0.5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Thuốc",
+                        style: GoogleFonts.openSans(
+                          color: kMainColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      IconButton(
+                        padding: const EdgeInsets.only(),
+                        onPressed: () {
+                          controller.addNewDrug();
+                          if (scrollController.hasClients) {
+                            scrollController.animateTo(
+                              scrollController.position.maxScrollExtent,
+                              curve: Curves.easeOut,
+                              duration: Duration(milliseconds: 100),
+                            );
+                          }
+                        },
+                        icon: Icon(
+                          Icons.add_rounded,
+                          color: kMainColor,
+                          size: 26,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 1.2.h,
+                  ),
+                  Obx(
+                    () => Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: ListView.separated(
+                          controller: scrollController,
+                          itemCount: controller.listDrug.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Thuốc ${index + 1}",
+                                      style: GoogleFonts.openSans(
+                                          color: kMainColor,
+                                          fontSize: 11.sp,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    IconButton(
+                                      padding: const EdgeInsets.only(),
+                                      onPressed: () =>
+                                          controller.removeDrugAtIndex(index),
+                                      icon: Icon(
+                                        Icons.delete_rounded,
+                                        color: kMainColor,
+                                        size: 26,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 1.2.h,
+                                ),
+                                CustomTextField(
+                                  controller:
+                                      controller.drugControllers![index],
+                                  icon: Icons.medication_rounded,
+                                  labelText: "Thuốc",
+                                  hintText: "Nhập vào thuốc..",
+                                  // controller:
+                                  //     controller.ageController,
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                CustomTextField(
+                                  controller:
+                                      controller.dosageControllers![index],
+                                  icon: Icons.note_alt_rounded,
+                                  labelText: "Mô tả liều dùng",
+                                  hintText: "Nhập vào mô tả liều dùng...",
+                                  // controller:
+                                  //     controller.ageController,
+                                ),
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: 1.5.h,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

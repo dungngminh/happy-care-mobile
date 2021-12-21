@@ -90,7 +90,8 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                         backgroundImage:
                                             CachedNetworkImageProvider(
                                           controller.user.profile!.avatar!,
-                                          cacheManager: CustomCacheManager.customCacheManager,
+                                          cacheManager: CustomCacheManager
+                                              .customCacheManager,
                                         ))
                                     : CircleAvatar(
                                         backgroundImage: Image.asset(

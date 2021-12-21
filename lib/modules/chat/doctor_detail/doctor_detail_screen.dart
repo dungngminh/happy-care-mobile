@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +48,8 @@ class DoctorDetailScreen extends StatelessWidget {
                         Expanded(
                           child: Center(
                             child: CachedNetworkImage(
-                              cacheManager: CustomCacheManager.customCacheManager,
+                              cacheManager:
+                                  CustomCacheManager.customCacheManager,
                               imageUrl: doctor.profile!.avatar!,
                             ),
                           ),

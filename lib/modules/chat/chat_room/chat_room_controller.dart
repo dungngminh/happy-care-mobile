@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:happy_care/data/models/chat_mess.dart';
+import 'package:happy_care/data/models/prescription/medicine.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/data/repositories/mess_repository.dart';
 import 'package:happy_care/data/services/socket_io_service.dart';
@@ -21,14 +22,17 @@ class ChatRoomController extends GetxController
   FocusNode focusNode = FocusNode();
   final ScrollController scrollController = ScrollController();
   late final AnimationController animationController;
-  final Tween<Offset> tween = Tween(begin: Offset(0, 1), end: Offset(0, 0));
   final status = ChatRoomStatus.idle.obs;
   final isMoreLoading = false.obs;
   final UserController userController = Get.find();
   final ImageController imageController = Get.find();
   final formater = DateFormat("HH:mm");
-  late TextEditingController textMessController;
+  final TextEditingController textMessController = TextEditingController();
+  List<TextEditingController>? drugControllers;
+  List<TextEditingController>? dosageControllers;
+  TextEditingController? diagnoseController;
   var listMess = RxList<ChatMess>([]);
+  var listDrug = RxList<Medicine>([]);
   final isTyping = false.obs;
   final isHadImage = false.obs;
   final isSendingImage = false.obs;
@@ -41,14 +45,10 @@ class ChatRoomController extends GetxController
   @override
   Future<void> onInit() async {
     super.onInit();
-    textMessController = TextEditingController();
-    animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-
     status(ChatRoomStatus.loading);
     await messRepo!.getMessageHistory(roomId: roomPass.id).then((value) {
       listMess(value);
-      // listMess.value = listMess.reversed.toList();
+
       status(ChatRoomStatus.idle);
     }).onError((error, stackTrace) {
       print(error);
@@ -60,7 +60,11 @@ class ChatRoomController extends GetxController
         await getMoreData(roomId: roomPass.id);
       }
     });
-
+    if (userController.user.value.role == "doctor") {
+      drugControllers = <TextEditingController>[];
+      dosageControllers = <TextEditingController>[];
+      diagnoseController = TextEditingController();
+    }
     ioService!.socket!.on('receive-message', (data) {
       print(data);
       listMess.insert(0, ChatMess.fromMap(data));
@@ -69,7 +73,9 @@ class ChatRoomController extends GetxController
 
     ioService!.socket!.on('receive-typing-message', (data) {
       print(data);
+      //TODO: add animation for container
       data['userId'] != null ? isTyping(true) : isTyping(false);
+      print("isTyping ${isTyping.value}");
     });
   }
 
@@ -141,6 +147,7 @@ class ChatRoomController extends GetxController
   @override
   void onClose() {
     scrollController.dispose();
+    textMessController.dispose();
     super.onClose();
   }
 
@@ -170,9 +177,10 @@ class ChatRoomController extends GetxController
     scrollToBottom();
   }
 
-  onTypingMessage(String roomId) {
+  onTypingMessage(String roomId, String value) {
+    print(userController.user.value.id);
     print(textMessController.text);
-    if (textMessController.text != "") {
+    if (value.isNotEmpty) {
       ioService!.isTypingAction(
           roomId: roomId, userId: userController.user.value.id, isTyping: true);
     } else {
@@ -182,5 +190,26 @@ class ChatRoomController extends GetxController
         isTyping: false,
       );
     }
+  }
+
+  addNewDrug() {
+    listDrug.add(Medicine());
+    drugControllers!.add(TextEditingController());
+    dosageControllers!.add(TextEditingController());
+    update();
+  }
+
+  resetBottomSheet() {
+    listDrug.clear();
+    drugControllers!.clear();
+    dosageControllers!.clear();
+    diagnoseController!.text = "";
+  }
+
+  removeDrugAtIndex(int index) {
+    listDrug.removeAt(index);
+    drugControllers!.removeAt(index);
+    dosageControllers!.removeAt(index);
+    update();
   }
 }

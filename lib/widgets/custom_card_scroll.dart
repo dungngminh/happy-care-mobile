@@ -32,7 +32,7 @@ class CustomCardScroll extends StatelessWidget {
         var heightOfPrimaryCard = safeHeight;
         var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
 
-        var primaryCardLeft = safeWidth - widthOfPrimaryCard - 20;
+        var primaryCardLeft = safeWidth - widthOfPrimaryCard - 30;
         var horizontalInset = primaryCardLeft / 2;
 
         List<Widget> cardList = [];
@@ -44,7 +44,7 @@ class CustomCardScroll extends StatelessWidget {
           var start = padding +
               max(
                   primaryCardLeft -
-                      horizontalInset * -delta * (isOnRight ? 20 : 1.5),
+                      horizontalInset * -delta * (isOnRight ? 30 : 1.5),
                   0.0);
 
           var cardItem = Positioned.directional(
