@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/helpers/show_custom_dialog.dart';
 import 'package:happy_care/core/utils/shared_pref.dart';
 import 'package:happy_care/data/models/news_detail.dart';
 import 'package:happy_care/data/models/symptom.dart';
@@ -10,7 +9,6 @@ import 'package:happy_care/data/repositories/news_repository.dart';
 import 'package:happy_care/data/repositories/symptom_repository.dart';
 import 'package:happy_care/modules/home/finding_spec/finding_spec.dart';
 import 'package:happy_care/widgets/my_toast.dart';
-import 'package:sizer/sizer.dart';
 
 enum NewsStatus { loading, error, done }
 enum SymptomStatus { loading, error, done }
@@ -118,28 +116,7 @@ class HomeController extends GetxController {
     }
     keywordsString += listMax[listMax.length - 1];
     try {
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    color: kMainColor,
-                  ),
-                  SizedBox(
-                    height: 1.2.h,
-                  ),
-                  Text("Đang tìm bác sĩ...",
-                      style: GoogleFonts.openSans(
-                          color: Colors.white, fontWeight: FontWeight.w700)),
-                ],
-              ),
-            );
-          });
-
+      showLoadingDialog(context, contentDialog: "Đang tìm bác sĩ...");
       await symptomRepository!.getSpecBySymptom(keywordsString).then((value) {
         if (value.isEmpty) {
           Get.back();

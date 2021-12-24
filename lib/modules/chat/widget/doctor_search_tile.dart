@@ -34,7 +34,7 @@ class DoctorSearchTile extends StatelessWidget {
             child: CircleAvatar(
               radius: 30,
               backgroundImage: avatar == null
-                  ? Image.asset("assets/images/icon.png").image
+                  ? Image.asset("assets/images/doctor.png").image
                   : CachedNetworkImageProvider(
                       avatar!,
                       cacheManager: CustomCacheManager.customCacheManager,

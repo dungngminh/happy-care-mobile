@@ -52,9 +52,7 @@ class FindingSpecScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(
-                color: kMainColor,
-              ),
+              SizedBox(height: 1.2.h),
               Expanded(
                 child: ListView.builder(
                   itemCount: listSpecFound.length,

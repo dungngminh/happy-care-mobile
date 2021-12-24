@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_care/core/helpers/show_custom_dialog.dart';
 
-import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:happy_care/modules/main_screen/controller/image_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
@@ -30,40 +29,6 @@ class EditInformationController extends GetxController {
         text: user.profile?.age != null ? user.profile!.age!.toString() : null);
     addressController = TextEditingController(text: user.profile?.address);
     update();
-  }
-
-  showConfirmDialog(BuildContext context,
-      {required String title,
-      required String contentDialog,
-      required void Function() confirmFunction}) async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          title,
-          style: GoogleFonts.openSans(fontWeight: FontWeight.w600),
-        ),
-        content: Text(
-          contentDialog,
-        ),
-        actions: [
-          TextButton(
-            onPressed: confirmFunction,
-            child: Text(
-              "Xác nhận",
-              style: GoogleFonts.openSans(color: kMainColor),
-            ),
-          ),
-          TextButton(
-            onPressed: () => Get.back(result: false),
-            child: Text(
-              "Không",
-              style: GoogleFonts.openSans(color: kMainColor),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   Future<void> getProfileImageFromCamera() async {
@@ -101,14 +66,7 @@ class EditInformationController extends GetxController {
         title: "Cập nhật thông tin",
         contentDialog: "Xác nhận cập nhật thông tin",
         confirmFunction: () async {
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return Center(
-              child: CircularProgressIndicator(color: kMainColor),
-            );
-          });
+      showLoadingDialog(context, contentDialog: "Đang cập nhật thông tin...");
       String? url = profileImage != null
           ? await _imageController.myCloudinaryService
               .uploadFileOnCloudinary(filePath: profileImage!.path)

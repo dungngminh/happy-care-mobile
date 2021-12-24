@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,11 +48,13 @@ class DoctorDetailScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Center(
-                            child: CachedNetworkImage(
-                              cacheManager:
-                                  CustomCacheManager.customCacheManager,
-                              imageUrl: doctor.profile!.avatar!,
-                            ),
+                            child: doctor.profile?.avatar != null
+                                ? CachedNetworkImage(
+                                    cacheManager:
+                                        CustomCacheManager.customCacheManager,
+                                    imageUrl: doctor.profile!.avatar!,
+                                  )
+                                : Image.asset("assets/images/doctor.png"),
                           ),
                         ),
                       ],
@@ -67,7 +70,7 @@ class DoctorDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           doctor.background!.first.degree! +
-                              " " +
+                              "\n" +
                               doctor.profile!.fullname!,
                           style: GoogleFonts.openSans(
                             color: kMainColor,
@@ -78,7 +81,7 @@ class DoctorDetailScreen extends StatelessWidget {
                         SizedBox(
                           height: 0.5.h,
                         ),
-                        Text(
+                        AutoSizeText(
                           doctor.specializations!.first +
                               " - " +
                               doctor.background!.first.workLocation!,

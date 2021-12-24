@@ -9,10 +9,9 @@ import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/modules/chat/chat_controller.dart';
 import 'package:happy_care/modules/chat/widget/room_mess_list_tile.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
-import 'package:happy_care/widgets/custom_text_field.dart';
 import 'package:sizer/sizer.dart';
 
-class ChatDoctorScreen extends GetWidget<ChatController> {
+class ChatDoctorScreen extends GetView<ChatController> {
   const ChatDoctorScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,7 +37,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                             return controller.user.value.profile?.avatar == null
                                 ? CircleAvatar(
                                     backgroundImage:
-                                        Image.asset("assets/images/icon.png")
+                                        Image.asset("assets/images/doctor.png")
                                             .image,
                                   )
                                 : CircleAvatar(
@@ -195,11 +194,7 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                                   .newestMessage!
                                                                   .type! ==
                                                               "image"
-                                                          ? (controller
-                                                                      .listRoom[
-                                                                          index]!
-                                                                      .newestMessage!
-                                                                      .user ==
+                                                          ? (controller.listRoom[index]!.newestMessage!.user ==
                                                                   controller
                                                                       .userController
                                                                       .user
@@ -207,22 +202,20 @@ class ChatDoctorScreen extends GetWidget<ChatController> {
                                                                       .id
                                                               ? "Bạn đã gửi một hình ảnh"
                                                               : "Bạn đã nhận được một hình ảnh")
-                                                          : (controller
-                                                                      .listRoom[
-                                                                          index]!
+                                                          : (controller.listRoom[index]!.newestMessage!.type ==
+                                                                  "prescription"
+                                                              ? "Bạn đã gửi một đơn thuốc"
+                                                              : (controller.listRoom[index]!.newestMessage!.user ==
+                                                                      controller
+                                                                          .userController
+                                                                          .user
+                                                                          .value
+                                                                          .id
+                                                                  ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
+                                                                  : controller
+                                                                      .listRoom[index]!
                                                                       .newestMessage!
-                                                                      .user ==
-                                                                  controller
-                                                                      .userController
-                                                                      .user
-                                                                      .value
-                                                                      .id
-                                                              ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
-                                                              : controller
-                                                                  .listRoom[
-                                                                      index]!
-                                                                  .newestMessage!
-                                                                  .content))
+                                                                      .content)))
                                                       : null),
                                         );
                                       }),

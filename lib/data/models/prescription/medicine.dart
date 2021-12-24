@@ -19,4 +19,8 @@ class Medicine {
         'dosage': dosage,
         '_id': id,
       };
+  Map<String, dynamic> toJsonNoId() => {
+        'drug': drug,
+        'dosage': dosage,
+      };
 }

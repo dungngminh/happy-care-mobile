@@ -47,7 +47,7 @@ class DoctorController extends GetxController {
       });
       checkOnlineAndSort();
       update();
-      await Future.delayed(Duration(minutes: 2));
+      await Future.delayed(Duration(seconds: 30));
     }
   }
 

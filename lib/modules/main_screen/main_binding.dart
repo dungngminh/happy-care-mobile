@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
+import 'package:happy_care/data/api/drug_api.dart';
 import 'package:happy_care/data/api/mess_api.dart';
 import 'package:happy_care/data/api/news_api.dart';
+import 'package:happy_care/data/api/prescription_api.dart';
 import 'package:happy_care/data/api/symptom_api.dart';
 import 'package:happy_care/data/repositories/doctor_repository.dart';
+import 'package:happy_care/data/repositories/drug_repository.dart';
 import 'package:happy_care/data/repositories/mess_repository.dart';
 import 'package:happy_care/data/repositories/news_repository.dart';
+import 'package:happy_care/data/repositories/prescription_repository.dart';
 import 'package:happy_care/data/repositories/room_repository.dart';
 import 'package:happy_care/data/repositories/spec_repository.dart';
 import 'package:happy_care/data/repositories/symptom_repository.dart';
@@ -23,7 +27,6 @@ import 'package:happy_care/modules/main_screen/controller/main_controller.dart';
 import 'package:happy_care/modules/main_screen/controller/spec_controller.dart';
 import 'package:happy_care/modules/prescription/prescription_controller.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
-// import 'package:http/http.dart';
 
 class MainBinding extends Bindings {
   @override
@@ -35,12 +38,11 @@ class MainBinding extends Bindings {
     Get.lazyPut<MessApi?>(() => MessApi(Get.find()));
     Get.lazyPut<NewsApi?>(() => NewsApi(Get.find()));
     Get.lazyPut<SymptomApi?>(() => SymptomApi(Get.find()));
-
-    // Get.lazyPut<UserApi?>(() => UserApi(Client()));
-    // Get.lazyPut<SpecApi?>(() => SpecApi(Client()));
-    // Get.lazyPut<RoomApi?>(() => RoomApi(Client()));
-    // Get.lazyPut<DoctorApi?>(() => DoctorApi(Client()));
-    // Get.lazyPut<MessApi?>(() => MessApi(Client()));
+    Get.lazyPut<DrugApi?>(() => DrugApi(Get.find()));
+    Get.lazyPut<PrescriptionApi?>(() => PrescriptionApi(Get.find()));
+    Get.lazyPut<PrescriptionRepository?>(
+        () => PrescriptionRepository(prescriptionApi: Get.find()));
+    Get.lazyPut<DrugRepository?>(() => DrugRepository(drugApi: Get.find()));
     Get.lazyPut<NewsReposity?>(() => NewsReposity(newsApi: Get.find()));
     Get.lazyPut<SymptomRepository?>(
         () => SymptomRepository(symptomApi: Get.find()));
@@ -55,12 +57,19 @@ class MainBinding extends Bindings {
     Get.lazyPut<RoomRepository?>(() => RoomRepository(roomApi: Get.find()));
     Get.lazyPut(() => SpecController(specRepo: Get.find()));
     Get.lazyPut(() => ImageController());
-    Get.lazyPut(() =>
-        DoctorController(doctorRepository: Get.find(), ioService: Get.find()));
+    Get.lazyPut(() => DoctorController(
+          doctorRepository: Get.find(),
+          ioService: Get.find(),
+        ));
     Get.lazyPut(() => MainController(userRepository: Get.find()));
     Get.lazyPut(() => HomeController(
-        newsReposity: Get.find(), symptomRepository: Get.find()));
-
+          newsReposity: Get.find(),
+          symptomRepository: Get.find(),
+        ));
+    Get.lazyPut(() => PrescriptionController(
+          drugRepository: Get.find(),
+          prescriptionRepository: Get.find(),
+        ));
     Get.lazyPut(() => ChatController(
           socketService: Get.find(),
           roomRepository: Get.find(),
@@ -68,6 +77,8 @@ class MainBinding extends Bindings {
         ));
     Get.lazyPut(() => PrescriptionController());
     Get.lazyPut(() => UserController(
-        socketIOService: Get.find(), userRepository: Get.find()));
+          socketIOService: Get.find(),
+          userRepository: Get.find(),
+        ));
   }
 }

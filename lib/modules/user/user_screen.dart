@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/modules/user/user_controller.dart';
 import 'package:happy_care/routes/app_pages.dart';
+import 'package:happy_care/widgets/custom_text_field.dart';
 import 'package:happy_care/widgets/information_tile.dart';
+import 'package:sizer/sizer.dart';
 
 class UserScreen extends GetView<UserController> {
   const UserScreen({Key? key}) : super(key: key);
@@ -145,6 +147,113 @@ class UserScreen extends GetView<UserController> {
                         subtitle: status == UserStatus.loading
                             ? "Đang cập nhật"
                             : controller.user.value.profile?.address,
+                      ),
+                      InformationTile(
+                        icon: Icons.lock_rounded,
+                        title: 'Thay đổi mật khẩu',
+                        subtitle: "Nhấn và giữ để thay đổi mật khẩu",
+                        onLongPress: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => FocusManager
+                                      .instance.primaryFocus
+                                      ?.unfocus(),
+                                  child: AlertDialog(
+                                    title: Text(
+                                      "Đổi mật khẩu",
+                                      style: GoogleFonts.openSans(
+                                          color: kMainColor,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Obx(
+                                          () => CustomTextField(
+                                            controller:
+                                                controller.oldPassController,
+                                            icon: Icons.password_outlined,
+                                            labelText: 'Mật khẩu cũ',
+                                            hintText: 'Nhập lại mật khẩu cũ',
+                                            isPassword: true,
+                                            isPasswordHide:
+                                                controller.hide1.value,
+                                            onPasswordTap: () {
+                                              controller.hide1(
+                                                  !controller.hide1.value);
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1.2.h,
+                                        ),
+                                        Obx(
+                                          () => CustomTextField(
+                                            controller:
+                                                controller.newPassController,
+                                            icon: Icons.password_outlined,
+                                            labelText: 'Mật khẩu mới',
+                                            hintText: 'Nhập mật khẩu mới',
+                                            isPassword: true,
+                                            isPasswordHide:
+                                                controller.hide2.value,
+                                            onPasswordTap: () {
+                                              controller.hide2(
+                                                  !controller.hide2.value);
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1.2.h,
+                                        ),
+                                        Obx(
+                                          () => CustomTextField(
+                                            controller:
+                                                controller.rePassController,
+                                            icon: Icons.password_outlined,
+                                            labelText: 'Nhập lại mật khẩu mới',
+                                            hintText: 'Nhập lại mật khẩu mới',
+                                            isPassword: true,
+                                            isPasswordHide:
+                                                controller.hide3.value,
+                                            onPasswordTap: () {
+                                              controller.hide3(
+                                                  !controller.hide3.value);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            controller.changePassword(context),
+                                        child: Text(
+                                          "Thay đổi",
+                                          style: GoogleFonts.openSans(
+                                            color: kMainColor,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          controller.resetValue();
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "Hủy",
+                                          style: GoogleFonts.openSans(
+                                            color: kMainColor,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
                       ),
                       GestureDetector(
                         onTap: () => controller.signOut(context),

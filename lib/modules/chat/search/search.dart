@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_care/core/helpers/show_custom_dialog.dart';
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
 import 'package:happy_care/data/models/specialization.dart';
@@ -9,7 +10,7 @@ import 'package:happy_care/modules/chat/search/search_controller.dart';
 import 'package:happy_care/modules/chat/widget/doctor_search_tile.dart';
 import 'package:happy_care/routes/app_pages.dart';
 
-class SearchScreen extends GetWidget<SearchController> {
+class SearchScreen extends GetView<SearchController> {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
@@ -110,14 +111,18 @@ class SearchScreen extends GetWidget<SearchController> {
                         function: () => Get.to(() => DoctorDetailScreen(
                               doctor: controller.listDoctor[index],
                               function: () async {
+                                showLoadingDialog(context,
+                                    contentDialog: "Đang join phòng...");
                                 await controller.chatController
                                     .joinFirstToChatRoom(
                                         notUserId:
                                             controller.listDoctor[index].id)
-                                    .then((value) => Get.toNamed(
-                                        AppRoutes.rChatRoom,
-                                        arguments: RoomChatPass(value!,
-                                            controller.listDoctor[index])));
+                                    .then((value) {
+                                  Get.back();
+                                  Get.offNamed(AppRoutes.rChatRoom,
+                                      arguments: RoomChatPass(value!,
+                                          controller.listDoctor[index]));
+                                });
                               },
                             )),
                       );

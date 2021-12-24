@@ -10,7 +10,7 @@ import 'package:happy_care/widgets/logo_title.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sizer/sizer.dart';
 
-class SignUpScreen extends GetWidget<SignUpController> {
+class SignUpScreen extends GetView<SignUpController> {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override

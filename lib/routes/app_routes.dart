@@ -13,4 +13,6 @@ abstract class AppRoutes {
   static const rSearch = '/searh';
   static const rChatRoom = '/chat_room';
   static const rListDoctor = '/list_doctor';
+  static const rDetailPrescription = '/detail_prescription';
+  static const rEditPrescription = '/edit_prescription';
 }

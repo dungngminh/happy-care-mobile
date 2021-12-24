@@ -154,4 +154,31 @@ class UserApi {
       throw Exception("Cannot get user information: $userId");
     }
   }
+
+  Future<String> changePassword(
+      String token, String oldPassword, String newPassword) async {
+    final body = {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    };
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    var response = await http
+        .post(Uri.parse("${dotenv.env['BASE_URL']}/api/users/change-password"),
+            headers: headers, body: convert.jsonEncode(body))
+        .timeout(Duration(minutes: 1), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
+
+    if (response.statusCode == 200) {
+      print("===========CHANGE_PASSS_OK================\n" + response.body);
+      return response.body;
+    } else {
+      print("CHANGEE FAIL");
+      throw Exception();
+    }
+  }
 }

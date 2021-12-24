@@ -44,7 +44,7 @@ class HomeScreen extends GetView<HomeController> {
                               "Chào, ${userController.user.value.profile?.fullname ?? userController.user.value.email}",
                               style: GoogleFonts.openSans(
                                 color: kMainColor,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 14.sp,
                               ),
                             ),

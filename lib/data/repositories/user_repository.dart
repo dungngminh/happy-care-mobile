@@ -86,4 +86,13 @@ class UserRepository {
       throw Exception();
     }
   }
+
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    try {
+      String token = await SharedPrefUtils.getStringKey("token");
+      await userApi!.changePassword(token, oldPassword, newPassword);
+    } catch (_) {
+      throw Exception();
+    }
+  }
 }

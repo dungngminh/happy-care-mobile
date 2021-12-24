@@ -5,10 +5,13 @@ import 'package:happy_care/modules/chat/search/search.dart';
 import 'package:happy_care/modules/chat/search/search_binding.dart';
 import 'package:happy_care/modules/home/choose_doctor/choose_doctor.dart';
 import 'package:happy_care/modules/home/choose_doctor/choose_doctor_binding.dart';
-import 'package:happy_care/modules/home/choose_doctor/choose_doctor_controller.dart';
 import 'package:happy_care/modules/main_screen/main_binding.dart';
 import 'package:happy_care/modules/main_screen/main_screen.dart';
 import 'package:happy_care/modules/onboarding/onboarding.dart';
+import 'package:happy_care/modules/prescription/detail_prescription/detail_prescription.dart';
+import 'package:happy_care/modules/prescription/detail_prescription/detail_prescription_binding.dart';
+import 'package:happy_care/modules/prescription/edit_prescription/edit_prescription.dart';
+import 'package:happy_care/modules/prescription/edit_prescription/edit_prescription_binding.dart';
 import 'package:happy_care/modules/sign_in/sign_in.dart';
 import 'package:happy_care/modules/sign_in/sign_in_binding.dart';
 import 'package:happy_care/modules/sign_up/sign_up.dart';
@@ -61,6 +64,16 @@ class AppPages {
       name: AppRoutes.rListDoctor,
       binding: ChooseDoctorBinding(),
       page: () => ChooseDoctor(),
+    ),
+    GetPage(
+      name: AppRoutes.rDetailPrescription,
+      binding: DetailPrescriptionBinding(),
+      page: () => DetailPrescription(),
+    ),
+    GetPage(
+      name: AppRoutes.rEditPrescription,
+      binding: EditPrescriptionBinding(),
+      page: () => EditPrescriptionScreen(),
     ),
   ];
 }

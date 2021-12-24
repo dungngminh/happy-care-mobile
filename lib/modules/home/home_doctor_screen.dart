@@ -45,7 +45,7 @@ class HomeDoctorScreen extends GetView<HomeController> {
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.openSans(
                                   color: kMainColor,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 14.sp,
                                 ),
                               ),
