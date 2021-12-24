@@ -39,16 +39,6 @@ class SignInController extends GetxController {
       );
       await Future.delayed(Duration(seconds: 2))
           .then((value) => btnController.reset());
-    } else if (ValidatorUtils.checkPassword(passwordController.text)) {
-      btnController.error();
-      ScaffoldMessenger.of(context).showSnackBar(
-        customSnackBar(
-            message:
-                "Password phải có ít nhất 1 chữ in hoa, 1 chữ thường, 1 chữ số",
-            isError: true),
-      );
-      await Future.delayed(Duration(seconds: 2))
-          .then((value) => btnController.reset());
     } else {
       bool isOK = await userRepository!.signIn(
           email: emailController.text, password: passwordController.text);

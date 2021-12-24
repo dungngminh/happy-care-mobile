@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happy_care/core/themes/colors.dart';
+import 'package:happy_care/core/utils/custom_cache_manager.dart';
 import 'package:happy_care/data/models/user.dart';
 import 'package:sizer/sizer.dart';
 
@@ -47,9 +48,13 @@ class DoctorDetailScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Center(
-                            child: CachedNetworkImage(
-                              imageUrl: doctor.profile!.avatar!,
-                            ),
+                            child: doctor.profile?.avatar != null
+                                ? CachedNetworkImage(
+                                    cacheManager:
+                                        CustomCacheManager.customCacheManager,
+                                    imageUrl: doctor.profile!.avatar!,
+                                  )
+                                : Image.asset("assets/images/doctor.png"),
                           ),
                         ),
                       ],
@@ -65,7 +70,7 @@ class DoctorDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           doctor.background!.first.degree! +
-                              " " +
+                              "\n" +
                               doctor.profile!.fullname!,
                           style: GoogleFonts.openSans(
                             color: kMainColor,
@@ -76,7 +81,7 @@ class DoctorDetailScreen extends StatelessWidget {
                         SizedBox(
                           height: 0.5.h,
                         ),
-                        Text(
+                        AutoSizeText(
                           doctor.specializations!.first +
                               " - " +
                               doctor.background!.first.workLocation!,

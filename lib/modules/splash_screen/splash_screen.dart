@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   LogoTitle(),
                   Lottie.asset(
-                    "assets/splash.json",
+                    "assets/lottie/splash.json",
                     controller: _animationController,
                     height: 40.h,
                     animate: true,

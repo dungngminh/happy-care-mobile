@@ -24,22 +24,38 @@ class MoreSymptomScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => Text(
-                        "Triệu chứng của bạn là gì? (" +
-                            controller.listChoice
-                                .where((choice) => choice == true)
-                                .toList()
-                                .length
-                                .toString() +
-                            "/" +
-                            "3)",
-                        style: GoogleFonts.openSans(
-                          fontSize: 14.sp,
-                          color: kTextMainColor,
-                          fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(26),
+                          onTap: () => Get.back(),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: kMainColor,
+                            size: 26,
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Obx(
+                          () => Text(
+                            "Triệu chứng của bạn là gì? (" +
+                                controller.listChoice
+                                    .where((choice) => choice == true)
+                                    .toList()
+                                    .length
+                                    .toString() +
+                                "/" +
+                                "3)",
+                            style: GoogleFonts.openSans(
+                              fontSize: 14.sp,
+                              color: kMainColor,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Obx(
                       () => controller.listChoice
@@ -58,7 +74,7 @@ class MoreSymptomScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 1.h),
+              SizedBox(height: 1.2.h),
               Obx(
                 () => Wrap(
                   spacing: 1.5.w,
@@ -91,9 +107,33 @@ class MoreSymptomScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () => print(controller.listMax.toString()),
-                  child: Text("Show choice")),
+              SizedBox(height: 1.2.h),
+              Builder(builder: (context) {
+                return Center(
+                  child: Obx(
+                    () => ElevatedButton(
+                      style: controller.listChoice
+                              .where((choice) => choice == true)
+                              .toList()
+                              .isNotEmpty
+                          ? ElevatedButton.styleFrom(
+                              primary: kMainColor,
+                              elevation: 4,
+                              textStyle: GoogleFonts.openSans(),
+                            )
+                          : ElevatedButton.styleFrom(
+                              primary: Colors.grey.shade200,
+                              onPrimary: Colors.grey,
+                              elevation: 1,
+                              textStyle: GoogleFonts.openSans(),
+                            ),
+                      onPressed: () => controller.findingSpecBySymptom(context,
+                          isMore: true),
+                      child: Text("Tìm kiếm bác sĩ"),
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

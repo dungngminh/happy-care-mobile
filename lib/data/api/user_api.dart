@@ -9,10 +9,14 @@ class UserApi {
 
   UserApi(this.http);
 
-  Future<String> createNewUser(String email, String password) async {
-    Map<String, String> bodyRequest = {
+  Future<String> createNewUser(String email, String password,
+      {String? avatar}) async {
+    Map<String, dynamic> bodyRequest = {
       'email': email,
       'password': password,
+      'profile': {
+        'avatar': avatar,
+      }
     };
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -148,6 +152,33 @@ class UserApi {
       return response.body;
     } else {
       throw Exception("Cannot get user information: $userId");
+    }
+  }
+
+  Future<String> changePassword(
+      String token, String oldPassword, String newPassword) async {
+    final body = {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    };
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    var response = await http
+        .post(Uri.parse("${dotenv.env['BASE_URL']}/api/users/change-password"),
+            headers: headers, body: convert.jsonEncode(body))
+        .timeout(Duration(minutes: 1), onTimeout: () {
+      throw TimeoutException("Time out exception");
+    });
+
+    if (response.statusCode == 200) {
+      print("===========CHANGE_PASSS_OK================\n" + response.body);
+      return response.body;
+    } else {
+      print("CHANGEE FAIL");
+      throw Exception();
     }
   }
 }

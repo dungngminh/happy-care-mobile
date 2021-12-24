@@ -12,10 +12,7 @@ Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
   var isNotFirstTime = await SharedPrefUtils.getBoolKey("first_time") ?? true;
   var token = await SharedPrefUtils.getStringKey('token');
-  runApp(MyApp(
-    isNotFirstTime: isNotFirstTime,
-    token: token,
-  ));
+  runApp(MyApp(isNotFirstTime: isNotFirstTime, token: token));
 }
 
 class MyApp extends StatelessWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_care/core/helpers/show_custom_dialog.dart';
 
 import 'package:happy_care/core/themes/colors.dart';
 import 'package:happy_care/data/models/room_chat/room_chat_pass.dart';
@@ -15,7 +16,7 @@ import 'package:happy_care/routes/app_pages.dart';
 import 'package:happy_care/widgets/search_doctor_bar.dart';
 import 'package:sizer/sizer.dart';
 
-class ChatScreen extends GetWidget<ChatController> {
+class ChatScreen extends GetView<ChatController> {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
@@ -132,27 +133,32 @@ class ChatScreen extends GetWidget<ChatController> {
                                     avatar: docController
                                         .listDoctor[index].profile?.avatar,
                                     width: 16.w,
-                                    function: () => Get.to(() =>
-                                        DoctorDetailScreen(
-                                          doctor:
-                                              docController.listDoctor[index],
-                                          function: () async {
-                                            await controller
-                                                .joinFirstToChatRoom(
-                                                    notUserId: docController
-                                                        .listDoctor[index].id)
-                                                .then(
-                                                  (value) => Get.toNamed(
+                                    function: () =>
+                                        Get.to(() => DoctorDetailScreen(
+                                              doctor: docController
+                                                  .listDoctor[index],
+                                              function: () async {
+                                                showLoadingDialog(context,
+                                                    contentDialog:
+                                                        "Đang join phòng...");
+                                                await controller
+                                                    .joinFirstToChatRoom(
+                                                        notUserId: docController
+                                                            .listDoctor[index]
+                                                            .id)
+                                                    .then((value) {
+                                                  Get.back();
+                                                  Get.offNamed(
                                                     AppRoutes.rChatRoom,
                                                     arguments: RoomChatPass(
                                                       value!,
                                                       docController
                                                           .listDoctor[index],
                                                     ),
-                                                  ),
-                                                );
-                                          },
-                                        )),
+                                                  );
+                                                });
+                                              },
+                                            )),
                                     status:
                                         docController.listDoctor[index].status!,
                                   );
@@ -266,11 +272,7 @@ class ChatScreen extends GetWidget<ChatController> {
                                                               .newestMessage!
                                                               .type! ==
                                                           "image"
-                                                      ? (controller
-                                                                  .listRoom[
-                                                                      index]!
-                                                                  .newestMessage!
-                                                                  .user ==
+                                                      ? (controller.listRoom[index]!.newestMessage!.user ==
                                                               controller
                                                                   .userController
                                                                   .user
@@ -278,21 +280,20 @@ class ChatScreen extends GetWidget<ChatController> {
                                                                   .id
                                                           ? "Bạn đã gửi một hình ảnh"
                                                           : "Bạn đã nhận được một hình ảnh")
-                                                      : (controller
-                                                                  .listRoom[
-                                                                      index]!
+                                                      : (controller.listRoom[index]!.newestMessage!.type ==
+                                                              "prescription"
+                                                          ? "Bạn nhận được một đơn thuốc"
+                                                          : (controller.listRoom[index]!.newestMessage!.user ==
+                                                                  controller
+                                                                      .userController
+                                                                      .user
+                                                                      .value
+                                                                      .id
+                                                              ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
+                                                              : controller
+                                                                  .listRoom[index]!
                                                                   .newestMessage!
-                                                                  .user ==
-                                                              controller
-                                                                  .userController
-                                                                  .user
-                                                                  .value
-                                                                  .id
-                                                          ? "Bạn: ${controller.listRoom[index]!.newestMessage!.content}"
-                                                          : controller
-                                                              .listRoom[index]!
-                                                              .newestMessage!
-                                                              .content))
+                                                                  .content)))
                                                   : null),
                                     ),
                                   ),

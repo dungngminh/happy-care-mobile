@@ -9,9 +9,9 @@ class UserRepository {
   UserRepository({this.userApi});
 
   Future<bool> createNewUser(
-      {required String email, required String password}) async {
+      {required String email, required String password, String? avatar}) async {
     try {
-      await userApi!.createNewUser(email, password);
+      await userApi!.createNewUser(email, password, avatar: avatar);
       return true;
     } catch (_) {
       print(_ as Exception);
@@ -83,6 +83,15 @@ class UserRepository {
       print(
           "================GET_USER_BY_ID:$userId _ERROR=====================");
       print(_.toString());
+      throw Exception();
+    }
+  }
+
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    try {
+      String token = await SharedPrefUtils.getStringKey("token");
+      await userApi!.changePassword(token, oldPassword, newPassword);
+    } catch (_) {
       throw Exception();
     }
   }

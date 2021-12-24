@@ -29,7 +29,7 @@ class DoctorController extends GetxController {
     status(DocStatus.loading);
     listDoctor = await getDoctorMaybeBySpecId(id: null);
     _ioService?.initService();
-    await Future.delayed(Duration(seconds: 5)).then((value) async {
+    await Future.delayed(Duration(seconds: 3)).then((value) async {
       if (userController.user.value.role == "member") await getDoctorOnline();
     });
   }
@@ -47,7 +47,7 @@ class DoctorController extends GetxController {
       });
       checkOnlineAndSort();
       update();
-      await Future.delayed(Duration(minutes: 2));
+      await Future.delayed(Duration(seconds: 30));
     }
   }
 

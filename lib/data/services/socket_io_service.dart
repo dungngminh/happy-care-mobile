@@ -6,7 +6,7 @@ import 'package:happy_care/data/models/doctor_inapp.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class SocketIOService {
-  late io.Socket socket;
+  io.Socket? socket;
   List<DoctorInApp> listDoctor = [];
 
   /// init SocketIO Service
@@ -18,11 +18,11 @@ class SocketIOService {
             .disableAutoConnect()
             .enableForceNew()
             .build());
-    socket.connect();
+    socket!.connect();
     String token = await SharedPrefUtils.getStringKey('token');
     print(token);
-    socket.onConnect((_) {
-      socket.emitWithAck('join', token, ack: (data) {
+    socket!.onConnect((_) {
+      socket!.emitWithAck('join', token, ack: (data) {
         if (data != null) {
           print('from server $data');
         } else {
@@ -34,7 +34,7 @@ class SocketIOService {
 
   ///Get all Doctor activity in app
   getDoctorInApp() {
-    socket.emitWithAck('get-doctors-in-app', "hello", ack: (data) {
+    socket!.emitWithAck('get-doctors-in-app', "hello", ack: (data) {
       if (data["message"] != 'cannot found any doctors') {
         print('===========GET DOCTOR IN APP=======\n$data');
         try {
@@ -55,13 +55,13 @@ class SocketIOService {
 
   ///disconnect socket when sign out
   signOut() {
-    socket.disconnect();
+    socket!.disconnect();
   }
 
   ///emit event join room
   joinToRoom({required String roomId, required String userId}) {
     Map<String, String> msg = {"roomId": roomId, "userId": userId};
-    socket.emitWithAck('join-chat-room', msg, ack: (data) {
+    socket!.emitWithAck('join-chat-room', msg, ack: (data) {
       if (data != 'joined room $roomId') {
         print(data);
       } else {
@@ -85,11 +85,11 @@ class SocketIOService {
     };
     print(msg);
     if (msg["contentType"] == "image") {
-      socket.emitWithAck('send-message', msg, binary: true, ack: (data) {
+      socket!.emitWithAck('send-message', msg, binary: true, ack: (data) {
         print("send mess data: $data");
       });
     } else {
-      socket.emitWithAck('send-message', msg, ack: (data) {
+      socket!.emitWithAck('send-message', msg, ack: (data) {
         print("send mess data: $data");
       });
     }
@@ -101,7 +101,7 @@ class SocketIOService {
       "roomId": roomId,
     };
     print("leaving");
-    socket.emitWithAck('leave-chat-room', msg, ack: (data) {
+    socket!.emitWithAck('leave-chat-room', msg, ack: (data) {
       print("leave chat room data: $data");
     });
   }
@@ -116,7 +116,7 @@ class SocketIOService {
       "userId": userId,
       "isTyping": isTyping,
     };
-    socket.emitWithAck('typing-message', msg, ack: (data) {
+    socket!.emitWithAck('typing-message', msg, ack: (data) {
       print(data);
     });
   }
