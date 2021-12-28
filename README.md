@@ -1,6 +1,6 @@
-# Happy-Care
+# Happy Care
 
-Online Health Consultation Application built with Flutter for Client, ExpressJs for Backend Server.
+Online Health Consultation Application built with Flutter for Client, ExpressJs for Backend Server (private repo sorry 😣).
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6ade1e4b31d343f7863ddf652c17d7be)](https://www.codacy.com/gh/komkat-studio/happy-care-mobile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=komkat-studio/happy-care-mobile&utm_campaign=Badge_Grade)
@@ -20,7 +20,7 @@ Online Health Consultation Application built with Flutter for Client, ExpressJs 
 
 - Flutter GetX pattern, [GetX](https://pub.dev/packages/get) for state management.
 - Authentication and Authorization using JWT.
-- Backend using NodeJS, MongoDB.
+- Backend using ExpressJs, MongoDB.
 - Realtime event using Socket.io.
 - Cloudinary for storing images.
 
