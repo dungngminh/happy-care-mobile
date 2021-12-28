@@ -123,7 +123,7 @@ class SignInScreen extends GetView<SignInController> {
                                   color: kMainColor,
                                   fontWeight: FontWeight.w500,
                                   textBaseline: TextBaseline.alphabetic,
-                                ),
+                                ),     
                               ),
                               onFieldSubmitted: (value) {
                                 controller.btnController.start();

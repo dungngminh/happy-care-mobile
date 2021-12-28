@@ -68,11 +68,16 @@ class CustomCardScroll extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    CachedNetworkImage(
-                      imageUrl: list[i].profile!.avatar!,
-                      fit: BoxFit.cover,
-                      cacheManager: CustomCacheManager.customCacheManager,
-                    ),
+                    list[i].profile?.avatar == null
+                        ? Image.asset(
+                            "assets/images/doctor.png",
+                            fit: BoxFit.cover,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: list[i].profile!.avatar!,
+                            fit: BoxFit.cover,
+                            cacheManager: CustomCacheManager.customCacheManager,
+                          ),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Padding(

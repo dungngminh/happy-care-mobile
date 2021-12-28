@@ -71,8 +71,9 @@ class UserScreen extends GetView<UserController> {
                               GetBuilder<UserController>(builder: (controller) {
                             return controller.user.value.profile?.avatar == null
                                 ? CircleAvatar(
+                                    backgroundColor: Colors.white,
                                     backgroundImage:
-                                        Image.asset("assets/images/icon.png")
+                                        Image.asset("assets/images/blank.png")
                                             .image,
                                   )
                                 : CircleAvatar(

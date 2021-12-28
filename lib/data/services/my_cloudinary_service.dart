@@ -10,8 +10,11 @@ class MyCloudinaryService {
   Future<String?> uploadFileOnCloudinary({required String filePath}) async {
     try {
       var response = await cloudinary!.uploadFile(
-        CloudinaryFile.fromFile(filePath,
-            folder: "Image", resourceType: CloudinaryResourceType.Image),
+        CloudinaryFile.fromFile(
+          filePath,
+          folder: "Image",
+          resourceType: CloudinaryResourceType.Image,
+        ),
       );
       print("URL is" + response.secureUrl);
       return response.secureUrl;

@@ -96,9 +96,12 @@ class EditInformationScreen extends GetView<EditInformationController> {
                                               .customCacheManager,
                                         ))
                                     : CircleAvatar(
+                                        backgroundColor: Colors.white,
                                         backgroundImage: Image.asset(
-                                                "assets/images/blank.png")
-                                            .image);
+                                          controller.user.role == "doctor"
+                                              ? "assets/images/doctor.png"
+                                              : "assets/images/blank.png",
+                                        ).image);
                               } else {
                                 return CircleAvatar(
                                   backgroundColor: kSecondColor,

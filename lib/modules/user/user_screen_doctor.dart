@@ -90,6 +90,7 @@ class UserDoctorScreen extends GetView<UserController> {
                               GetBuilder<UserController>(builder: (controller) {
                             return controller.user.value.profile?.avatar == null
                                 ? CircleAvatar(
+                                  backgroundColor: Colors.white,
                                     backgroundImage:
                                         Image.asset("assets/images/doctor.png")
                                             .image,

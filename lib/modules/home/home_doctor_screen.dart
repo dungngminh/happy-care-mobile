@@ -54,12 +54,19 @@ class HomeDoctorScreen extends GetView<HomeController> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: CircleAvatar(
-                                    backgroundColor: kSecondColor,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                      controller.user.value.profile!.avatar!,
-                                      cacheManager:
-                                          CustomCacheManager.customCacheManager,
-                                    ),
+                                    backgroundColor: Colors.white,
+                                    backgroundImage:
+                                        controller.user.value.profile?.avatar ==
+                                                null
+                                            ? Image.asset(
+                                                    "assets/images/doctor.png")
+                                                .image
+                                            : CachedNetworkImageProvider(
+                                                controller.user.value.profile!
+                                                    .avatar!,
+                                                cacheManager: CustomCacheManager
+                                                    .customCacheManager,
+                                              ),
                                   ),
                                 ),
                               ),

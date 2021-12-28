@@ -55,10 +55,16 @@ class HomeScreen extends GetView<HomeController> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: CircleAvatar(
-                                    backgroundImage: CachedNetworkImageProvider(
-                                      userController
-                                          .user.value.profile!.avatar!,
-                                    ),
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: userController
+                                                .user.value.profile?.avatar ==
+                                            null
+                                        ? Image.asset("assets/images/blank.png")
+                                            .image
+                                        : CachedNetworkImageProvider(
+                                            userController
+                                                .user.value.profile!.avatar!,
+                                          ),
                                   ),
                                 ),
                               ),
