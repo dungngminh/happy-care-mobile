@@ -1,6 +1,6 @@
 # Happy-Care
 
-Online health consultation application built with Flutter for Client, ExpressJs for Backend Server.
+Online Health Consultation Application built with Flutter for Client, ExpressJs for Backend Server.
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6ade1e4b31d343f7863ddf652c17d7be)](https://www.codacy.com/gh/komkat-studio/happy-care-mobile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=komkat-studio/happy-care-mobile&utm_campaign=Badge_Grade)
