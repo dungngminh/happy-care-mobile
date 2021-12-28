@@ -153,6 +153,8 @@ Sorry for some UIs are not designed in advance, not as beautiful as the intro, s
 |        ![](screenshots/detail_prescription.png)         |    ![](screenshots/detail_user.png)    |     ![](screenshots/edit_user_detial.png)     |
 |                Detail Information Doctor                |         Change password dialog         |             Dialog choose avatar              |
 |           ![](screenshots/detail_doctor.png)            |    ![](screenshots/change_pass.png)    | ![](screenshots/dialog_image_choose_edit.png) |
+|                        More news                        |                WebView                 |                                               |
+|             ![](screenshots/more_news.png)              |      ![](screenshots/webview.png)      |                     ![]()                     |
 
 </details>
 
@@ -172,6 +174,8 @@ Sorry for some UIs are not designed in advance, not as beautiful as the intro, s
 |         ![](screenshots/prescription.png)          |       ![](screenshots/detail.png)        |         ![](screenshots/edit_detail.png)          |
 |           Detail Information Doctor role           |             Edit Information             |               Dialog choose avatar                |
 |          ![](screenshots/user_doctor.png)          |      ![](screenshots/edit_user.png)      |   ![](screenshots/dialog_image_choose_edit.png)   |
+|                     More news                      |                 WebView                  |                                                   |
+|           ![](screenshots/more_news.png)           |       ![](screenshots/webview.png)       |                       ![]()                       |
 
 </details>
 
