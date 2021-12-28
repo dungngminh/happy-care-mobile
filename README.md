@@ -122,14 +122,14 @@ Sorry for some UIs are not designed in advance, not as beautiful as the intro, s
     <summary>View Screenshots</summary>
     <br>
 
-|                             |                             |                             |
-| :-------------------------: | :-------------------------: | :-------------------------: |
-|        Splash Screen        |           Intro1            |           Intro2            |
-| ![](screenshots/splash.png) | ![](screenshots/intro1.png) | ![](screenshots/intro2.png) |
-|           Intro3            |           Intro4            |                             |
-| ![](screenshots/intro3.png) | ![](screenshots/intro4.png) |            ![]()            |
-|           Sign In           |           Sign Up           |                             |
-| ![](screenshots/signin.png) | ![](screenshots/signup.png) |            ![]()            |
+|                                                               |                             |                             |
+| :-----------------------------------------------------------: | :-------------------------: | :-------------------------: |
+|                         Splash Screen                         |           Intro1            |           Intro2            |
+| <img src="screenshots/splash.gif" width="420" height="560" /> | ![](screenshots/intro1.png) | ![](screenshots/intro2.png) |
+|                            Intro3                             |           Intro4            |                             |
+|                  ![](screenshots/intro3.png)                  | ![](screenshots/intro4.png) |            ![]()            |
+|                            Sign In                            |           Sign Up           |                             |
+|                  ![](screenshots/signin.png)                  | ![](screenshots/signup.png) |            ![]()            |
 
 </details>
 
