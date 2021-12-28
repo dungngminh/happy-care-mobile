@@ -114,7 +114,7 @@ project
 
 ## Screenshots (Running Stable in Mi 9)
 
-Sorry for some UIs are not designed in advance, not as beautiful as the intro, sign in, sign up because there is no time, just code in mind :(
+Sorry for some UIs are not designed in advance, it will be not responsive for 16:9, not as beautiful as the intro, sign in, sign up because there is no time, just code in mind 😣
 
 ### Splash, Intro, SignIn, SignUp
 
