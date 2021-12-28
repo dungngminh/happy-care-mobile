@@ -192,6 +192,12 @@ Sorry for some UIs are not designed in advance, not as beautiful as the intro, s
 
 </details>
 
+## Todo
+
+- WebRTC for voice, video call
+- Notifications
+- Rebuild UI (i think no no no because i am very lazy 😣)
+
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
