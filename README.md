@@ -18,7 +18,7 @@ Online Health Consultation Application built with Flutter for Client, ExpressJs 
 
 ## Technology used
 
-- Flutter GetX pattern, [GetX](https://pub.dev/packages/get) for state management.
+- Flutter GetX pattern, [GetX](https://pub.dev/packages/get) for state management. (actually I want to use BLOC (Rx) but I only have 1 month to complete so I use Getx to do it faster. But GetX's build-in DI is so stupid)
 - Authentication and Authorization using JWT.
 - Backend using ExpressJs, MongoDB.
 - Realtime event using Socket.io.
